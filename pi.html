@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Pi Generator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    body {
+      background: #0f0f0f;
+      color: #e0e0e0;
+      font-family: 'Courier New', monospace;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      gap: 12px;
+    }
+
+    h1 {
+      font-size: 1.2rem;
+      color: #888;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+
+    #pi-display {
+      width: 100%;
+      max-width: 640px;
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 12px;
+      padding: 20px;
+      font-size: 1.25rem;
+      line-height: 1.8;
+      word-break: break-all;
+      overflow-wrap: break-word;
+      flex: 1;
+      overflow-y: auto;
+      color: #a8d8a8;
+    }
+
+    #pi-display .prefix {
+      color: #f4a261;
+      font-weight: bold;
+    }
+
+    #pi-display .digits {
+      color: #a8d8a8;
+    }
+
+    #pi-display .current-digit {
+      color: #0f0f0f;
+      background: #e9c46a;
+      border-radius: 3px;
+      padding: 0 1px;
+    }
+
+    #tap-btn {
+      width: 100%;
+      max-width: 640px;
+      padding: 24px;
+      font-size: 1.4rem;
+      font-family: inherit;
+      font-weight: bold;
+      letter-spacing: 0.05em;
+      background: #2a9d8f;
+      color: #fff;
+      border: none;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    #tap-btn:active {
+      transform: scale(0.97);
+      background: #1e6f65;
+    }
+
+    #count {
+      color: #555;
+      font-size: 0.85rem;
+    }
+
+    #footnote {
+      color: #666;
+      font-size: 0.75rem;
+      margin-top: auto;
+      padding-top: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Pi Generator</h1>
+
+  <div id="pi-display">
+    <span class="prefix">3.</span><span class="digits" id="digits-span"></span>
+  </div>
+
+  <button id="tap-btn">+ 1 digit of π</button>
+
+  <div id="count">0 digits revealed</div>
+
+  <div id="footnote">lobster-made in blr</div>
+
+  <script>
+    // Pi to 1000 decimal places
+    const PI_DIGITS =
+      "1415926535897932384626433832795028841971693993751058209749445923078164062862089986280348253421170679" +
+      "8214808651328230664709384460955058223172535940812848111745028410270193852110555964462294895493038196" +
+      "4428810975665933446128475648233786783165271201909145648566923460348610454326648213393607260249141273" +
+      "7245870066063155881748815209209628292540917153643678925903600113305305488204665213841469519415116094" +
+      "3305727036575959195309218611738193261179310511854807446237996274956735188575272489122793818301194912" +
+      "9833673362440656643086021394946395224737190702179860943702770539217176293176752384674818467669405132" +
+      "0005681271452635608277857713427577896091736371787214684409012249534301465495853710507922796892589235" +
+      "4201995611212902196086403441815981362977477130996051870721134999999837297804995105973173281609631859" +
+      "5024459455346908302642522308253344685035261931188171010003137838752886587533208381420617177669147303" +
+      "5982534904287554687311595628638823537875937519577818577805321712268066130019278766111959092164201989";
+
+    let revealed = 0;
+
+    const digitsSpan = document.getElementById('digits-span');
+    const countEl = document.getElementById('count');
+    const btn = document.getElementById('tap-btn');
+
+    function reveal() {
+      if (revealed >= PI_DIGITS.length) return;
+      revealed++;
+      const prev = PI_DIGITS.slice(0, revealed - 1);
+      const current = PI_DIGITS[revealed - 1];
+      digitsSpan.innerHTML = prev + '<span class="current-digit">' + current + '</span>';
+      countEl.textContent = revealed + " digit" + (revealed === 1 ? "" : "s") + " revealed";
+      document.getElementById('pi-display').scrollTop = 999999;
+    }
+
+    btn.addEventListener('click', reveal);
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault(); // blocks double-tap zoom and the ghost click
+      reveal();
+    });
+  </script>
+</body>
+</html>

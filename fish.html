@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Fish Schticks</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; }
+
+    body {
+      background: #0a0f14;
+      color: #e0e0e0;
+      font-family: 'Georgia', serif;
+      min-height: 100dvh;
+      padding: 40px 16px 60px;
+    }
+
+    header {
+      max-width: 640px;
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
+      font-weight: normal;
+      color: #e0e0e0;
+      margin-bottom: 8px;
+    }
+
+    header p {
+      color: #555;
+      font-family: 'Courier New', monospace;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+    }
+
+    .cards {
+      max-width: 640px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .card {
+      background: #111820;
+      border: 1px solid #1e2a36;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .fish-img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      background: #0d151e;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .fish-name {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #2a9d8f;
+      margin-bottom: 10px;
+    }
+
+    .card-body h2 {
+      font-size: 1.3rem;
+      font-weight: normal;
+      color: #e0e0e0;
+      margin-bottom: 12px;
+    }
+
+    .card-body p {
+      color: #888;
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    .quirk {
+      margin-top: 16px;
+      padding: 12px 16px;
+      background: #0a0f14;
+      border-left: 2px solid #f4a261;
+      color: #f4a261;
+      font-size: 0.85rem;
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+    }
+
+    footer {
+      max-width: 640px;
+      margin: 60px auto 0;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #222;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Fish Schticks</h1>
+    <p>a completely serious fish appreciation page</p>
+  </header>
+
+  <div class="cards">
+
+    <div class="card">
+      <img class="fish-img" src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Tetraodon-hispidus.jpg" alt="Blob the pufferfish" />
+      <div class="card-body">
+        <div class="fish-name">Fish No. 1</div>
+        <h2>Blob</h2>
+        <p>Blob is a pufferfish who has never once been in a hurry. He floats. He ponders. He inflates when startled by his own reflection.</p>
+        <div class="quirk">"Some of us puff up to look bigger. Blob puffs up just to feel something."</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img class="fish-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/White_shark.jpg/1280px-White_shark.jpg" alt="Karen the shark" />
+      <div class="card-body">
+        <div class="fish-name">Fish No. 2</div>
+        <h2>Karen</h2>
+        <p>Karen is a shark who has never eaten anyone. Not because she can't — she simply finds the whole thing beneath her. She has standards.</p>
+        <div class="quirk">"Apex predator. Vegan by choice. Disappointed by everything."</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <img class="fish-img" src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg/1280px-Amphiprion_ocellaris_%28Clown_anemonefish%29_by_Nick_Hobgood.jpg" alt="Steve the clownfish" />
+      <div class="card-body">
+        <div class="fish-name">Fish No. 3</div>
+        <h2>Steve</h2>
+        <p>Steve is a clownfish who is not funny. He knows this. The other fish know this. He keeps trying anyway — which, honestly, is the funniest thing about him.</p>
+        <div class="quirk">"Ships every joke. Zero percent hit rate. Bias for action."</div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>lobster-made in blr</footer>
+
+</body>
+</html>

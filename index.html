@@ -1,160 +1,210 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="author" content="Jatin Pandey" />
-	<meta name="description" content="I like technology, design and humor. UIUC 2014 grad" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Jatin Pandey</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-	<title>Jatin Pandey</title>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #e0e0e0;
+      --muted: #666;
+      --accent: #2a9d8f;
+      --warm: #f4a261;
+    }
 
-	<!-- CSS and fonts -->
-	<link rel="stylesheet" type="text/css" href="css/bootstrap-responsive.css">
-	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
-	<link rel="stylesheet" type="text/css" href="css/styles.css">
+    html {
+      scroll-behavior: smooth;
+    }
 
-	<link href='http://fonts.googleapis.com/css?family=Maven+Pro' rel='stylesheet' type='text/css'>
-	<link href='http://fonts.googleapis.com/css?family=Lato:100' rel='stylesheet' type='text/css'>
-	<link href="http://www.jatinpandey.com/favicon.ico" rel="shortcut icon" type="image/x-icon">
-	
-	<!--Social tags-->
-	<meta property="og:title" content="Jatin Pandey" />
-	<meta property="og:site_name" content="Jatin Pandey" />
-	<meta property="og:url" content="http://www.jatinpandey.com/" />
-	<meta property="og:type" content="website" />
-	<meta property="og:image" content="http://www.jatinpandey.com/img/chill.jpg" />
-	<meta property="og:description" content="I like technology, design and humor. Studying Computer Science at the University of Illinois at Urbana-Champaign" />
-	<meta property="fb:admins" content="664457128" />
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Georgia', serif;
+      line-height: 1.7;
+      padding: 0 16px;
+    }
 
-	<meta name="twitter:card" content="summary" />
-	<meta name="twitter:creator" content="@jatinpandey" />
-	<meta name="twitter:title" content="Jatin Pandey" />
-	<meta name="twitter:description" content="I like technology, design and humor. Studying Computer Science at the University of Illinois at Urbana-Champaign" />
+    /* NAV */
+    nav {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 32px 0 0;
+      display: flex;
+      gap: 24px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
 
+    nav a {
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+
+    nav a:hover { color: var(--text); }
+
+    /* SECTIONS */
+    section {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 80px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    section:last-child { border-bottom: none; }
+
+    .label {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    /* ABOUT */
+    #about h1 {
+      font-size: 2rem;
+      font-weight: normal;
+      margin-bottom: 24px;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    #about p {
+      color: #aaa;
+      font-size: 1.05rem;
+      margin-bottom: 14px;
+    }
+
+    /* PROJECTS */
+    #projects h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      margin-bottom: 40px;
+      color: var(--text);
+    }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 16px;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.15s;
+    }
+
+    .project-card:hover {
+      border-color: var(--accent);
+    }
+
+    .project-card h3 {
+      font-size: 1.1rem;
+      font-weight: normal;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .project-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      line-height: 1.5;
+    }
+
+    .project-tag {
+      display: inline-block;
+      margin-top: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    /* THOUGHTS */
+    #thoughts h2 {
+      font-size: 1.4rem;
+      font-weight: normal;
+      margin-bottom: 40px;
+      color: var(--text);
+    }
+
+    .coming-soon {
+      color: var(--muted);
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      letter-spacing: 0.05em;
+      padding: 40px 0;
+    }
+
+    /* FOOTER */
+    footer {
+      max-width: 640px;
+      margin: 0 auto;
+      padding: 40px 0 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #333;
+    }
+  </style>
 </head>
-
 <body>
-	<div id="fb-root"></div>
-		<script>
-			window.fbAsyncInit = function() {
-			FB.init({
-			appId      : '621107387943422',
-			status     : true,
-			xfbml      : true
-	});
-};
 
-			(function(d, s, id) {
-				var js, fjs = d.getElementsByTagName(s)[0];
-				if (d.getElementById(id)) {return;}
-				js = d.createElement(s); js.id = id;
-				js.src = "//connect.facebook.net/en_US/all.js";
-				fjs.parentNode.insertBefore(js, fjs);
-			}(document, 'script', 'facebook-jssdk'));
-		</script>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#projects">Projects</a>
+    <a href="#thoughts">Thoughts</a>
+  </nav>
 
-	<div class="container-fluid">
-		<div class="navbar navbar-inverse ">
-			<div class="navbar-inner">
-				<a id="toplogo" class="brand" href="/"><strong>Jatin</strong> Pandey</a>
-				<ul class="nav">
-					<li id="navHome" class="active"><a>Home</a></li>
-					<li id="navBlog"><a>Blog</a></li>
-					<li id="navContact"><a>Contact</a></li>
-				</ul>
-			</div>
-		</div>
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="label">About</div>
+    <h1>Jatin Pandey</h1>
+    <p>I think about systems — technical ones, human ones, and the space where they collide.</p>
+    <p>I'm drawn to problems. Sometimes that's a bouldering route, other times it's a trivia question. Usually it's something in between.</p>
+    <p>These days I'm closing the gap between the aha moment and a thing that exists.</p>
+  </section>
 
-		<div id="content">
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="label">Projects</div>
+    <h2>Things I've built</h2>
 
-			<div id="myCarousel" class="carousel slide">
+    <a class="project-card" href="/pi.html">
+      <h3>The Pi Project</h3>
+      <p>Tap to reveal digits of π one at a time. A tiny meditation on patience and infinite things.</p>
+      <span class="project-tag">→ open project</span>
+    </a>
 
-				  <!-- Carousel items -->
-				  <div class="carousel-inner">
+    <a class="project-card" href="/fish.html">
+      <h3>Fish Schticks</h3>
+      <p>A completely serious fish appreciation page. Three fish. Three personalities. Zero agenda.</p>
+      <span class="project-tag">→ open project</span>
+    </a>
 
-				    <div class="item active">
-						<div id="home" class="section">
-							<div id="aboutHeader">
-								<p class="largeHead">My name is Jatin</p>
-								<div id="aboutSubtext">
-									<p>I build iOS apps</p>
-								</div>
-							</div>
-							
-							<div>
-								<img id="aboutImg" src="img/snapcode.png" />
-							</div>
+  </section>
 
-							<div id="aboutDetails">
-								<p class="sectionMethod">I'm an iOS engineer at <a href="http://yahoo.com">Yahoo</a> building a community-driven commenting platform. <a href="https://www.illinois.edu" id="illinois-link"></a></p>
-								<p class="sectionMethod">I enjoy hearing people's perspective on things. Feel free to <a id="contactLink">get in touch</a> with me if you want to chat!</p>
+  <!-- THOUGHTS -->
+  <section id="thoughts">
+    <div class="label">Thoughts</div>
+    <h2>Writing</h2>
+    <div class="coming-soon">coming soon.</div>
+  </section>
 
-								<!--<div class="fb-like" data-send="true" data-width="450" data-show-faces="true"></div>-->
+  <footer>lobster-made in blr</footer>
 
-							</div>
-						</div>
-					</div>
-
-					<div class="item">
-						<div id="blog" class="section">
-							<p class="largeHead">Jatin's Blog</p>
-							
-							<img src="img/img3.jpg" />
-							<img src="img/quora.jpg" />
-							<img src="img/img1.jpg" />
-							<img src="img/hipster.jpg" />
-							<img src="img/visionary.jpg" />
-
-							<div id="comingUp" class="dimMe largeText">
-								<p>Blog is currently being set up. Keep watching this space!</p>
-							</div>
-						</div>
-					</div>
-
-					<div class="item">
-						<div id="contact" class="section">
-							<p class="largeHead">Let's talk!</p>
-							<div id="contactDetails">
-								<p class="sectionMethod">Email me at <a href="mailto:jatinpandey5@gmail.com target="_blank">jatinpandey5@gmail.com</a> if you want to get in touch</p>
-								<p class="sectionMethod">Follow me on <a href="http://www.twitter.com/jatinpandey" target="_blank">Twitter</a></p>
-								<p class="sectionMethod">Connect with me on <a href="http://www.linkedin.com/in/jatinpandey" target="_blank">LinkedIn</a></p>
-							</div>
-						</div>
-					</div>
-
-				    <div class="item">
-				    	<div id="resume" class="section">
-							<object data="img/resume.pdf" type="application/pdf" width="100%" height="100%">
-								<p>It appears you don't have a PDF plugin for this browser. No biggie. You can <a href="myfile.pdf">click here</a> to download the PDF file</p>
-							</object>
-					    </div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="footer">
-		<p>&copy; 2017 Jatin Pandey</p>
-	</div>
-
-
-	<!-- Analytics info -->
-	<script>
-	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	  ga('create', 'UA-39734612-3', 'auto');
-	  ga('send', 'pageview');
-
-	</script>
-
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-	<script type="text/javascript" src="js/bootstrap.js"></script>
-	<script type="text/javascript" src="js/script.js"></script>
 </body>
-</html>				
+</html>
