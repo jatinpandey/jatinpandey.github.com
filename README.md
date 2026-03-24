@@ -1,4 +1,4 @@
-jatinpandey.github.com
+jatinpandey.github.io
 ======================
 
-Personal website repository. Made with lobster help in BLR.
+Personal website Made with lobster help in BLR.
