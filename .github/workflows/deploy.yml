@@ -10,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Deploy to Cloudflare Pages
-        run: npx wrangler pages deploy . --project-name jatinpandey --branch master
+        run: npx wrangler pages deploy . --project-name jatinpandey --branch production
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
