@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-  <title>Attempts at a Smart Speech-to-Text App</title>
+  <title>Comal: Attempts at a Smart Speech-to-Text App</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -62,6 +62,36 @@
       margin-bottom: 20px;
     }
 
+    .cta {
+      margin: 28px 0 26px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cta a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      color: #0f0f0f;
+      background: #2a9d8f;
+      border: 1px solid #2a9d8f;
+      border-radius: 999px;
+      padding: 10px 16px;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+    }
+
+    .cta a.secondary {
+      color: #2a9d8f;
+      background: transparent;
+    }
+
+    .cta a:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
     .video-wrap {
       margin: 34px 0 30px;
       display: flex;
@@ -92,19 +122,6 @@
       font-size: 0.78rem;
     }
 
-    .links {
-      margin: 28px 0 8px;
-      font-family: 'Courier New', monospace;
-      font-size: 0.9rem;
-    }
-
-    .links a {
-      color: #2a9d8f;
-      text-decoration: none;
-    }
-
-    .links a:hover { text-decoration: underline; }
-
     footer {
       max-width: 720px;
       margin: 0 auto;
@@ -127,6 +144,11 @@
     <p>What I like about it is not just that it transcribes. It feels like it understands the job. You say something out loud, the interface briefly shows <em>Transcribing…</em>, then <em>Polishing…</em>, and a moment later the messy edges of spoken language resolve into something you could actually use.</p>
     <p>That shift is the whole point. Most voice input still feels like dictation software. Comal feels closer to writing. It takes the friction out of getting a thought out of your head without making the result feel raw or disposable.</p>
 
+    <div class="cta">
+      <a href="https://comal-omega.vercel.app" target="_blank" rel="noopener noreferrer">Try Comal →</a>
+      <a class="secondary" href="https://github.com/jatinpandey/comal" target="_blank" rel="noopener noreferrer">View code</a>
+    </div>
+
     <div class="video-wrap">
       <div style="width:100%">
         <div class="video-frame">
@@ -141,25 +163,9 @@
 
     <p>I am increasingly drawn to products that remove one annoying seam from everyday thinking. This is one of those. Sometimes the fastest way to get an idea out is to say it. The trick is making the result feel composed enough that you want to keep it.</p>
     <p>Comal is a small showcase, but it points at a bigger interaction pattern I like: speak once, get something back that feels finished. Less transcription as a feature. More speech as a first-class way to write.</p>
-
   </article>
 
   <footer>taste refinement parmo dharma</footer>
 
 </body>
-</html>
-ck is making the result feel composed enough that you want to keep it.</p>
-    <p>Comal is a small showcase, but it points at a bigger interaction pattern I like: speak once, get something back that feels finished. Less transcription as a feature. More speech as a first-class way to write.</p>
-
-    <div class="links">
-      <a href="https://github.com/jatinpandey/comal" target="_blank" rel="noopener noreferrer">GitHub → jatinpandey/comal</a>
-    </div>
-  </article>
-
-  <footer>taste refinement parmo dharma</footer>
-
-</body>
-</html>
-/html>
-body>
 </html>
