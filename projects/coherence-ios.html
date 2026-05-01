@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>Coherence iOS</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0f0f0f;
+      color: #e0e0e0;
+      font-family: 'Georgia', serif;
+      line-height: 1.8;
+      padding: 0 16px;
+    }
+
+    nav {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 32px 0 0;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85rem;
+    }
+
+    nav a {
+      color: #555;
+      text-decoration: none;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: color 0.15s;
+    }
+
+    nav a:hover { color: #e0e0e0; }
+
+    article {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px 0 80px;
+    }
+
+    .meta {
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: #2a9d8f;
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: normal;
+      color: #e0e0e0;
+      line-height: 1.3;
+      margin-bottom: 28px;
+    }
+
+    p {
+      color: #aaa;
+      font-size: 1.05rem;
+      margin-bottom: 20px;
+    }
+
+    .cta {
+      margin: 28px 0 30px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cta a {
+      font-family: 'Courier New', monospace;
+      font-size: 0.88rem;
+      letter-spacing: 0.04em;
+      text-decoration: none;
+      color: #2a9d8f;
+      background: transparent;
+      border: 1px solid #2a9d8f;
+      border-radius: 999px;
+      padding: 10px 16px;
+      transition: transform 0.12s ease, opacity 0.12s ease;
+    }
+
+    .cta a:hover {
+      opacity: 0.92;
+      transform: translateY(-1px);
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 16px;
+      margin: 36px 0 30px;
+    }
+
+    .shot {
+      border-radius: 22px;
+      border: 1px solid #2a2a2a;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45);
+      background: #111;
+      overflow: hidden;
+    }
+
+    .shot img {
+      width: 100%;
+      display: block;
+    }
+
+    .caption {
+      padding: 12px 14px 14px;
+      text-align: center;
+      font-family: 'Courier New', monospace;
+      letter-spacing: 0.04em;
+      color: #666;
+      font-size: 0.76rem;
+    }
+
+    footer {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 40px 0 60px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.75rem;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <nav><a href="/">← back</a></nav>
+
+  <article>
+    <div class="meta">May 01, 2026 · Side Project</div>
+    <h1>Coherence iOS</h1>
+
+    <p><strong>Coherence iOS</strong> is a native breathing trainer for iPhone: configurable breathing patterns, a pulsing orb, haptics, pitch-glide tones, and a daily streak system wrapped in a minimal dark SwiftUI interface.</p>
+    <p>What stands out is that this is not just a timer with nice colors. The project is trying to make a breathing session feel tactile and embodied. Visual rhythm, audio guidance, and haptic feedback all work together so the app can quietly hold the structure while the user focuses on the breath itself.</p>
+    <p>The app also feels thoughtfully composed as a native product. There is a home screen with stats and a run button, a live session state, and a settings sheet for presets, custom patterns, duration, and toggles. Underneath that are small but meaningful implementation details: an explicit breath engine, a tone engine built on <code>AVAudioEngine</code>, and a streak model backed by <code>UserDefaults</code>.</p>
+
+    <div class="cta">
+      <a href="https://github.com/jatinpandey/coherence-ios" target="_blank" rel="noopener noreferrer">View code</a>
+      <a href="https://github.com/jatinpandey/coherence" target="_blank" rel="noopener noreferrer">See companion prototype</a>
+    </div>
+
+    <div class="gallery">
+      <div class="shot">
+        <img src="/projects/images/coherence-home.jpg" alt="Coherence iOS home screen" />
+        <div class="caption">Home screen: stats, controls, and a calm default state.</div>
+      </div>
+      <div class="shot">
+        <img src="/projects/images/coherence-session.jpg" alt="Coherence iOS active breathing session" />
+        <div class="caption">Session view: the pulsing orb leads the breathing cycle.</div>
+      </div>
+      <div class="shot">
+        <img src="/projects/images/coherence-settings.jpg" alt="Coherence iOS settings screen" />
+        <div class="caption">Settings: presets, custom patterns, duration, and toggles.</div>
+      </div>
+    </div>
+
+    <p>I like projects like this because they sit at the intersection of interface craft and bodily experience. They are technical, yes, but they are also about pacing, sensation, and whether software can help someone regulate themselves without becoming noisy or overbearing.</p>
+  </article>
+
+  <footer>taste refinement parmo dharma</footer>
+
+</body>
+</html>
