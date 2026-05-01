@@ -113,7 +113,7 @@
 
   <div id="count">0 digits revealed</div>
 
-  <div id="footnote">taste refinement parmo dharma</div>
+  <div id="footnote">tap the button, or press Enter on desktop · taste refinement parmo dharma</div>
 
   <script>
     // Pi to 1000 decimal places
@@ -149,6 +149,13 @@
     btn.addEventListener('touchend', function(e) {
       e.preventDefault(); // blocks double-tap zoom and the ghost click
       reveal();
+    });
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        reveal();
+      }
     });
   </script>
 </body>
