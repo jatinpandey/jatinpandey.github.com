@@ -2,7 +2,7 @@
 // Paste your Measurement ID from the GA dashboard below (looks like G-XXXXXXXXXX).
 // Until a real ID is set, this file does nothing — no requests, no tracking.
 (function () {
-  var GA_MEASUREMENT_ID = 'G-XXXXXXXXXX';
+  var GA_MEASUREMENT_ID = 'G-6GMD2P2ZLJ';
 
   if (!GA_MEASUREMENT_ID || GA_MEASUREMENT_ID.indexOf('XXXX') !== -1) {
     return;
