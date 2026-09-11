@@ -165,73 +165,51 @@ a { color: inherit; }
 .work-heading {
   display: flex;
   align-items: flex-end;
-  padding-bottom: clamp(18px, 2vw, 28px);
+  padding-bottom: clamp(16px, 1.8vw, 24px);
 }
+.project-list { border-bottom: 1px solid var(--line); }
 
 .project-row {
   position: relative;
-  min-height: 188px;
-  padding: 44px clamp(26px, 3vw, 44px) 32px;
+  min-height: 92px;
+  padding: 14px 0;
   display: grid;
-  grid-template-columns: 158px minmax(220px, 1fr) auto;
-  gap: clamp(20px, 2.6vw, 38px);
+  grid-template-columns: 64px minmax(0, 1fr) auto;
+  gap: 20px;
   align-items: center;
   border: 0;
-  border-radius: 30px;
-  background:
-    linear-gradient(164deg, rgba(255, 255, 255, 0.72) 0%, rgba(255, 255, 255, 0) 44%),
-    linear-gradient(180deg, #f1efe9 0%, #e6e3db 100%);
-  box-shadow: var(--lift-rest);
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
   color: var(--ink);
   text-decoration: none;
-  transform: perspective(1150px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, 0, 0);
-  transform-style: preserve-3d;
-  transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
-  will-change: transform;
 }
-/* cursor-tracked specular sheen */
-.project-row::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  border-radius: inherit;
-  pointer-events: none;
-  opacity: 0;
-  background: radial-gradient(520px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0) 46%);
-  transition: opacity 450ms var(--ease);
-}
-.project-row:hover::after, .project-row:focus-visible::after { opacity: 1; }
-.project-row:hover, .project-row:focus-visible {
-  box-shadow: var(--lift-hover);
-  transform: perspective(1150px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translate3d(0, -7px, 0);
-}
-.project-row + .project-row { margin-top: clamp(20px, 2.6vw, 34px); }
-.project-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; }
+.project-row:hover .row-copy strong { color: var(--accent); text-decoration: underline; text-underline-offset: 0.18em; }
+.project-row:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
-/* ---------- the object icon: flat, the card carries the depth ---------- */
+/* ---------- project marks ---------- */
 .object-stage {
   position: relative;
   z-index: var(--z-base);
   display: grid;
   place-items: center;
-  width: 152px;
-  height: 152px;
+  width: 54px;
+  height: 54px;
 }
 .object-3d {
   position: relative;
   z-index: var(--z-object);
   display: block;
-  width: 118px;
-  height: 118px;
+  width: 54px;
+  height: 54px;
 }
 .object-face {
   position: absolute;
   inset: 0;
-  border-radius: 16px;
+  border-radius: 10px;
   background: var(--soft);
   overflow: hidden;
-  box-shadow: 0 2px 6px -3px rgba(17, 17, 17, 0.35);
+  box-shadow: 0 2px 5px -3px rgba(17, 17, 17, 0.35);
 }
 
 .flixelated-object .object-face { background: #0f1318; }
@@ -276,23 +254,23 @@ a { color: inherit; }
   background: #151515;
   color: var(--paper);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 5.3rem;
+  font-size: 2.5rem;
   line-height: 1;
 }
 
 /* ---------- copy ---------- */
-.row-copy { display: block; min-width: 0; transform: translateZ(22px); }
+.row-copy { display: block; min-width: 0; }
 .row-copy strong {
   display: block;
-  margin-bottom: 10px;
-  font-size: clamp(1.6rem, 2.3vw, 2.2rem);
+  margin-bottom: 2px;
+  font-size: 1.12rem;
 }
 .row-copy > span {
   display: block;
   max-width: 56ch;
   color: var(--graphite);
-  font-size: clamp(0.94rem, 1.05vw, 1.02rem);
-  line-height: 1.55;
+  font-size: 0.88rem;
+  line-height: 1.45;
   text-wrap: pretty;
 }
 .row-copy small {
@@ -312,7 +290,7 @@ a { color: inherit; }
   font-family: Arial, sans-serif;
   font-size: 1.45rem;
   line-height: 1;
-  transition: transform 420ms var(--ease);
+  transition: transform 160ms ease-out;
 }
 .project-row:hover .row-action, .project-row:focus-visible .row-action {
   transform: translateX(6px);
@@ -503,10 +481,6 @@ footer::before {
 /* ---------- responsive ---------- */
 @media (max-width: 900px) {
   .profile { grid-template-columns: minmax(110px, 0.22fr) 1fr; gap: 34px; }
-  .project-row { grid-template-columns: 140px minmax(0, 1fr); }
-  .row-action { grid-column: 2; }
-  .object-stage { width: 132px; height: 138px; }
-  .object-3d { width: 104px; height: 104px; }
   .project-hero { grid-template-columns: 1fr; }
 }
 
@@ -522,18 +496,18 @@ footer::before {
   .work-heading { padding-bottom: 16px; }
   .work-heading h2 { font-size: 2rem; }
   .project-row {
-    min-height: 0;
-    padding: 36px 20px 56px;
-    border-radius: 24px;
-    grid-template-columns: 96px minmax(0, 1fr);
-    gap: 14px;
+    min-height: 78px;
+    padding: 12px 0;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+    gap: 12px;
     align-items: center;
   }
-  .object-stage { width: 92px; height: 112px; }
-  .object-3d { width: 78px; height: 78px; }
-  .row-copy strong { margin-bottom: 8px; font-size: 1.42rem; }
-  .row-copy > span { font-size: 0.88rem; }
-  .row-action { position: absolute; right: 20px; bottom: 18px; width: 28px; height: 28px; font-size: 1.25rem; }
+  .object-stage, .object-3d { width: 44px; height: 44px; }
+  .object-face { border-radius: 8px; }
+  .pi-object .object-face { font-size: 2rem; }
+  .row-copy strong { margin-bottom: 0; font-size: 0.98rem; line-height: 1.2; }
+  .row-copy > span { display: none; }
+  .row-action { width: 28px; height: 28px; font-size: 1.25rem; }
   .project-page .index-layout { padding-inline: 20px; }
   .project-summary h1 { font-size: clamp(2.2rem, 11vw, 3rem); }
   .gallery { grid-template-columns: 1fr; }

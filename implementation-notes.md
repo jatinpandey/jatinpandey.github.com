@@ -1,5 +1,29 @@
 # Implementation notes
 
+## 2026-09-12 — Editorial project ledger
+
+- Replaced the live homepage's tall project-card stack with the selected Editorial ledger treatment: compact ruled rows, smaller project marks, restrained copy, and a clear outbound arrow.
+- Kept descriptions visible on desktop and reduced mobile rows to project names while preserving the full name and description in each link's accessible label.
+- Updated the Meanwhile in History description to “Explore the world and its many civilizations.” in both the homepage and the local treatment comparison.
+
+## Verification
+
+- Visually verified the live homepage at 1280 × 900 and 390 × 844. Desktop rows retain readable descriptions; mobile rows reduce cleanly to project names with no horizontal overflow.
+- Confirmed all four links preserve their full accessible labels and new-tab behavior, the updated Meanwhile wording appears locally, and the browser reports no errors or warnings.
+- HTML parsing, exact-copy/layout assertions, and `git diff --check` pass.
+
+## 2026-09-12 — Projects section treatment exploration
+
+- Built a local comparison page with four scalable alternatives to the growing homepage project-card stack: Editorial ledger, Cover grid, Feature + archive, and Project rail.
+- Showed each direction in both desktop and mobile compositions using the current project titles, descriptions, imagery, typography, and warm charcoal palette.
+- Kept this exploration isolated at `design/project-treatments/index.html`; the pushed homepage remains unchanged until a direction is selected.
+
+## Verification
+
+- Visually reviewed all four treatments in the local browser and corrected a class collision in the Project rail layout.
+- Confirmed the comparison page has no horizontal overflow at a 390px viewport and all four embedded mobile previews remain 320px wide.
+- Confirmed the browser accessibility tree exposes all four treatment names and project links.
+
 ## 2026-09-11 — Meanwhile in History project image
 
 - Replaced the temporary `M·H` monogram with the supplied Meanwhile in History map screenshot.
