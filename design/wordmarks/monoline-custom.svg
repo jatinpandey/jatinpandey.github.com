@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 236 104" role="img" aria-labelledby="title desc">
+  <title id="title">Jatin custom monoline wordmark</title>
+  <desc id="desc">A custom lowercase jatin drawn from rounded monoline strokes.</desc>
+  <g fill="none" stroke="#111111" stroke-width="7.5" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M29 39v31c0 12-5 19-15 19-5 0-9-2-12-6"/>
+    <path d="M82 47c-4-6-10-9-17-9-13 0-23 10-23 24s10 24 23 24c7 0 13-3 17-9M82 39v46"/>
+    <path d="M111 22v49c0 10 5 15 14 15M99 40h28"/>
+    <path d="M146 40v45"/>
+    <path d="M171 85V40m0 18c4-13 12-20 23-20 13 0 21 9 21 24v23"/>
+  </g>
+  <circle cx="29" cy="21" r="4.25" fill="#42433f"/>
+  <circle cx="146" cy="21" r="4.25" fill="#42433f"/>
+</svg>

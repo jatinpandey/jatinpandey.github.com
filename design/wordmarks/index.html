@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jatin — wordmark directions</title>
+  <style>
+    :root { --paper:#f2f0ea; --ink:#111; --graphite:#5d5b55; --line:#c7c5bf; --accent:#42433f; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:radial-gradient(110% 65% at 50% -8%,#fbf9f4 0%,rgba(251,249,244,0) 64%),var(--paper); color:var(--ink); font-family:"Avenir Next",Avenir,"Helvetica Neue",Arial,sans-serif; }
+    main { width:min(100% - 40px,1064px); margin:0 auto; padding:64px 0 88px; }
+    header { display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,0.72fr); gap:40px; align-items:end; padding-bottom:34px; border-bottom:1px solid var(--line); }
+    h1 { margin:0; font-size:clamp(2.5rem,6vw,5.4rem); line-height:.9; letter-spacing:-.055em; font-weight:640; }
+    header p { margin:0; color:var(--graphite); line-height:1.6; text-wrap:pretty; }
+    .grid { display:grid; gap:24px; padding-top:32px; }
+    article { min-height:210px; padding:34px clamp(24px,4vw,48px); border-radius:28px; background:linear-gradient(164deg,rgba(255,255,255,.72),rgba(255,255,255,0) 44%),linear-gradient(180deg,#f1efe9,#e6e3db); box-shadow:inset 0 1px 0 rgba(255,255,255,.8),0 18px 42px -32px rgba(17,17,17,.42); display:grid; grid-template-columns:minmax(0,1fr) minmax(180px,280px); gap:32px; align-items:center; }
+    .mark { min-height:104px; display:flex; align-items:center; justify-content:center; }
+    .mark img { display:block; width:min(100%,520px); height:104px; object-fit:contain; object-position:left center; }
+    .meta h2 { margin:0 0 10px; font-size:1rem; letter-spacing:-.015em; }
+    .meta p { margin:0; color:var(--graphite); font-size:.9rem; line-height:1.55; }
+    .recommend { color:var(--accent); font-family:"Courier New",monospace; font-size:.68rem; letter-spacing:.06em; text-transform:uppercase; }
+    @media (max-width:680px) { main{padding-top:40px} header{grid-template-columns:1fr} article{grid-template-columns:1fr;gap:16px}.mark img{object-position:center}.meta{text-align:center} }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Wordmark<br />directions</h1>
+      <p>Five restrained identity routes for jatinpandey.github.com, shown on the site’s warm paper palette. All are reusable SVGs.</p>
+    </header>
+    <section class="grid" aria-label="Wordmark options">
+      <article>
+        <div class="mark"><img src="quiet-grotesk.svg" alt="jatin in a compact lowercase sans serif" /></div>
+        <div class="meta"><span class="recommend">Best fit</span><h2>Quiet grotesk</h2><p>Feels native to the current site: calm, confident, compact, and readable at header size.</p></div>
+      </article>
+      <article>
+        <div class="mark"><img src="monoline-custom.svg" alt="jatin drawn in custom rounded monoline letters" /></div>
+        <div class="meta"><h2>Custom monoline</h2><p>The most ownable direction. Rounded geometry echoes the project cards without becoming playful.</p></div>
+      </article>
+      <article>
+        <div class="mark"><img src="full-signature.svg" alt="jatinpandey as a joined split-weight wordmark" /></div>
+        <div class="meta"><h2>Full signature</h2><p>Distinct weight separates first and last name while the indigo registration square ties back to the interface accent.</p></div>
+      </article>
+      <article>
+        <div class="mark"><img src="editorial-serif.svg" alt="jatin in a high contrast editorial serif" /></div>
+        <div class="meta"><h2>Editorial serif</h2><p>A sharper authorial voice that makes the otherwise sans-serif index feel more like a personal publication.</p></div>
+      </article>
+      <article>
+        <div class="mark"><img src="wide-caps.svg" alt="JATIN PANDEY in widely spaced capitals" /></div>
+        <div class="meta"><h2>Wide caps</h2><p>Architectural and formal. Best if the site evolves toward a portfolio or studio-like presentation.</p></div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>

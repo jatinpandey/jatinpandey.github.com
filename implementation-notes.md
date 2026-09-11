@@ -1,5 +1,29 @@
 # Implementation notes
 
+## 2026-09-11 — Editorial serif wordmark and charcoal accent
+
+- Selected the editorial serif `jatin` direction for the live masthead on both the homepage and Pi page. The visible mark uses the same Didot/Bodoni system-serif stack as the chosen SVG, while the home link retains the accessible label “Jatin Pandey, home.”
+- Replaced the previous indigo primary accent with warm charcoal `#42433f`, including its translucent and shadow variants. Updated the wordmark comparison artifacts to show the same final palette.
+- Kept the five-option wordmark gallery and reusable SVG files as design-source artifacts. No content, routes, or project interactions changed.
+
+## Verification
+
+- Visually verified the homepage at desktop and 390 × 844, and the Pi page at 390 × 844. The serif mark remains centered, compact, and readable on both pages.
+- Confirmed both home links expose the accessible label “Jatin Pandey, home.” HTML/SVG parsing, color assertions, and `git diff --check` pass.
+
+## 2026-09-11 — Wordmark design exploration
+
+- Created five isolated SVG wordmark directions under `design/wordmarks/`: Quiet grotesk, Custom monoline, Full signature, Editorial serif, and Wide caps.
+- Matched the current homepage rather than introducing a separate brand system: warm bone background, near-black ink, restrained indigo accent, Avenir-like geometry, and minimal ornament.
+- Ranked Quiet grotesk as the best immediate fit because it preserves the homepage’s calm editorial tone and remains legible in the existing compact sticky header. Custom monoline is the most ownable alternative if a more distinctive identity is preferred.
+- Added a local comparison page at `design/wordmarks/index.html`. The live homepage and shared stylesheet are unchanged; no option has been selected or deployed.
+
+## Verification
+
+- Confirmed all five SVGs parse as XML and include accessible titles and descriptions.
+- Confirmed the comparison page parses as HTML, displays all five assets, and remains single-column at narrow viewport widths.
+- `git diff --check` passes for the exploration files and notes update.
+
 ## 2026-09-11 — Project list update
 
 - Removed the Coherence iOS card from the homepage project list. The existing project detail file remains untouched because the request was to remove the app from Projects, not delete its source page.

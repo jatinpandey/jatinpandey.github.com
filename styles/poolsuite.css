@@ -7,8 +7,8 @@
   --line: #c7c5bf;
   --soft: #e4e2dc;
   --panel: #edebe5;
-  --accent: #343F9B;
-  --accent-soft: rgba(52, 63, 155, 0.1);
+  --accent: #42433f;
+  --accent-soft: rgba(66, 67, 63, 0.1);
   --metal: #9b9b96;
 
   /* fluid, borderless separation */
@@ -101,9 +101,10 @@ a { color: inherit; }
   align-items: center;
   color: var(--ink);
   text-decoration: none;
-  font-size: 1.06rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
+  font-family: Didot, "Bodoni 72", "Times New Roman", serif;
+  font-size: 1.7rem;
+  font-weight: 400;
+  letter-spacing: -0.045em;
   line-height: 1;
 }
 .topbar a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
@@ -457,7 +458,7 @@ footer::before {
   background: var(--accent);
   color: var(--paper);
   transform-style: preserve-3d;
-  box-shadow: 0 6px 16px -8px rgba(52, 63, 155, 0.7);
+  box-shadow: 0 6px 16px -8px rgba(66, 67, 63, 0.62);
 }
 .pi-controls {
   padding: clamp(18px, 2vw, 28px) 0 0;
@@ -491,7 +492,7 @@ footer::before {
 
 @media (max-width: 620px) {
   .topbar { min-height: 54px; padding-inline: 20px; }
-  .site-name { font-size: 1rem; }
+  .site-name { font-size: 1.58rem; }
   .index-layout { padding: 20px 20px 0; }
   .profile { display: block; padding-bottom: 40px; }
   .profile h1 { margin-bottom: 16px; font-size: 2rem; }
