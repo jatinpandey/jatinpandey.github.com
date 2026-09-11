@@ -1,0 +1,150 @@
+# Implementation notes
+
+## 2026-09-11 — Project list update
+
+- Removed the Coherence iOS card from the homepage project list. The existing project detail file remains untouched because the request was to remove the app from Projects, not delete its source page.
+- Added Flixelated as an external project linking to `https://flixelated.club`.
+- Used the supplied screenshot as the project image and kept the description deliberately brief: “A daily film guessing game built around pixelated movie posters.”
+- Kept the current homepage structure and styling intact. The larger interface revamp is still a concept decision and should be implemented only after a direction is chosen.
+
+## Verification
+
+- `git diff --check` passes.
+- Served the site locally and confirmed the homepage, analytics script, and Flixelated screenshot all load successfully.
+- Visually checked the project card at the default desktop viewport and at 390 × 844. The image scales without overflow, all three project cards remain readable, and the Flixelated link is exposed correctly to the accessibility tree.
+- The local server reports only the pre-existing missing `/favicon.ico`; it does not affect this change.
+
+## 2026-09-11 — PoolSuite-inspired local mockup
+
+- Reworked the homepage into a playful retro desktop using a coral, cream, navy, teal, yellow, and green palette. The presentation borrows the leisure-software energy of PoolSuite without copying its branding or interface.
+- Reorganized the existing About and Projects content into application-like windows, tactile project tiles, a postcard, and code-native tropical foliage.
+- Kept navigation as ordinary semantic links, added a skip link and visible keyboard focus, respected reduced-motion preferences, and preserved narrow-screen layouts.
+- Changed the homepage Flixelated destination to a new local project page. The project page links onward to `https://flixelated.club` and displays both the original gameplay screenshot and the newly supplied results screenshot.
+- No deployment was requested or performed. This version is intended for local review first.
+
+## Verification
+
+- `git diff --check` passes, and both HTML documents parse without syntax errors using Python's standard HTML parser.
+- Served the site locally on port 4173. Browser requests successfully loaded the homepage, shared stylesheet, both screenshot assets, and the Flixelated detail page.
+- Visually checked the homepage and Flixelated page at the default desktop viewport and at 390 × 844. Corrected the detail-page title scale and the featured-card mobile stacking after those checks.
+- The accessibility tree exposes the full navigation, project links, headings, screenshot descriptions, and outbound game links. The browser console contains no errors or warnings.
+
+## 2026-09-11 — Retro interface correction
+
+- Removed the invented email link and all other homepage copy that was not part of the pre-redesign site. The homepage now contains only the original name, About/Projects navigation, three About paragraphs, three project entries, and footer line.
+- Removed the `JP`, `Bengaluru · online`, intro eyebrow, large added headline, and current-exploration strip.
+- Replaced the pastel resort palette with dirty beige, charcoal, dark olive, tobacco brown, oxidized orange, and muted brass.
+- Rebuilt navigation as large icon cells inspired by 1990s leisure software. The original About copy now appears on a pinned, folded, hard-shadowed 3D sticky note.
+- Reworked projects into a software-directory window with three circular media objects, filename-like labels, and the original descriptions. This borrows the selection language of the supplied PoolSuite reference without reproducing its CD player.
+- Applied the same darker retro system to the Flixelated detail page and removed added descriptive flourishes there while preserving its requested screenshots and live-game link.
+
+## Verification
+
+- `git diff --check` and standard-library HTML parsing pass.
+- Visually verified the sticky note and project directory at 1280 × 800 and at the in-app browser's narrow viewport; verified the Flixelated page at the wide viewport.
+- Confirmed through the accessibility tree that only the intended navigation, original homepage copy, project content, and footer remain. No browser console errors or warnings were found.
+
+## 2026-09-11 — Typographic index with dimensional objects
+
+- Replaced the rejected retro software treatment with a clean editorial index based on the approved typographic exploration.
+- The desktop layout uses a sticky About rail and three full-width project rows. The wording remains limited to the previously approved site content; no “small projects” positioning is present.
+- Each project row is anchored by a distinct CSS-built 3D object: a framed pixel-art slab for Flixelated, interlocking geometric blocks for Things, and a dark pi slab. Hovering or keyboard-focusing the row moves its object 72px toward the viewer in perspective.
+- The interaction uses only compositor transforms, completes in 180ms, and becomes static under `prefers-reduced-motion`.
+- Updated the Flixelated detail page to use the same bone, graphite, black, and vermilion design system.
+
+## Verification
+
+- `git diff --check` and standard-library HTML parsing pass.
+- Visually verified the homepage at 1440 × 900 and 390 × 844, including the forward 3D focus state. Corrected a mobile About-label collision found during QA.
+- Visually verified the Flixelated detail page at 390 × 844. The accessibility tree exposes all navigation, project links, and screenshot descriptions, and the browser console contains no warnings or errors.
+- The local server remains available on port 4173. No deployment was performed.
+
+## 2026-09-11 — Single-page index and Pi interaction
+
+- Removed the About and Projects links from the top bar and reordered the homepage into one linear composition: About first, then Projects.
+- Removed “messy” from the About copy and added the requested linked thought about the vanished distance between wishing, searching, and building.
+- Reduced every project action to its arrow. Flixelated now links directly to `https://flixelated.club`, Things links to `https://github.com/jatinpandey/things`, and the unused local Flixelated landing page was removed.
+- Rebuilt the Pi experience in the same bone, graphite, black, and vermilion editorial system while preserving its digit sequence, click interaction, Enter-key interaction, counter, and progressive reveal.
+- Each new Pi digit animates from the viewport center toward its final inline position, shrinking from an exaggerated foreground scale over 180ms. The motion is skipped when reduced motion is requested.
+- No deployment was requested or performed.
+
+## Verification
+
+- Standard-library HTML parsing, requested-copy/link assertions, and `git diff --check` pass.
+- Confirmed in the local browser that the homepage exposes only the name in its top bar, places About before Projects, and points each project at the requested destination.
+- Confirmed the Pi page visually at the narrow in-app viewport and tested both its button and Enter-key paths; each advances the digit string and updates the accessible count.
+
+## 2026-09-11 — Compact homepage rhythm
+
+- Replaced the oversized name heading with “About” and removed the redundant About label below it.
+- Tightened the intro’s top padding, type scale, paragraph spacing, column gap, and bottom spacing so the section no longer fills an artificial viewport-height block.
+- Turned the top-left name into a lowercase `jatinpandey` wordmark with contrasting weights and a single vermilion registration mark. The same home wordmark appears on the Pi page.
+- Reduced the Projects heading lead-in and scale while retaining the dimensional project objects and existing content.
+- Removed the final project-row border and the page’s empty bottom padding. The footer now draws one viewport-wide divider immediately above its content.
+- No deployment was requested or performed.
+
+## Verification
+
+- Visually checked the revised About/Projects transition and the bottom of the homepage in the local browser. The footer follows the final project without an empty band or duplicate rule.
+- Confirmed the wordmark remains an accessible home link with the readable label “Jatin Pandey, home.”
+- Standard-library HTML parsing and `git diff --check` pass.
+
+## 2026-09-11 — Unnumbered object collection
+
+- Matched the Projects and Pi page title scales to the About heading and removed all decorative project numbers.
+- Folded the tweet destination into the existing phrase “distance between having an idea and making something real,” removing the standalone linked quote.
+- Removed repeated horizontal rules from the header, About transition, Projects heading, project rows, and Pi console. A small asymmetric black-and-vermilion block cluster marks major transitions, while generous staggered spacing separates project objects.
+- Changed every external project link to open in the current tab.
+- Rebuilt the Things object face from the supplied three-bar icon: a charcoal slab with one violet and two paper-colored rounded bars.
+- Increased project-object depth on interaction. Pointer hover brings the object 150px toward the viewer in the first 196ms, then keeps it rotating slowly around its horizontal axis while hovered; keyboard focus gets the same forward depth without a loop, and reduced-motion users get a static state.
+- Updated the Pi description on the homepage and Pi page to the requested meditative/party-trick wording.
+- No deployment was requested or performed.
+
+## Verification
+
+- Confirmed the homepage has no target-new-tab attributes, project-number elements, standalone tweet text, or supersized Projects/Pi titles.
+- Standard-library HTML parsing, CSS copy assertions, and `git diff --check` pass.
+
+## 2026-09-11 — Footer social link and direct depth motion
+
+- Extended both the homepage and Pi footer with a same-tab `𝕏 @jatinpandey` link to `https://x.com/jatinpandey`, retaining the existing footer copy and typographic treatment.
+- Removed the project objects’ rotating hover loop. Hover and keyboard focus now move each object directly 150px toward the viewer without changing its resting orientation.
+- Kept the 180ms compositor-only transition and the existing static reduced-motion behavior.
+- No deployment was requested or performed.
+
+## Verification
+
+- Confirmed the X profile link appears in both page accessibility trees and has the label “Jatin Pandey on X.”
+- Confirmed the object interaction no longer contains animation keyframes or rotation deltas.
+- Standard-library HTML parsing and `git diff --check` pass.
+
+## 2026-09-11 — Alignment, link restraint, and accent shortlist
+
+- Simplified the wordmark to the larger lowercase word `jatin`; removed `pandey` and the vermilion registration square on both pages.
+- Restored a subtle top-bar divider and replaced the asymmetric block separator with one inset rule that follows the site content margins.
+- Removed the Things-row stagger so all three 3D objects share the same vertical axis. Mobile rows now center the object against their copy instead of top-aligning it.
+- Centered the taste line and X profile link as one compact footer group.
+- Reduced the X hover treatment to a conventional underline. Keyboard focus retains a visible outline, and the linked sentence uses the same restrained hover behavior.
+- Kept the existing red accent temporarily because the user requested a shortlist before choosing its replacement. No logo dots were added while the accent decision is pending.
+- No deployment was requested or performed.
+
+## Verification
+
+- Visually checked the wordmark, top-bar rule, inset About separator, aligned project objects, and centered footer in the local browser.
+- Standard-library HTML parsing, removed-selector assertions, and `git diff --check` pass.
+
+## 2026-09-11 — Project surfaces and cat peek
+
+- Grouped each project’s object, copy, and arrow inside a lightly shaded graphite-tinted surface with a restrained border and soft elevation shadow. On mobile the arrow is pinned inside the card’s lower-right corner.
+- Replaced the object depth movement with a CSS-built cat that rises from behind the object, remains visible, and retreats at the end of a three-second hover or keyboard-focus sequence. The entrance and exit each occupy 180ms, the animation uses only transform and opacity, and reduced-motion users see no animation.
+- Removed the remaining black-and-vermilion dash motif from the Pi heading.
+- Moved the Pi digit count above the reveal region and aligned it to the right. Moved the button/Enter instruction directly beneath the button.
+- Made the homepage and Pi footers structurally and textually identical, including the taste line and X profile link, and set the social link to inherit the footer typography.
+- No deployment was requested or performed.
+
+## Verification
+
+- Visually checked project grouping at the narrow local viewport and confirmed the arrow remains inside each surface.
+- Visually checked the reordered Pi status and controls, then revealed a digit; the counter updated from zero to one in its new position.
+- Confirmed both page accessibility trees expose the same footer content.
+- Standard-library HTML parsing, motion-property assertions, and `git diff --check` pass.

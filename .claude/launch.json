@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "site", "runtimeExecutable": "node", "runtimeArgs": ["/Users/jatinpandey/Desktop/jatinpandey.github.com/.claude/serve.js"], "port": 8123 }
+  ]
+}
