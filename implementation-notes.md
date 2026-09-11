@@ -1,5 +1,47 @@
 # Implementation notes
 
+## 2026-09-11 — Spaced full-name wordmark selection
+
+- Selected `jatin pandey`, with a space, as the live editorial-serif masthead wordmark on both the homepage and Pi page.
+- Removed the rejected joined `jatinpandey` study and retained the spaced full-name SVG as the selected design artifact.
+
+## Verification
+
+- Refreshed the local homepage and confirmed the spaced full-name mark is left-aligned, readable, and preserves the accessible home-link label.
+- Confirmed both HTML pages and the retained SVG parse successfully, the rejected SVG is absent, exact-copy assertions pass, and `git diff --check` passes.
+
+## 2026-09-11 — Copy refinements and full-name wordmarks
+
+- Updated the About paragraph, Things description, and Pi description using the user’s latest exact wording. Applied the Pi wording consistently on both the homepage card and Pi page.
+- Added two image-only wordmark studies in the current editorial-serif style: `jatinpandey` and `jatin pandey`. Both use the site’s warm paper and near-black palette at matching dimensions for direct comparison.
+- Kept the live masthead wordmark unchanged while these full-name variants are under review.
+
+## Verification
+
+- Refreshed the local homepage and confirmed all three copy changes render without disturbing the layout.
+- Confirmed both new wordmark images render in the intended Didot/Bodoni style, parse as SVG, and use matching dimensions and colors. Exact-copy assertions, HTML parsing, and `git diff --check` pass.
+
+## 2026-09-11 — About copy trim
+
+- Removed the opening “I spend a lot of time thinking about systems…” paragraph from the homepage About section exactly as requested.
+- Preserved the remaining About copy, layout, links, and styling.
+
+## Verification
+
+- Refreshed the local homepage and confirmed the About section now starts with “I'm broadly interested in problem solving.” The remaining linked sentence and project layout are unchanged.
+- Confirmed the removed sentence no longer exists in the homepage source, HTML parsing succeeds, and `git diff --check` passes.
+
+## 2026-09-11 — Left-aligned masthead wordmark
+
+- Moved the selected editorial serif wordmark from the center to the left on both the homepage and Pi page.
+- Added a shared masthead inner container so the wordmark follows the site’s 1064px content shell and responsive page margins instead of hugging the viewport edge.
+- No deployment or push was requested; this change remains local for review.
+
+## Verification
+
+- Visually verified the homepage at desktop and 390 × 844. The wordmark aligns with the About/Projects content edge at both widths, and the accessible home-link label remains intact.
+- Confirmed both HTML pages parse and `git diff --check` passes.
+
 ## 2026-09-11 — Editorial serif wordmark and charcoal accent
 
 - Selected the editorial serif `jatin` direction for the live masthead on both the homepage and Pi page. The visible mark uses the same Didot/Bodoni system-serif stack as the chosen SVG, while the home link retains the accessible label “Jatin Pandey, home.”
