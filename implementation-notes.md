@@ -1,5 +1,28 @@
 # Implementation notes
 
+## 2026-09-11 — Meanwhile in History project image
+
+- Replaced the temporary `M·H` monogram with the supplied Meanwhile in History map screenshot.
+- Stored the supplied image unchanged and used the existing square project frame to crop it responsively around the highlighted Germany/Berlin view.
+- Kept the image decorative inside the already-labelled project link so assistive technology receives one concise project name and description.
+
+## Verification
+
+- Refreshed the homepage locally at desktop and 390px widths. Tightened the frame crop around Germany and the Berlin label so the supplied map remains recognizable at icon size; the card layout has no clipping or horizontal overflow.
+- Confirmed the PNG loads successfully at its original 838 × 636 resolution, the project link retains its accessible name and description, HTML parsing succeeds, and `git diff --check` passes.
+
+## 2026-09-11 — Meanwhile in History project
+
+- Added “Meanwhile in History” immediately after Flixelated and before Things, linking to `https://meanwhileinhistory.vercel.app/` in a new tab.
+- Used the supplied description exactly: “Explore the world and its history.” Added a restrained `M·H` editorial monogram surface that fits the existing project-object system.
+- Updated the Pi page line to begin with “Work” and changed “AND” to lowercase “and,” including the matching page-description metadata.
+- No push or deployment was requested for this pass.
+
+## Verification
+
+- Refreshed the homepage and Pi page locally. Confirmed the new project appears in the requested order, its title wraps cleanly at 390px, and the Pi copy renders with the requested capitalization.
+- Confirmed all four project cards retain new-tab behavior, both HTML pages parse, exact-copy/order assertions pass, and `git diff --check` passes.
+
 ## 2026-09-11 — Copy, interaction, and Pi-page cleanup
 
 - Removed the tweet link from the About sentence while preserving its text.

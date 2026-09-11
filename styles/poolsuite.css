@@ -257,6 +257,19 @@ a { color: inherit; }
 .things-object .object-face i:nth-child(2) { top: 48%; width: 78%; }
 .things-object .object-face i:last-child { top: 73%; width: 66%; }
 
+.history-object .object-face {
+  background: #42433f;
+}
+.history-object img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 44%;
+  transform: scale(1.42);
+  transform-origin: 52% 44%;
+}
+
 .pi-object .object-face {
   display: grid;
   place-items: center;
