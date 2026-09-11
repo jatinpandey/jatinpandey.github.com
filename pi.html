@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Reveal digits of pi one at a time." />
+  <meta name="description" content="Work through the digits of pi one at a time - memory game AND party trick." />
   <title>The Pi Project — Jatin Pandey</title>
   <link rel="stylesheet" href="/styles/poolsuite.css" />
   <script src="/analytics.js"></script>
@@ -19,7 +19,7 @@
   <main class="pi-shell" id="main">
     <header class="pi-heading">
       <h1>The Pi Project</h1>
-      <p>Reveal digits of π one at a time. Oddly meditative, and you learn the greatest party trick in the world (second only to reciting the alphabet backwards).</p>
+      <p>work through the digits of pi one at a time - memory game AND party trick</p>
     </header>
 
     <section class="pi-console" aria-label="Pi digit generator">
@@ -27,7 +27,7 @@
         <div id="pi-display" aria-label="Revealed digits of pi">
           <span class="prefix">3.</span><span class="digits" id="digits-span"></span>
         </div>
-        <div class="pi-status"><div id="count" aria-live="polite">0 / &#8734;</div></div>
+        <div class="pi-status"><div id="count" aria-live="polite">0 digits</div></div>
       </div>
       <div class="pi-controls">
         <button id="tap-btn" type="button">+ 1 digit of π</button>
@@ -77,7 +77,7 @@
       const previous = PI_DIGITS.slice(0, revealed - 1);
       const current = PI_DIGITS[revealed - 1];
       digitsSpan.innerHTML = previous + '<span class="current-digit">' + current + '</span>';
-      countEl.textContent = revealed + ' / \u221E';
+      countEl.textContent = revealed + (revealed === 1 ? ' digit' : ' digits');
       display.scrollTop = display.scrollHeight;
       animateDigit(digitsSpan.querySelector('.current-digit'));
     }

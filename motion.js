@@ -60,8 +60,6 @@
   var sfx = {
     // card rises and tilts toward the cursor
     lift:  function () { tone({ from: 300, to: 470, dur: 0.17, peak: 0.075, cutoff: 2400 }); },
-    // card settles back
-    drop:  function () { tone({ from: 420, to: 280, dur: 0.14, peak: 0.05, cutoff: 1700 }); },
     // press
     press: function () { tone({ from: 560, to: 300, dur: 0.1, peak: 0.1, type: 'sine', cutoff: 3000 }); }
   };
@@ -97,7 +95,6 @@
       row.addEventListener('pointerleave', function () {
         row.style.setProperty('--rx', '0deg');
         row.style.setProperty('--ry', '0deg');
-        sfx.drop();
       });
     }
     row.addEventListener('pointerdown', function (e) {

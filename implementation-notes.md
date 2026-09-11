@@ -1,5 +1,20 @@
 # Implementation notes
 
+## 2026-09-11 — Copy, interaction, and Pi-page cleanup
+
+- Removed the tweet link from the About sentence while preserving its text.
+- Removed the Things date/category metadata, shortened the homepage Pi card copy, and updated the Pi page description to the requested “memory game AND party trick” wording.
+- Changed the Pi counter from fraction-like `n / ∞` text to grammatically correct `n digit` / `n digits` text.
+- Removed the pointer-leave sound while preserving the visual reset, hover-entry sound, press sound, and touch haptics.
+- Reduced the vertical gap between the Pi button and footer. Added `touch-action: manipulation` on the Pi page to prevent double-tap zoom during rapid play while preserving pinch zoom and scrolling.
+- Set all three homepage project cards to open in new tabs with `noopener`; footer and About navigation behavior is unchanged.
+
+## Verification
+
+- Refreshed the homepage and Pi page locally and confirmed the requested copy, removed metadata, shorter footer gap, and new-tab project links are reflected in the accessibility tree and rendered layout.
+- Triggered 52 rapid Pi button presses and confirmed the counter reads `52 digits`; computed `touch-action` is `manipulation`, and the browser reported no errors or warnings.
+- Confirmed the pointer-leave handler now only resets card transforms and emits no sound. HTML parsing, JavaScript syntax, exact-copy/link assertions, and `git diff --check` pass.
+
 ## 2026-09-11 — Compact centered wordmark restored
 
 - Restored `jatin` as the live editorial-serif masthead wordmark on both the homepage and Pi page.

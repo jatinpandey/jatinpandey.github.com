@@ -400,7 +400,7 @@ footer::before {
 .gallery figure + figure { margin: 0; }
 
 /* ---------- pi ---------- */
-.pi-page { min-height: 100dvh; }
+.pi-page { min-height: 100dvh; touch-action: manipulation; }
 .pi-shell {
   position: relative;
   z-index: 1;
@@ -470,6 +470,8 @@ footer::before {
   display: flex;
   justify-content: center;
 }
+.pi-page .pi-shell { padding-bottom: 8px; }
+.pi-page footer { margin-top: 18px; padding-top: 20px; }
 #tap-btn {
   width: min(100%, 300px);
   min-height: 62px;
