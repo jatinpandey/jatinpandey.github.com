@@ -1,5 +1,16 @@
 # Implementation notes
 
+## 2026-09-11 — Compact centered wordmark restored
+
+- Restored `jatin` as the live editorial-serif masthead wordmark on both the homepage and Pi page.
+- Re-centered the wordmark within the shared responsive masthead container while preserving its accessible “Jatin Pandey, home” label.
+- Retained the spaced full-name SVG as a design-source artifact only; it is no longer used by the live masthead.
+
+## Verification
+
+- Refreshed the local homepage and confirmed the compact `jatin` mark is centered and readable while the accessible home-link label remains intact.
+- Confirmed both HTML pages parse, exact wordmark assertions pass, and `git diff --check` passes.
+
 ## 2026-09-11 — Spaced full-name wordmark selection
 
 - Selected `jatin pandey`, with a space, as the live editorial-serif masthead wordmark on both the homepage and Pi page.
