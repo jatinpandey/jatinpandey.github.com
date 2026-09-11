@@ -107,11 +107,11 @@
   });
 
   /* ---------- pi button ---------- */
+  // haptics only here — the pi button is deliberately silent
   var tap = document.getElementById('tap-btn');
   if (tap) {
     tap.addEventListener('pointerdown', function (e) {
       if (e.pointerType === 'touch') buzz(12);
-      sfx.press();
     }, { passive: true });
   }
 })();
