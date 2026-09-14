@@ -1,5 +1,21 @@
 # Implementation notes
 
+## 2026-09-14 — Paper texture, serif headings, and illustrations
+
+- Added a paper texture to the shared stylesheet: multiply grain with faint fibres, laid-paper lines, and a warm edge. A heavy-over-hairline double rule replaces the masthead drop shadow and matches the content width; matching rules frame the project list; a small star sits on the footer rule.
+- Set the About, Projects, Pi and Things headings and the project names in Didot (the wordmark face). The `jatin` wordmark now sits left, aligned with the content column.
+- Replaced the project icons with monoline spot illustrations (`projects/images/spot-*.svg`).
+- Added “The Insides of a Mechanical Watch” after Flixelated, linking to `/watch/` in a new tab with a matching watch spot. The watch animation now starts at 0.1×.
+- Added four transparent-background illustrations above the footer (day hillside and Van Gogh-style night as soft cut-out vignettes, masala dosa on its leaf, ramen bowl), four across and two per row on phones. Grain is confined to the painted areas so no rectangle shows. They are decorative and hidden from assistive technology.
+- Rethemed `projects/things.html` from dark teal to the site's light palette via `poolsuite.css`; copy unchanged.
+- `design/illustrations/` holds the ten-style exploration; `build.py` regenerates the samples, the homepage cut-outs in `images/illustrations/`, and the project spots.
+
+## Verification
+
+- Checked the homepage at 1280px and 390px, and the Pi and Things pages: no horizontal overflow, all images load, the wordmark and masthead rule align with the content edge, and the illustrations sit directly after Projects.
+- Compared local and live pages at identical window sizes to rule out CSS differences behind a “shrunk” report (it was browser zoom).
+- All generated SVGs pass `xmllint`; the watch project's validation passes; HTML parsing and `git diff --check` pass.
+
 ## 2026-09-12 — Editorial project ledger
 
 - Replaced the live homepage's tall project-card stack with the selected Editorial ledger treatment: compact ruled rows, smaller project marks, restrained copy, and a clear outbound arrow.

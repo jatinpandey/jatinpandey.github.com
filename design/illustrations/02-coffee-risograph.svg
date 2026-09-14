@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img"><title>Coffee cup, risograph</title><defs>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 1.7 -0.66"/>
+</filter>
+<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="2" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="grainIn" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0.95 -0.37" result="specks"/>
+  <feComposite in="specks" in2="SourceAlpha" operator="in" result="clipped"/>
+  <feComposite in="clipped" in2="SourceGraphic" operator="atop"/>
+</filter>
+<filter id="wash" x="-6%" y="-6%" width="112%" height="112%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="10" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.7"/>
+</filter>
+
+<pattern id="dotP" width="9" height="9" patternUnits="userSpaceOnUse" patternTransform="rotate(18)"><circle cx="4.5" cy="4.5" r="2.6" fill="#ff4fae"/></pattern>
+<pattern id="dotB" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><circle cx="3.5" cy="3.5" r="1.9" fill="#2f4fa0"/></pattern></defs>
+<rect width="400" height="500" fill="#f3eee2"/>
+<g style="mix-blend-mode:multiply" transform="translate(5 3)">
+  <circle cx="200" cy="250" r="150" fill="url(#dotP)"/>
+  <ellipse cx="200" cy="370" rx="152" ry="36" fill="#ff4fae"/>
+  <path d="M103 225 L127 348 Q200 378 273 348 L297 225 Z" fill="#f3eee2"/>
+  <ellipse cx="200" cy="225" rx="97" ry="25" fill="#f3eee2"/>
+  <path d="M296 250 C352 244 352 322 280 320" fill="none" stroke="#f3eee2" stroke-width="16"/>
+  <g fill="#ff4fae">
+    <path d="M62 120 l6 16 l16 6 l-16 6 l-6 16 l-6 -16 l-16 -6 l16 -6 Z"/>
+    <path d="M340 150 l4 11 l11 4 l-11 4 l-4 11 l-4 -11 l-11 -4 l11 -4 Z"/>
+    <path d="M330 420 l4 10 l10 4 l-10 4 l-4 10 l-4 -10 l-10 -4 l10 -4 Z"/>
+  </g>
+</g>
+<g style="mix-blend-mode:multiply">
+  <ellipse cx="200" cy="370" rx="152" ry="36" fill="none" stroke="#2f4fa0" stroke-width="4"/>
+  <path d="M232 232 L297 225 L273 348 Q250 358 226 364 Z" fill="url(#dotB)"/>
+  <path d="M103 225 L127 348 Q200 378 273 348 L297 225 Z" fill="none" stroke="#2f4fa0" stroke-width="5" stroke-linejoin="round"/>
+  <ellipse cx="200" cy="225" rx="97" ry="25" fill="none" stroke="#2f4fa0" stroke-width="5"/>
+  <ellipse cx="200" cy="228" rx="82" ry="17" fill="#2f4fa0"/>
+  <path d="M200 240 C176 226 181 212 193 214 C198 215 200 220 200 222 C200 220 202 215 207 214 C219 212 224 226 200 240 Z" fill="#f3eee2"/>
+  <path d="M296 250 C352 244 352 322 280 320" fill="none" stroke="#2f4fa0" stroke-width="12" stroke-linecap="round"/>
+  <g fill="none" stroke="#2f4fa0" stroke-width="5" stroke-linecap="round">
+    <path d="M168 186 C148 156 188 140 168 104"/>
+    <path d="M212 180 C192 146 232 130 212 90"/>
+    <path d="M254 186 C234 156 274 140 254 104"/>
+  </g>
+  <text x="200" y="458" font-family="Georgia, serif" font-style="italic" font-size="30" fill="#2f4fa0" text-anchor="middle">slow mornings</text>
+</g><rect width="400" height="500" filter="url(#grain)" opacity="0.7" style="mix-blend-mode:multiply"/></svg>

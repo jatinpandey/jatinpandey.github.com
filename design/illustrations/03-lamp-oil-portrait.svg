@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img"><title>Woman with a brass lamp, after Raja Ravi Varma</title><defs>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 1.7 -0.66"/>
+</filter>
+<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="2" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="grainIn" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0.95 -0.37" result="specks"/>
+  <feComposite in="specks" in2="SourceAlpha" operator="in" result="clipped"/>
+  <feComposite in="clipped" in2="SourceGraphic" operator="atop"/>
+</filter>
+<filter id="wash" x="-6%" y="-6%" width="112%" height="112%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="10" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.7"/>
+</filter>
+
+<radialGradient id="rvBg" cx="72%" cy="62%" r="85%"><stop offset="0" stop-color="#6b4222"/><stop offset=".45" stop-color="#2f1c0f"/><stop offset="1" stop-color="#0f0805"/></radialGradient>
+<radialGradient id="rvGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(300 352) scale(230)"><stop offset="0" stop-color="#ffcf7a" stop-opacity=".75"/><stop offset=".35" stop-color="#e98b35" stop-opacity=".28"/><stop offset="1" stop-color="#e98b35" stop-opacity="0"/></radialGradient>
+<linearGradient id="rvSkin" x1="1" y1="0" x2="0" y2=".3"><stop offset="0" stop-color="#e7b287"/><stop offset=".55" stop-color="#b87649"/><stop offset="1" stop-color="#6e3f22"/></linearGradient>
+<linearGradient id="rvSari" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c33a2c"/><stop offset=".5" stop-color="#8f1d1f"/><stop offset="1" stop-color="#3d0a0d"/></linearGradient>
+<linearGradient id="rvGreen" x1="1" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#4f7a45"/><stop offset="1" stop-color="#1c2e1a"/></linearGradient>
+<linearGradient id="rvFrame" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f3d58a"/><stop offset=".3" stop-color="#a8752a"/><stop offset=".55" stop-color="#f0cf7c"/><stop offset=".8" stop-color="#7a5119"/><stop offset="1" stop-color="#d9ad55"/></linearGradient>
+<pattern id="canvas" width="4" height="4" patternUnits="userSpaceOnUse"><path d="M0 0h4M0 2h4" stroke="#000" stroke-width=".5" opacity=".35"/><path d="M1 0v4M3 0v4" stroke="#fff" stroke-width=".4" opacity=".15"/></pattern>
+<filter id="oil" x="-3%" y="-3%" width="106%" height="106%"><feTurbulence type="fractalNoise" baseFrequency="0.06 0.02" numOctaves="3" seed="5" result="t"/><feDisplacementMap in="SourceGraphic" in2="t" scale="3.5" xChannelSelector="R" yChannelSelector="G"/></filter></defs>
+<rect width="400" height="500" fill="url(#rvBg)"/>
+<g filter="url(#oil)">
+  <path d="M40 500 C60 440 50 380 30 330 L0 330 L0 500 Z" fill="#1e120a"/>
+  <path d="M340 420 L400 400 L400 500 L330 500 Z" fill="#3b2412"/>
+  <path d="M104 300 C150 270 232 278 270 304 C312 336 330 420 338 500 L52 500 C60 420 70 330 104 300 Z" fill="url(#rvSari)"/>
+  <path d="M236 290 C268 300 288 322 300 352 L284 368 C270 340 250 318 222 306 Z" fill="url(#rvGreen)"/>
+  <path d="M290 346 C300 360 304 372 300 384 L270 380 C276 366 280 356 290 346 Z" fill="url(#rvSkin)"/>
+  <path d="M142 290 C196 320 232 372 246 500" fill="none" stroke="#d4a345" stroke-width="11"/>
+  <path d="M142 290 C196 320 232 372 246 500" fill="none" stroke="#6b1414" stroke-width="2" stroke-dasharray="3 7"/>
+  <circle cx="163.5" cy="310.0" r="2" fill="#f5d88f"/><circle cx="180.9" cy="323.0" r="2" fill="#f5d88f"/><circle cx="198.0" cy="336.0" r="2" fill="#f5d88f"/><circle cx="214.6" cy="349.0" r="2" fill="#f5d88f"/><circle cx="230.6" cy="362.0" r="2" fill="#f5d88f"/><circle cx="245.8" cy="375.0" r="2" fill="#f5d88f"/><circle cx="260.3" cy="388.0" r="2" fill="#f5d88f"/><circle cx="273.9" cy="401.0" r="2" fill="#f5d88f"/><circle cx="286.7" cy="414.0" r="2" fill="#f5d88f"/><circle cx="298.7" cy="427.0" r="2" fill="#f5d88f"/><circle cx="310.0" cy="440.0" r="2" fill="#f5d88f"/><circle cx="320.7" cy="453.0" r="2" fill="#f5d88f"/><circle cx="330.9" cy="466.0" r="2" fill="#f5d88f"/><circle cx="340.8" cy="479.0" r="2" fill="#f5d88f"/><circle cx="350.5" cy="492.0" r="2" fill="#f5d88f"/>
+  <path d="M96 318 C120 360 124 430 118 500" fill="none" stroke="#5a0f12" stroke-width="3" opacity=".7"/>
+  <path d="M176 330 C190 380 196 440 190 500" fill="none" stroke="#5a0f12" stroke-width="3" opacity=".6"/>
+  <path d="M196 112 C214 112 226 126 228 150 C229 160 232 166 240 180 C242 184 238 187 232 188 C234 192 234 196 236 199 C233 202 230 203 231 206 C233 209 232 214 228 218 C226 226 222 232 212 236 C204 239 196 238 190 236 L190 268 C204 276 220 282 232 292 L130 302 C146 282 156 262 156 240 C140 220 150 150 196 112 Z" fill="url(#rvSkin)"/>
+  <path d="M202 104 C158 96 124 128 128 172 C130 200 146 222 160 236 C168 226 172 204 182 184 C192 164 200 146 218 132 C214 116 210 108 202 104 Z" fill="#140c08"/>
+  <circle cx="124" cy="196" r="32" fill="#140c08" stroke="#5b3a20" stroke-width="2"/>
+  <path d="M206 106 C226 112 224 124 218 132" fill="none" stroke="#8a5a30" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="112.3" cy="233.6" r="4.2" fill="#f6efdc"/><circle cx="102.5" cy="228.4" r="4.2" fill="#f6efdc"/><circle cx="94.5" cy="220.6" r="4.2" fill="#f6efdc"/><circle cx="88.9" cy="211.0" r="4.2" fill="#f6efdc"/><circle cx="86.2" cy="200.2" r="4.2" fill="#f6efdc"/><circle cx="86.6" cy="189.1" r="4.2" fill="#f6efdc"/><circle cx="90.0" cy="178.5" r="4.2" fill="#f6efdc"/><circle cx="96.3" cy="169.2" r="4.2" fill="#f6efdc"/><circle cx="104.8" cy="162.1" r="4.2" fill="#f6efdc"/><circle cx="115.0" cy="157.5" r="4.2" fill="#f6efdc"/><circle cx="126.0" cy="156.0" r="4.2" fill="#f6efdc"/><circle cx="137.0" cy="157.5" r="4.2" fill="#f6efdc"/>
+  <path d="M206 158 Q216 154 224 159" fill="none" stroke="#2b160c" stroke-width="2.2" stroke-linecap="round"/>
+  <path d="M204 150 Q214 143 226 148" fill="none" stroke="#1c0f08" stroke-width="2.4" stroke-linecap="round"/>
+  <circle cx="226" cy="138" r="2.6" fill="#b3121a"/>
+  <circle cx="234" cy="190" r="3.2" fill="none" stroke="#d4a345" stroke-width="1.6"/>
+  <path d="M229 205 Q233 207 231 209" fill="none" stroke="#7b2a22" stroke-width="2.4"/>
+  <circle cx="194" cy="214" r="5" fill="#d4a345"/>
+  <path d="M186 222 L202 222 L198 240 L190 240 Z" fill="#d4a345"/>
+  <path d="M190 268 C204 276 220 282 232 292" fill="none" stroke="#d4a345" stroke-width="5" stroke-dasharray="6 3"/>
+  <ellipse cx="300" cy="376" rx="26" ry="9" fill="#b98a3a"/>
+  <path d="M274 376 Q300 398 326 376" fill="#8a6225"/>
+  <path d="M300 368 C290 356 296 340 300 330 C304 340 310 356 300 368 Z" fill="#fff2b3"/>
+</g>
+<rect width="400" height="500" fill="url(#rvGlow)" style="mix-blend-mode:screen"/>
+<rect width="400" height="500" fill="url(#canvas)" opacity=".5" style="mix-blend-mode:overlay"/>
+<rect x="9" y="9" width="382" height="482" fill="none" stroke="url(#rvFrame)" stroke-width="18"/>
+<rect x="19" y="19" width="362" height="462" fill="none" stroke="#2a1a08" stroke-width="2"/><rect width="400" height="500" filter="url(#grain)" opacity="0.35" style="mix-blend-mode:multiply"/></svg>

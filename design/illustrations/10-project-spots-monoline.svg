@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img"><title>Monoline spot illustrations for each project</title><defs>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 1.7 -0.66"/>
+</filter>
+<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="2" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="grainIn" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0.95 -0.37" result="specks"/>
+  <feComposite in="specks" in2="SourceAlpha" operator="in" result="clipped"/>
+  <feComposite in="clipped" in2="SourceGraphic" operator="atop"/>
+</filter>
+<filter id="wash" x="-6%" y="-6%" width="112%" height="112%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="10" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.7"/>
+</filter>
+</defs>
+<rect width="400" height="500" fill="#f5f1e8"/>
+<g fill="none" stroke="#d9d3c6" stroke-width="1"><path d="M200 30 V470 M30 250 H370"/></g>
+<path d="M58 70 C100 40 170 60 164 120 C158 190 90 200 64 170 C40 140 30 100 58 70 Z" fill="#f2c14e" opacity=".75"/>
+<path d="M240 60 C300 44 360 70 352 130 C346 190 280 206 246 172 C216 140 206 76 240 60 Z" fill="#9fc5b8" opacity=".8"/>
+<path d="M70 290 C120 264 176 292 168 350 C162 408 94 418 66 386 C40 356 36 306 70 290 Z" fill="#b9a6e8" opacity=".75"/>
+<path d="M250 300 C300 270 364 290 354 356 C346 410 280 420 250 392 C222 362 214 318 250 300 Z" fill="#f08a6c" opacity=".7"/>
+<g fill="none" stroke="#1c1b19" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M70 110 L86 200 L140 200 L156 110 Z M70 110 C66 96 80 88 88 96 C88 80 106 78 110 92 C116 78 136 80 134 96 C146 88 160 98 156 110 M88 110 L96 200 M113 110 L113 200 M138 110 L130 200 M92 96 C96 104 104 104 108 98"/>
+  <path d="M290 76 A40 40 0 1 1 289.9 76 M250 116 H330 M290 76 C272 96 272 136 290 156 C308 136 308 96 290 76 M258 94 C276 102 304 102 322 94 M258 138 C276 130 304 130 322 138 M290 156 V178 M262 190 H318 M290 178 V190 M338 116 C338 150 316 172 290 176"/>
+  <path d="M82 300 H150 V400 H82 Z M94 300 V290 M112 300 V290 M130 300 V290 M96 326 H138 M96 346 H132 M96 366 H124 M96 326 l-6 0"/>
+  <path d="M250 334 C262 320 296 322 330 318 C342 317 352 314 358 306 M284 324 C286 356 280 386 262 402 M322 320 C318 352 320 382 336 398 C344 404 354 400 356 390"/>
+</g>
+<g font-family="'Courier New', monospace" font-size="10" fill="#6b665c" text-anchor="middle" letter-spacing="1">
+  <text x="112" y="232">flixelated</text><text x="290" y="232">history</text>
+  <text x="116" y="440">things</text><text x="302" y="440">pi</text>
+</g><rect width="400" height="500" filter="url(#grain)" opacity="0.3" style="mix-blend-mode:multiply"/></svg>

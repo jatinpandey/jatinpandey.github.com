@@ -4,20 +4,24 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
   <title>Things</title>
+  <link rel="stylesheet" href="/styles/poolsuite.css" />
   <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { background: #0f0f0f; color: #e0e0e0; font-family: 'Georgia', serif; line-height: 1.8; padding: 0 16px; }
+    body { padding: 0 20px; }
+    nav, article { position: relative; z-index: 1; }
     nav { max-width: 720px; margin: 0 auto; padding: 32px 0 0; font-family: 'Courier New', monospace; font-size: 0.85rem; }
-    nav a { color: #555; text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.15s; }
-    nav a:hover { color: #e0e0e0; }
+    nav a { color: var(--graphite); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.15s; }
+    nav a:hover { color: var(--ink); }
+    nav a:focus-visible { color: var(--ink); outline: 2px solid var(--accent); outline-offset: 4px; }
     article { max-width: 720px; margin: 0 auto; padding: 64px 0 80px; }
-    .meta { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: #2a9d8f; margin-bottom: 24px; }
-    h1 { font-size: 2rem; font-weight: normal; color: #e0e0e0; line-height: 1.3; margin-bottom: 28px; }
-    p { color: #aaa; font-size: 1.05rem; margin-bottom: 20px; }
+    .meta { font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--graphite); margin-bottom: 24px; }
+    h1 { font-family: var(--serif); font-size: clamp(2.6rem, 4.2vw, 3.9rem); font-weight: 400; letter-spacing: -0.02em; line-height: 1; color: var(--ink); margin-bottom: 28px; text-shadow: 0 1px 0 rgba(255, 255, 255, 0.7); }
+    p { color: var(--graphite); font-size: 1.08rem; line-height: 1.72; margin-bottom: 20px; text-wrap: pretty; }
+    strong { color: var(--ink); font-weight: 600; }
+    code { padding: 0.1em 0.35em; border-radius: 4px; background: var(--soft); color: var(--ink); font-family: 'Courier New', monospace; font-size: 0.92em; }
     .cta { margin: 28px 0 34px; display: flex; flex-wrap: wrap; gap: 12px; }
-    .cta a { font-family: 'Courier New', monospace; font-size: 0.88rem; letter-spacing: 0.04em; text-decoration: none; color: #2a9d8f; background: transparent; border: 1px solid #2a9d8f; border-radius: 999px; padding: 10px 16px; transition: transform 0.12s ease, opacity 0.12s ease; }
-    .cta a:hover { opacity: 0.92; transform: translateY(-1px); }
-    footer { max-width: 720px; margin: 0 auto; padding: 40px 0 60px; font-family: 'Courier New', monospace; font-size: 0.75rem; color: #333; }
+    .cta a { font-family: 'Courier New', monospace; font-size: 0.88rem; letter-spacing: 0.04em; text-decoration: none; color: var(--ink); background: linear-gradient(180deg, #f8f6f1, #e8e5dd); border-radius: 999px; padding: 10px 16px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 6px 14px -8px rgba(17, 17, 17, 0.4); transition: transform 0.12s ease; }
+    .cta a:hover { transform: translateY(-1px); }
+    footer { margin-top: 0; }
   </style>
   <script src="/analytics.js"></script>
 </head>

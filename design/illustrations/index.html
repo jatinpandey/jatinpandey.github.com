@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Illustration directions — Jatin Pandey</title>
+  <link rel="stylesheet" href="/styles/poolsuite.css" />
+  <style>
+    :root { --serif: Didot, "Bodoni 72", "Times New Roman", serif; }
+    .sheet { position: relative; z-index: 1; width: min(100%, 1180px); margin: 0 auto; padding: 36px max(26px, 3.4vw) 80px; }
+    .sheet-intro { max-width: 62ch; margin-bottom: 44px; }
+    .sheet-intro h1 { font-family: var(--serif); font-weight: 400; font-size: clamp(2.4rem, 4vw, 3.4rem); letter-spacing: -0.02em; line-height: 1; margin-bottom: 14px; }
+    .sheet-intro p { color: var(--graphite); }
+    .plates { display: grid; grid-template-columns: repeat(auto-fill, minmax(236px, 1fr)); gap: 40px 30px; }
+    .plate { margin: 0; cursor: pointer; }
+    .plate-art {
+      display: block; width: 100%; padding: 10px; border: 0; background: #fbf8f1; cursor: pointer;
+      box-shadow: 0 1px 0 rgba(255,255,255,.9) inset, 0 1px 2px rgba(17,17,17,.12), 0 14px 30px -18px rgba(17,17,17,.45);
+      transition: transform 240ms var(--ease), box-shadow 240ms var(--ease);
+    }
+    .plate-art img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+    .plate-art:hover { transform: translateY(-3px); }
+    .plate-art:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+    .plate[aria-current="true"] .plate-art { box-shadow: 0 0 0 2px var(--ink), 0 14px 30px -18px rgba(17,17,17,.45); }
+    .plate figcaption { padding-top: 12px; }
+    .plate-num { font-family: "Courier New", monospace; font-size: .68rem; color: var(--graphite); letter-spacing: .06em; }
+    .plate h2 { font-family: var(--serif); font-weight: 400; font-size: 1.32rem; line-height: 1.15; margin: 2px 0 4px; }
+    .plate p { color: var(--graphite); font-size: .84rem; line-height: 1.45; text-wrap: pretty; }
+
+    .preview { margin-top: 84px; }
+    .preview-head { display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+    .preview-head h2 { font-family: var(--serif); font-weight: 400; font-size: 2rem; letter-spacing: -0.02em; }
+    .preview-head span { font-family: "Courier New", monospace; font-size: .72rem; color: var(--graphite); }
+    .mock { position: relative; overflow: hidden; border-radius: 6px; box-shadow: 0 0 0 1px rgba(17,17,17,.1), 0 30px 60px -40px rgba(17,17,17,.5); }
+    .mock body, .mock-page { position: relative; }
+    .mock-page { padding: 0 0 40px; background: var(--paper); isolation: isolate; }
+    .mock-page::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; opacity: .11; mix-blend-mode: multiply; background-image: inherit; }
+    .mock .topbar { position: relative; }
+    .mock .profile { grid-template-columns: minmax(104px, .16fr) minmax(0, 1fr) minmax(200px, .42fr); }
+    .mock-art { align-self: center; justify-self: end; width: 100%; max-width: 250px; margin: 0; }
+    .mock-art img { display: block; width: 100%; height: auto; box-shadow: 0 1px 2px rgba(17,17,17,.14), 0 16px 34px -20px rgba(17,17,17,.5); }
+    .mock-art figcaption { margin-top: 8px; text-align: right; font-family: "Courier New", monospace; font-size: .62rem; color: var(--graphite); }
+    .mock .project-row { pointer-events: none; }
+    @media (max-width: 900px) {
+      .mock .profile { grid-template-columns: 1fr; }
+      .mock-art { justify-self: start; max-width: 220px; order: -1; }
+    }
+  </style>
+</head>
+<body>
+  <main class="sheet">
+    <header class="sheet-intro">
+      <h1>Illustration directions</h1>
+      <p>Ten samples in ten different styles, so you can pick a vibe. They're rough sketches, not finished art. Click one to see it on the homepage below.</p>
+    </header>
+
+    <div class="plates" id="plates"></div>
+
+    <section class="preview" aria-labelledby="preview-title">
+      <div class="preview-head">
+        <h2 id="preview-title">On the homepage</h2>
+        <span id="preview-name"></span>
+      </div>
+      <div class="mock">
+        <div class="mock-page">
+          <header class="topbar"><div class="topbar-inner"><span class="site-name">jatin</span></div></header>
+          <div class="index-layout">
+            <section class="profile">
+              <div class="profile-heading"><h1>About</h1></div>
+              <div class="profile-copy">
+                <p>I'm broadly interested in problem solving. Sometimes that means product, other times design. Sometimes its a bouldering route at the edge of my competence, and other times an unnecessarily complex trivia question to work out.</p>
+                <p>Lately, I've been especially interested in reducing the distance between having an idea and making something real.</p>
+              </div>
+              <figure class="mock-art"><img id="mock-img" alt="" /><figcaption id="mock-cap"></figcaption></figure>
+            </section>
+            <section class="work-index">
+              <div class="work-heading"><h2>Projects</h2></div>
+              <div class="project-list">
+                <div class="project-row"><span class="object-stage"><span class="object-3d spot-object"><span class="object-face"><img src="/projects/images/spot-flixelated.svg" alt="" /></span></span></span><span class="row-copy"><strong>Flixelated</strong><span>Guess the movie from its pixelated poster.</span></span><span class="row-action">→</span></div>
+                <div class="project-row"><span class="object-stage"><span class="object-3d spot-object"><span class="object-face"><img src="/projects/images/spot-history.svg" alt="" /></span></span></span><span class="row-copy"><strong>Meanwhile in History</strong><span>Explore the world and its many civilizations.</span></span><span class="row-action">→</span></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    var plates = [
+      ['01-ramen-woodcut', 'Bowl of ramen', 'Japanese woodcut', 'Carved black lines, a vermilion sun, and a hanko seal. Bold and graphic, and it pairs well with the Didot type.'],
+      ['02-coffee-risograph', 'Coffee cup', 'Risograph print', 'Two slightly misaligned inks (blue and fluorescent pink) with halftone dots. Playful, like an indie zine.'],
+      ['03-lamp-oil-portrait', 'Woman with a brass lamp', 'Oil portrait, after Raja Ravi Varma', 'Warm lamplight, a crimson and gold sari, and a gilt frame. The most classical, museum-like option.'],
+      ['04-hillside-gouache', 'Hillside & cumulus', 'Gouache pastoral, Ghibli spirit', 'Tall summer clouds, a red-roofed house, and a small figure in the grass. Gentle and nostalgic.'],
+      ['05-night-sky-impasto', 'Swirling night sky', 'Impasto brushwork, after Van Gogh', 'Hundreds of short strokes follow the swirl. Rich and moody, and it looks striking at small sizes.'],
+      ['06-chai-cart-matchbox', 'Chai cart', 'Vintage Indian matchbox label', 'Flat inks, a striped umbrella, a brass kettle, and a label border. Warm, local, a bit cheeky.'],
+      ['07-dosa-watercolour', 'Masala dosa', 'Cookbook watercolour plate', 'Soft washes on a banana leaf with steel bowls of sambar and chutney. A handwritten plate caption.'],
+      ['08-hampi-poster', 'Hampi boulders', 'Mid-century travel poster', 'A climber on sunrise granite, a nod to the bouldering line in your About text.'],
+      ['09-armillary-engraving', 'Armillary sphere', 'Copperplate engraving', 'Sepia rings and hatching, captioned "Fig. π". Quietly nods to the Pi and History projects.'],
+      ['10-project-spots-monoline', 'Project spots', 'Monoline + colour blob', 'One small drawing per project. The most practical option: it could replace or sit beside the row icons.']
+    ];
+    var list = document.getElementById('plates');
+    var img = document.getElementById('mock-img');
+    var cap = document.getElementById('mock-cap');
+    var nameEl = document.getElementById('preview-name');
+
+    function select(i) {
+      var p = plates[i];
+      img.src = p[0] + '.svg';
+      cap.textContent = 'fig. ' + (i + 1) + ' — ' + p[1].toLowerCase();
+      nameEl.textContent = String(i + 1).padStart(2, '0') + ' · ' + p[2];
+      Array.prototype.forEach.call(list.children, function (el, j) { el.setAttribute('aria-current', j === i ? 'true' : 'false'); });
+    }
+
+    plates.forEach(function (p, i) {
+      var fig = document.createElement('figure');
+      fig.className = 'plate';
+      fig.innerHTML =
+        '<button class="plate-art" type="button" aria-label="Preview ' + p[1] + ' on the homepage"><img src="' + p[0] + '.svg" alt="' + p[1] + ', ' + p[2] + '" loading="lazy" /></button>' +
+        '<figcaption><span class="plate-num">' + String(i + 1).padStart(2, '0') + ' — ' + p[2] + '</span><h2>' + p[1] + '</h2><p>' + p[3] + '</p></figcaption>';
+      fig.querySelector('button').addEventListener('click', function () {
+        select(i);
+        document.getElementById('preview-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+      list.appendChild(fig);
+    });
+    select(3);
+  </script>
+</body>
+</html>

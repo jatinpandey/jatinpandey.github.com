@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img"><title>Climber on Hampi boulders, travel poster</title><defs>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 1.7 -0.66"/>
+</filter>
+<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="2" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="grainIn" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0.95 -0.37" result="specks"/>
+  <feComposite in="specks" in2="SourceAlpha" operator="in" result="clipped"/>
+  <feComposite in="clipped" in2="SourceGraphic" operator="atop"/>
+</filter>
+<filter id="wash" x="-6%" y="-6%" width="112%" height="112%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="10" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.7"/>
+</filter>
+</defs>
+<defs>
+  <linearGradient id="hSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e2694a"/><stop offset=".55" stop-color="#f0a35b"/><stop offset="1" stop-color="#f6d08a"/></linearGradient>
+</defs>
+<rect width="400" height="500" fill="#f2e6cc"/>
+<rect x="16" y="16" width="368" height="384" fill="url(#hSky)"/>
+<circle cx="276" cy="150" r="54" fill="#fbe3a4"/>
+<g fill="#fbe3a4" opacity=".55">
+  <rect x="16" y="170" width="368" height="3"/><rect x="16" y="182" width="368" height="2"/><rect x="16" y="192" width="368" height="1.5"/>
+</g>
+<path d="M16 262 L60 234 L96 250 L140 214 L186 246 L230 226 L276 250 L330 222 L384 244 L384 400 L16 400 Z" fill="#b8566a"/>
+<path d="M16 300 C40 276 70 280 88 292 C104 270 140 266 160 290 C190 280 220 290 232 306 L232 400 L16 400 Z" fill="#8a3b52"/>
+<g fill="#a8583a">
+  <ellipse cx="300" cy="360" rx="96" ry="58"/>
+  <ellipse cx="246" cy="302" rx="52" ry="40"/>
+  <ellipse cx="328" cy="270" rx="44" ry="46"/>
+</g>
+<g fill="#7a3a2a">
+  <path d="M300 418 C240 418 200 390 206 360 C240 386 320 392 396 360 L396 418 Z"/>
+  <path d="M290 318 C270 334 220 336 196 310 C206 330 250 346 290 332 Z"/>
+  <path d="M360 300 C350 316 320 316 300 300 C320 320 350 322 366 306 Z"/>
+</g>
+<g fill="#d27a4c"><path d="M226 276 C236 266 256 264 268 272 C252 270 238 274 226 284 Z"/><path d="M304 240 C316 230 336 230 348 240 C332 238 318 242 306 250 Z"/></g>
+<g fill="none" stroke="#e59a62" stroke-width="3" stroke-linecap="round" opacity=".8">
+  <path d="M292 232 C310 222 340 222 356 236"/><path d="M204 296 C214 276 236 264 258 264"/><path d="M216 350 C240 310 300 298 350 306"/>
+</g>
+<g stroke="#2a1c17" stroke-linecap="round" stroke-linejoin="round" fill="none">
+  <path d="M352 262 L346 244 L350 228" stroke-width="3.5"/>
+  <path d="M352 262 L362 240" stroke-width="3.5"/>
+  <path d="M352 262 L346 286" stroke-width="7"/>
+  <path d="M346 286 L360 298 L356 314" stroke-width="4"/>
+  <path d="M346 286 L336 304 L344 316" stroke-width="4"/>
+</g>
+<circle cx="354" cy="254" r="6" fill="#2a1c17"/>
+<rect x="318" y="384" width="60" height="12" rx="3" fill="#2f5f73"/>
+<rect x="16" y="400" width="368" height="84" fill="#2a1c17"/>
+<text x="200" y="448" font-family="Futura, 'Avenir Next Condensed', 'Arial Narrow', sans-serif" font-weight="700" font-size="44" letter-spacing="16" fill="#f2e6cc" text-anchor="middle">HAMPI</text>
+<text x="200" y="472" font-family="Futura, 'Avenir Next', sans-serif" font-size="11" letter-spacing="5" fill="#f0a35b" text-anchor="middle">GRANITE · SUNRISE · KARNATAKA</text><rect width="400" height="500" filter="url(#grain)" opacity="0.8" style="mix-blend-mode:multiply"/></svg>

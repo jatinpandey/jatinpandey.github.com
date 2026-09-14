@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500" width="400" height="500" role="img"><title>Chai cart, vintage matchbox label</title><defs>
+<filter id="grain" x="0" y="0" width="100%" height="100%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 1.7 -0.66"/>
+</filter>
+<filter id="rough" x="-2%" y="-2%" width="104%" height="104%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.045" numOctaves="2" seed="2" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="4" xChannelSelector="R" yChannelSelector="G"/>
+</filter>
+<filter id="grainIn" x="-5%" y="-5%" width="110%" height="110%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="3" seed="3"/>
+  <feColorMatrix values="0 0 0 0 0.22 0 0 0 0 0.18 0 0 0 0 0.12 0 0 0 0.95 -0.37" result="specks"/>
+  <feComposite in="specks" in2="SourceAlpha" operator="in" result="clipped"/>
+  <feComposite in="clipped" in2="SourceGraphic" operator="atop"/>
+</filter>
+<filter id="wash" x="-6%" y="-6%" width="112%" height="112%">
+  <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="t"/>
+  <feDisplacementMap in="SourceGraphic" in2="t" scale="10" xChannelSelector="R" yChannelSelector="G" result="d"/>
+  <feGaussianBlur in="d" stdDeviation="0.7"/>
+</filter>
+</defs>
+<rect width="400" height="500" fill="#b8322a"/>
+<g filter="url(#rough)">
+  <rect x="18" y="18" width="364" height="464" fill="#f4e6c4"/>
+  <rect x="28" y="28" width="344" height="444" fill="#e7b43a" stroke="#1d1a17" stroke-width="3"/>
+  <g fill="#b8322a">
+    <circle cx="48" cy="48" r="8"/><circle cx="352" cy="48" r="8"/><circle cx="48" cy="452" r="8"/><circle cx="352" cy="452" r="8"/>
+  </g>
+  <path d="M60 58 H340 L326 82 L340 106 H60 L74 82 Z" fill="#b8322a" stroke="#1d1a17" stroke-width="3"/>
+  <text x="200" y="96" font-family="Rockwell, 'Arial Black', serif" font-weight="700" font-size="36" letter-spacing="10" fill="#f4e6c4" text-anchor="middle">CHAI</text>
+  <circle cx="200" cy="300" r="150" fill="#f0cc6a"/>
+  <line x1="200" y1="118" x2="200" y2="370" stroke="#1d1a17" stroke-width="5"/>
+  <path d="M200 118 L70 196 L96 196 Z" fill="#b8322a"/><path d="M200 118 L96 196 L122 196 Z" fill="#f4e6c4"/><path d="M200 118 L122 196 L148 196 Z" fill="#b8322a"/><path d="M200 118 L148 196 L174 196 Z" fill="#f4e6c4"/><path d="M200 118 L174 196 L200 196 Z" fill="#b8322a"/><path d="M200 118 L200 196 L226 196 Z" fill="#f4e6c4"/><path d="M200 118 L226 196 L252 196 Z" fill="#b8322a"/><path d="M200 118 L252 196 L278 196 Z" fill="#f4e6c4"/><path d="M200 118 L278 196 L304 196 Z" fill="#b8322a"/><path d="M200 118 L304 196 L330 196 Z" fill="#f4e6c4"/>
+  <path d="M70 196 L330 196" stroke="#1d1a17" stroke-width="3"/>
+  <path d="M200 118 L70 196 M200 118 L330 196" stroke="#1d1a17" stroke-width="3" fill="none"/>
+  <path d="M70 196 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0 q13 12 26 0" fill="#f4e6c4" stroke="#1d1a17" stroke-width="3"/>
+  <rect x="88" y="286" width="224" height="84" fill="#1f6d68" stroke="#1d1a17" stroke-width="4"/>
+  <rect x="100" y="298" width="200" height="60" fill="none" stroke="#f4e6c4" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="200" y="336" font-family="Georgia, serif" font-style="italic" font-size="20" fill="#f4e6c4" text-anchor="middle">garam · meetha</text>
+  <rect x="80" y="280" width="240" height="10" fill="#8a4b2a" stroke="#1d1a17" stroke-width="3"/>
+  <g transform="translate(112 256)"><path d="M0 0 L20 0 L17 30 L3 30 Z" fill="#f4e6c4" stroke="#1d1a17" stroke-width="2.5"/><path d="M1.6 10 L18.4 10 L17 30 L3 30 Z" fill="#b97a3f"/><path d="M4 4 L6 26" stroke="#fff" stroke-width="1.5" opacity=".6"/></g><g transform="translate(140 256)"><path d="M0 0 L20 0 L17 30 L3 30 Z" fill="#f4e6c4" stroke="#1d1a17" stroke-width="2.5"/><path d="M1.6 10 L18.4 10 L17 30 L3 30 Z" fill="#b97a3f"/><path d="M4 4 L6 26" stroke="#fff" stroke-width="1.5" opacity=".6"/></g><g transform="translate(168 256)"><path d="M0 0 L20 0 L17 30 L3 30 Z" fill="#f4e6c4" stroke="#1d1a17" stroke-width="2.5"/><path d="M1.6 10 L18.4 10 L17 30 L3 30 Z" fill="#b97a3f"/><path d="M4 4 L6 26" stroke="#fff" stroke-width="1.5" opacity=".6"/></g>
+  <rect x="222" y="262" width="56" height="18" fill="#3a3a3a" stroke="#1d1a17" stroke-width="3"/>
+  <path d="M228 262 C224 226 276 226 272 262 Z" fill="#c9923b" stroke="#1d1a17" stroke-width="3"/>
+  <path d="M272 244 C292 240 296 226 306 220" fill="none" stroke="#1d1a17" stroke-width="5"/>
+  <path d="M232 236 C220 240 218 252 226 256" fill="none" stroke="#1d1a17" stroke-width="4"/>
+  <rect x="244" y="220" width="12" height="8" fill="#c9923b" stroke="#1d1a17" stroke-width="2.5"/>
+  <g fill="none" stroke="#f4e6c4" stroke-width="4" stroke-linecap="round">
+    <path d="M300 208 C292 196 308 190 300 176"/><path d="M314 214 C306 200 322 194 314 180"/>
+  </g>
+  <g fill="#f4e6c4" stroke="#1d1a17" stroke-width="4">
+    <circle cx="130" cy="392" r="30"/><circle cx="270" cy="392" r="30"/>
+  </g>
+  <g stroke="#1d1a17" stroke-width="3">
+    <path d="M130 362 V422 M100 392 H160 M109 371 L151 413 M151 371 L109 413"/>
+    <path d="M270 362 V422 M240 392 H300 M249 371 L291 413 M291 371 L249 413"/>
+  </g>
+  <circle cx="130" cy="392" r="6" fill="#b8322a" stroke="#1d1a17" stroke-width="2"/>
+  <circle cx="270" cy="392" r="6" fill="#b8322a" stroke="#1d1a17" stroke-width="2"/>
+  <path d="M312 300 L350 276" stroke="#1d1a17" stroke-width="6" stroke-linecap="round"/>
+  <rect x="40" y="430" width="320" height="30" fill="#1d1a17"/>
+  <text x="200" y="451" font-family="'Courier New', monospace" font-weight="700" font-size="13" letter-spacing="3" fill="#e7b43a" text-anchor="middle">★ BEST QUALITY · MADE IN BLR ★</text>
+</g><rect width="400" height="500" filter="url(#grain)" opacity="0.75" style="mix-blend-mode:multiply"/></svg>
