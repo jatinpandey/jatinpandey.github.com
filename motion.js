@@ -103,6 +103,34 @@
     }, { passive: true });
   });
 
+  /* ---------- wordmark dots ---------- */
+  // the hopping dots are tuned to Didot; elsewhere the plain wordmark stays put
+  (function () {
+    try {
+      var c = document.createElement('canvas').getContext('2d');
+      c.font = '100px monospace';
+      var fallback = c.measureText('jatin').width;
+      c.font = '100px Didot, monospace';
+      if (c.measureText('jatin').width !== fallback) document.documentElement.classList.add('has-didot');
+    } catch (e) {}
+  })();
+
+  /* ---------- illustrations ---------- */
+  var vignettes = document.querySelectorAll('.vignettes img');
+  Array.prototype.forEach.call(vignettes, function (img) {
+    function wiggle() {
+      if (reduced) return;
+      img.classList.remove('is-wiggling');
+      void img.offsetWidth; // restart the animation if it is mid-play
+      img.classList.add('is-wiggling');
+    }
+    img.addEventListener('pointerenter', function (e) { if (e.pointerType !== 'touch') wiggle(); });
+    img.addEventListener('pointerdown', function (e) {
+      if (e.pointerType === 'touch') { buzz(8); wiggle(); }
+    }, { passive: true });
+    img.addEventListener('animationend', function () { img.classList.remove('is-wiggling'); });
+  });
+
   /* ---------- pi button ---------- */
   // haptics only here — the pi button is deliberately silent
   var tap = document.getElementById('tap-btn');

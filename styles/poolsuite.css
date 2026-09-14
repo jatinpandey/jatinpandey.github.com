@@ -142,6 +142,31 @@ a { color: inherit; }
   letter-spacing: -0.045em;
   line-height: 1;
 }
+/* the dots on j and i are drawn separately so they can hop on hover.
+   Metrics are Didot's; motion.js only adds .has-didot when that face renders. */
+.tittled { position: relative; display: inline-block; }
+.tittle { display: none; }
+.has-didot .tittled .glyph { display: inline-block; clip-path: inset(0.3em -0.5em -0.5em -0.5em); }
+.has-didot .tittle {
+  position: absolute;
+  top: 0.105em;
+  left: 0.0925em;
+  display: block;
+  width: 0.1025em;
+  height: 0.105em;
+  border-radius: 50%;
+  background: currentColor;
+  transform-origin: 50% 100%;
+}
+.has-didot .site-name:hover .tittle { animation: tittle-hop 640ms var(--ease); }
+.has-didot .site-name:hover .tittled + .tittled .tittle { animation-delay: 90ms; }
+@keyframes tittle-hop {
+  0% { transform: translateY(0); }
+  32% { transform: translateY(-0.34em) scale(0.9, 1.12); }
+  58% { transform: translateY(0) scale(1.3, 0.72); }
+  74% { transform: translateY(-0.08em) scale(0.96, 1.04); }
+  100% { transform: translateY(0); }
+}
 .topbar a:focus-visible { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
 
 /* ---------- shell ---------- */
@@ -197,12 +222,35 @@ a { color: inherit; }
 .vignettes {
   position: relative;
   margin-top: clamp(56px, 6vw, 88px);
+  padding-bottom: 72px;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(14px, 2.4vw, 32px);
-  align-items: center;
+  align-items: start;
 }
-.vignettes img { display: block; width: 100%; height: auto; aspect-ratio: 4 / 5; }
+/* scattered like prints dropped on a table; each keeps its own offset while wiggling */
+.vignettes img {
+  --x: 0px; --y: 0px; --r: 0deg; --s: 1;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(var(--s));
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.vignettes img:nth-child(1) { --x: -8px; --y: -26px; --r: -5deg; --s: 1.02; }
+.vignettes img:nth-child(2) { --x: 6px; --y: 48px; --r: 4deg; --s: 0.92; }
+.vignettes img:nth-child(3) { --x: -4px; --y: 2px; --r: -2deg; --s: 1.05; }
+.vignettes img:nth-child(4) { --x: 10px; --y: 70px; --r: 6deg; --s: 0.95; }
+.vignettes img.is-wiggling { animation: vignette-wiggle 620ms ease-in-out; }
+@keyframes vignette-wiggle {
+  0%, 100% { transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(var(--s)); }
+  18% { transform: translate(var(--x), calc(var(--y) - 6px)) rotate(calc(var(--r) - 6deg)) scale(calc(var(--s) * 1.03)); }
+  38% { transform: translate(var(--x), calc(var(--y) - 3px)) rotate(calc(var(--r) + 5deg)) scale(calc(var(--s) * 1.03)); }
+  58% { transform: translate(var(--x), var(--y)) rotate(calc(var(--r) - 3deg)) scale(var(--s)); }
+  78% { transform: translate(var(--x), var(--y)) rotate(calc(var(--r) + 1.5deg)) scale(var(--s)); }
+}
 
 /* ---------- projects ---------- */
 .work-index { min-width: 0; padding-top: clamp(10px, 1.4vw, 20px); }
@@ -511,7 +559,11 @@ footer::before {
   .profile { display: block; padding-bottom: 40px; }
   .profile h1 { margin-bottom: 16px; font-size: 2.35rem; }
   .profile-copy { font-size: 1rem; }
-  .vignettes { grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 44px; }
+  .vignettes { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 18px; margin-top: 44px; padding-bottom: 28px; }
+  .vignettes img:nth-child(1) { --x: 4px; --y: -6px; }
+  .vignettes img:nth-child(2) { --x: -2px; --y: 26px; }
+  .vignettes img:nth-child(3) { --x: -6px; --y: 4px; }
+  .vignettes img:nth-child(4) { --x: 2px; --y: 30px; }
   .work-index { padding-top: 8px; }
   .work-heading { padding-bottom: 16px; }
   .work-heading h2 { font-size: 2.35rem; }

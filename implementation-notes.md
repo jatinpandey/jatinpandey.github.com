@@ -1,5 +1,15 @@
 # Implementation notes
 
+## 2026-09-14 — Playful wordmark dots and illustrations
+
+- The tittles on `j` and `i` in the wordmark are now separate dots that hop and squash in turn when the wordmark is hovered. The letters stay real text: each glyph is clipped just below its printed dot, and the drawn dots use Didot's measured metrics. `motion.js` enables this only when Didot actually renders, so other fonts keep the plain wordmark. Applied on the homepage and Pi page.
+- The footer illustrations are scattered with individual offsets, tilts and scales, and wiggle on mouse hover or touch tap (with a light haptic tick on touch). The wiggle keeps each piece's resting offset and is skipped under reduced motion.
+
+## Verification
+
+- Compared the clipped wordmark against plain Didot at 2× and checked a mid-hop frame: identical at rest, no doubled or missing dots.
+- Triggered the wiggle with mouse and touch pointer events and confirmed the animation runs and restarts. Checked the scattered layout at desktop and phone widths with no horizontal overflow. `node --check motion.js` and `git diff --check` pass.
+
 ## 2026-09-14 — Paper texture, serif headings, and illustrations
 
 - Added a paper texture to the shared stylesheet: multiply grain with faint fibres, laid-paper lines, and a warm edge. A heavy-over-hairline double rule replaces the masthead drop shadow and matches the content width; matching rules frame the project list; a small star sits on the footer rule.
