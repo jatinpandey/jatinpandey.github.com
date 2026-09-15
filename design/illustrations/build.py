@@ -681,10 +681,7 @@ PIECES = [
 
 # pieces shown on the homepage, published outside the design folder
 LIVE = {
-    "day": lambda: pastoral(cutout=True),
-    "dosa": lambda: dosa(cutout=True),
     "ramen": lambda: ramen(frame=False, cutout=True),
-    "night": lambda: starry(cutout=True),
 }
 
 if __name__ == "__main__":

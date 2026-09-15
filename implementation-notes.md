@@ -12,6 +12,15 @@
 - No API key was available locally, so the Anthropic endpoint was mocked in the browser with a streamed SSE response. Confirmed the request carries the model, system prompt with all three skill files, adaptive thinking, fallbacks and caching, plus the browser-access, beta and key headers; text streams in and renders as sanitized Markdown; the second turn sends the full prior history; history persists across reloads.
 - Checked a 401 (shows "That API key was rejected" with Update key / Retry and leaves history clean), Retry, Stop mid-stream, and the key prompt opening when no key is set. Checked 375px and desktop widths with no horizontal overflow.
 
+## 2026-09-16 — Single ramen illustration and larger footer text
+
+- Trimmed the footer illustrations to the ramen bowl alone, centred above the footer at 150–200px wide with a slight tilt; it still wiggles on hover or tap. Removed the unused day, dosa and night cut-outs from `images/illustrations/` (the originals remain in `design/illustrations/`).
+- Increased the footer text from 0.68rem to 0.82rem.
+
+## Verification
+
+- Checked the homepage at 1280px and 390px: the ramen is horizontally centred, the wiggle still triggers, and there is no horizontal overflow. `git diff --check` passes.
+
 ## 2026-09-14 — Playful wordmark dots and illustrations
 
 - The tittles on `j` and `i` in the wordmark are now separate dots that hop and squash in turn when the wordmark is hovered. The letters stay real text: each glyph is clipped just below its printed dot, and the drawn dots use Didot's measured metrics. `motion.js` enables this only when Didot actually renders, so other fonts keep the plain wordmark. Applied on the homepage and Pi page.
