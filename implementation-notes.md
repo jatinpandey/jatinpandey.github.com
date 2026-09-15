@@ -1,5 +1,17 @@
 # Implementation notes
 
+## 2026-09-16 — Coach
+
+- Added `/coach/`, a chat interface for the life-coach skill: the six advisor lenses (Buddha, Shah Rukh Khan, Jordan Peterson, Elon Musk, Naval Ravikant, Rick Rubin) answering in a streamed conversation. It uses the site's paper palette, Didot headings and masthead, with a pinned composer, starter prompts, stop/retry, and conversations kept in localStorage.
+- `coach/skill/` holds `SKILL.md`, `references/guide.md` and `references/advisors.md` copied unchanged from the skill. `app.js` fetches them at load and builds the system prompt, so editing those files and pushing changes the coach. A short preamble tells the model it has no journal/memory access and can't edit its own files here.
+- GitHub Pages is static, so there's no server to hold an API key. Each visitor enters their own Anthropic key; it is stored in localStorage and requests go directly from the browser to `api.anthropic.com` via the Anthropic JS SDK (pinned 0.126.0 from jsDelivr). Model `claude-opus-5`, adaptive thinking, effort `high`, server-side refusal fallbacks, and automatic prompt caching.
+- Added a Coach row to Projects after the watch, with a monoline speech-bubble spot (`projects/images/spot-coach.svg`). The page is `noindex`.
+
+## Verification
+
+- No API key was available locally, so the Anthropic endpoint was mocked in the browser with a streamed SSE response. Confirmed the request carries the model, system prompt with all three skill files, adaptive thinking, fallbacks and caching, plus the browser-access, beta and key headers; text streams in and renders as sanitized Markdown; the second turn sends the full prior history; history persists across reloads.
+- Checked a 401 (shows "That API key was rejected" with Update key / Retry and leaves history clean), Retry, Stop mid-stream, and the key prompt opening when no key is set. Checked 375px and desktop widths with no horizontal overflow.
+
 ## 2026-09-14 — Playful wordmark dots and illustrations
 
 - The tittles on `j` and `i` in the wordmark are now separate dots that hop and squash in turn when the wordmark is hovered. The letters stay real text: each glyph is clipped just below its printed dot, and the drawn dots use Didot's measured metrics. `motion.js` enables this only when Didot actually renders, so other fonts keep the plain wordmark. Applied on the homepage and Pi page.

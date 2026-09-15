@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Coach — a personal board of directors in a chat window." />
+  <meta name="robots" content="noindex" />
+  <title>Coach · Jatin Pandey</title>
+  <link rel="icon" href="/projects/images/spot-coach.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="/styles/poolsuite.css" />
+  <link rel="stylesheet" href="/coach/style.css" />
+  <script src="/analytics.js"></script>
+</head>
+<body class="coach-page">
+  <a class="skip-link" href="#composer-input">Skip to message box</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="site-name" href="/" aria-label="Jatin Pandey, home"><span class="tittled"><span class="glyph">j</span><i class="tittle"></i></span>at<span class="tittled"><span class="glyph">i</span><i class="tittle"></i></span>n</a>
+      <nav class="coach-tools" aria-label="Coach controls">
+        <button type="button" class="tool-btn" id="new-chat">New</button>
+        <button type="button" class="tool-btn" id="open-key">Key</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="coach-shell" id="main">
+    <section class="coach-intro" id="intro">
+      <h1>Coach</h1>
+      <p>A board of directors for the questions that matter. Candid, specific, and not here to flatter you.</p>
+      <p class="advisor-line">Buddha · Shah&nbsp;Rukh&nbsp;Khan · Jordan&nbsp;Peterson · Elon&nbsp;Musk · Naval&nbsp;Ravikant · Rick&nbsp;Rubin</p>
+      <div class="starters" id="starters">
+        <button type="button" class="starter">What should I focus on this week?</button>
+        <button type="button" class="starter">What am I not seeing?</button>
+        <button type="button" class="starter">I keep starting things and not finishing them.</button>
+        <button type="button" class="starter" data-fill="Help me pick between two paths: ">Help me pick between two paths.</button>
+      </div>
+    </section>
+
+    <ol class="thread" id="thread" aria-live="polite"></ol>
+  </main>
+
+  <form class="composer" id="composer">
+    <div class="composer-inner">
+      <label class="visually-hidden" for="composer-input">Message the coach</label>
+      <textarea id="composer-input" rows="1" placeholder="What’s on your mind?" autocomplete="off"></textarea>
+      <button type="submit" class="send-btn" id="send" aria-label="Send">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button type="button" class="send-btn stop-btn" id="stop" aria-label="Stop" hidden>
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor"/></svg>
+      </button>
+    </div>
+    <p class="composer-note">Enter to send · Shift+Enter for a new line · Conversations stay in this browser</p>
+  </form>
+
+  <dialog class="key-dialog" id="key-dialog">
+    <form method="dialog" id="key-form">
+      <h2>Your Anthropic API key</h2>
+      <p>Coach runs entirely in your browser and talks to Claude directly. Your key is stored only in this browser’s local storage and is sent only to <code>api.anthropic.com</code>.</p>
+      <label class="visually-hidden" for="key-input">API key</label>
+      <input id="key-input" type="password" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
+      <p class="key-hint">Get one at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.</p>
+      <div class="key-actions">
+        <button type="button" class="tool-btn" id="forget-key">Forget key</button>
+        <span class="spacer"></span>
+        <button type="button" class="tool-btn" id="cancel-key">Cancel</button>
+        <button type="submit" class="tool-btn primary" id="save-key">Save</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <script type="module" src="/coach/app.js"></script>
+  <script src="/motion.js"></script>
+</body>
+</html>
