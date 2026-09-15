@@ -1,11 +1,11 @@
 import * as THREE from 'three';
 import {OrbitControls} from './vendor/OrbitControls.js';
 import {movementAt,TAU} from './mechanics.js';
-export function createWatch(host,onPick){
+export function createWatch(host,onPick,onMiss=()=>{}){
  const scene=new THREE.Scene();scene.background=new THREE.Color('#eff1f2');
  const camera=new THREE.PerspectiveCamera(34,innerWidth/innerHeight,.05,120);camera.up.set(0,0,1);camera.position.set(0,-7.5,15);
  const renderer=new THREE.WebGLRenderer({antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.setSize(innerWidth,innerHeight);renderer.setClearColor('#eff1f2');renderer.toneMapping=THREE.ACESFilmicToneMapping;renderer.toneMappingExposure=1.45;host.appendChild(renderer.domElement);
- const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.08;controls.minDistance=1.1;controls.maxDistance=30;controls.target.set(0,0,.3);controls.maxPolarAngle=Math.PI*.95;
+ const controls=new OrbitControls(camera,renderer.domElement);controls.enableDamping=true;controls.dampingFactor=.08;controls.minDistance=1.1;controls.maxDistance=40;controls.target.set(0,0,.3);controls.maxPolarAngle=Math.PI*.95;
  scene.add(new THREE.HemisphereLight(0xffffff,0x8394a5,3));const key=new THREE.DirectionalLight(0xfff8ea,4);key.position.set(-4,3,10);scene.add(key);const fill=new THREE.DirectionalLight(0xb9d8ff,2.3);fill.position.set(5,-2,5);scene.add(fill);
  // A small studio environment gives real metallic parts a broad reflection.
  const envScene=new THREE.Scene();envScene.background=new THREE.Color('#b8c2ca');
@@ -53,25 +53,21 @@ export function createWatch(host,onPick){
  const casing=part('case',0,0,-.3,0);ring(casing,3.50,.24,.80,mats.silver);const bezel=part('case',0,0,-1.1,-2.6);ring(bezel,3.5,.43,.15,mats.silver);const glass=part('case',0,0,-1.25,-2.8);const crystalMat=new THREE.MeshPhysicalMaterial({color:0xe1f0fa,metalness:0,roughness:.05,transparent:true,opacity:.13,depthWrite:false});cylinder(glass,3.05,.025,crystalMat);
  // Contact shadow anchors the assembly without a distracting floor plane.
  const cv=document.createElement('canvas');cv.width=cv.height=128;const ctx=cv.getContext('2d');const grad=ctx.createRadialGradient(64,64,5,64,64,64);grad.addColorStop(0,'rgba(58,72,88,.25)');grad.addColorStop(1,'rgba(58,72,88,0)');ctx.fillStyle=grad;ctx.fillRect(0,0,128,128);const shadow=new THREE.Mesh(new THREE.PlaneGeometry(10,10),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cv),transparent:true,depthWrite:false}));shadow.position.z=-1.5;scene.add(shadow);
- let selected=null,trace=false,explode=0,time=0,last=performance.now(),playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,speed=.1,targetCamera=null,targetLook=null;
- const hidden=new Set(['winding','click','cannon','motion','hands','case']);bridges.visible=false;
- function visibility(){for(const [id,gs] of registry)for(const g of gs)g.visible=!hidden.has(id);if(!hidden.has('plates'))bridges.visible=mode==='all'||selected==='plates';}
- let mode='movement';visibility();
+ let selected=null,explode=0,time=0,last=performance.now(),playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,speed=.1,targetCamera=null,targetLook=null;
+ // Every part starts visible; the component list hides parts or whole sections.
+ const hidden=new Set();
+ function visibility(){for(const [id,gs] of registry)for(const g of gs)g.visible=!hidden.has(id)}
+ visibility();
  function highlight(){
-  const path=['mainspring','barrel','centre','third','fourth','escape','fork','balance'];
   for(const m of meshes){
    const mat=m.material,base=m.userData.baseSurface;
    mat.color.copy(m.userData.baseColor);mat.emissive.set(0);mat.emissiveIntensity=0;
    Object.assign(mat,base);
-   if(selected){
-    // Only the selected part changes; everything else keeps its own finish.
-    if(m.userData.id===selected){
-     // Matte navy stays distinct under bright studio reflections, including jewels.
-     mat.color.set(0x082b50);mat.metalness=0;mat.roughness=.78;
-     mat.opacity=1;mat.transparent=false;mat.depthWrite=true;
-    }
-   }else if(trace&&path.includes(m.userData.id)){
-    mat.emissive.set(0x745019);mat.emissiveIntensity=.38;
+   // Only the selected part changes; everything else keeps its own finish.
+   if(selected&&m.userData.id===selected){
+    // Matte navy stays distinct under bright studio reflections, including jewels.
+    mat.color.set(0x082b50);mat.metalness=0;mat.roughness=.78;
+    mat.opacity=1;mat.transparent=false;mat.depthWrite=true;
    }
    mat.needsUpdate=true;
   }
@@ -80,15 +76,18 @@ export function createWatch(host,onPick){
  // A part tapped on the model is already in view, so leave the camera and layers alone.
  // Parts chosen from search or links may be buried, so reveal them.
  function select(id,{fromModel=false}={}){selected=id;if(id&&!fromModel){hidden.delete(id);if(id==='mainspring'){hidden.add('winding');hidden.add('click')}if(['cannon','motion','hands'].includes(id)){view('dial');if(id!=='hands')hidden.add('hands');hidden.add('case')}}visibility();highlight()}
- function zoom(f){const d=camera.position.clone().sub(controls.target).multiplyScalar(f);d.clampLength(1.1,30);targetCamera=controls.target.clone().add(d);targetLook=controls.target.clone()}
- function view(name){const target=new THREE.Vector3(0,0,explode?1:0);const mobile=innerWidth<700;const distance=mobile?25:16;const map={angle:[0,-distance*.44,distance*.91],top:[0,-.01,distance],side:[0,-distance,1],dial:[0,.01,-distance]};targetCamera=new THREE.Vector3(...map[name]).add(target);targetLook=target;}
+ // Back the camera off until the whole watch, crown included, fits between the side panels.
+ // A page opened in a hidden tab can report a zero-sized window, so fall back to a laptop size.
+ function fitDistance(){const w=innerWidth||1280,h=innerHeight||800;const radius=4.3,halfFov=Math.tan(THREE.MathUtils.degToRad(camera.fov/2)),aspect=w/h;const clearWidth=w<700?.95:Math.min(1,Math.max(.45,(w-640)/w));return Math.min(38,Math.max(radius/(halfFov*.72),radius/(halfFov*aspect*clearWidth)))}
+ function viewPosition(name){const distance=fitDistance();const map={angle:[0,-distance*.44,distance*.91],top:[0,-.01,distance],side:[0,-distance,1],dial:[0,.01,-distance]};return new THREE.Vector3(...map[name])}
+ function view(name){const target=new THREE.Vector3(0,0,explode?1:0);targetCamera=viewPosition(name).add(target);targetLook=target;}
  function focus(id){const gs=registry.get(id);if(!gs)return;const box=new THREE.Box3();gs.filter(g=>g.visible).forEach(g=>box.expandByObject(g));const center=box.getCenter(new THREE.Vector3());const radius=box.getSize(new THREE.Vector3()).length()/2;const direction=camera.position.clone().sub(controls.target).normalize();targetLook=center;targetCamera=center.clone().add(direction.multiplyScalar(Math.max(1.6,radius*3.3)));}
- let down=null;renderer.domElement.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};targetCamera=null;targetLook=null});renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down.x,e.clientY-down.y)>5)return;const rect=renderer.domElement.getBoundingClientRect(),p=new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);const ray=new THREE.Raycaster();ray.setFromCamera(p,camera);const hits=ray.intersectObjects(meshes.filter(m=>{let p=m;while(p){if(!p.visible)return false;p=p.parent}return true}),false);if(hits.length)onPick(hits[0].object.userData.id,{fromModel:true});down=null});renderer.domElement.addEventListener('wheel',()=>{targetCamera=null;targetLook=null},{passive:true});
- function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}addEventListener('resize',resize);if(innerWidth<700){camera.position.set(0,-10,23)}
+ let down=null;renderer.domElement.addEventListener('pointerdown',e=>{down={x:e.clientX,y:e.clientY};targetCamera=null;targetLook=null});renderer.domElement.addEventListener('pointerup',e=>{if(!down||Math.hypot(e.clientX-down.x,e.clientY-down.y)>5)return;const rect=renderer.domElement.getBoundingClientRect(),p=new THREE.Vector2((e.clientX-rect.left)/rect.width*2-1,-(e.clientY-rect.top)/rect.height*2+1);const ray=new THREE.Raycaster();ray.setFromCamera(p,camera);const hits=ray.intersectObjects(meshes.filter(m=>{let p=m;while(p){if(!p.visible)return false;p=p.parent}return true}),false);if(hits.length)onPick(hits[0].object.userData.id,{fromModel:true});else onMiss();down=null});renderer.domElement.addEventListener('wheel',()=>{targetCamera=null;targetLook=null},{passive:true});
+ function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)}addEventListener('resize',resize);camera.position.copy(viewPosition('angle'));controls.target.set(0,0,0);
  function animate(now){requestAnimationFrame(animate);const dt=Math.min((now-last)/1000,.05);last=now;if(playing&&!document.hidden)time+=dt*speed;const a=movementAt(time);for(const id of ['centre','third','fourth','escape'])train[id].rotation.z=a[id];barrel.rotation.z=a.barrel;main.rotation.z=a.barrel;balance.rotation.z=a.balance;roller.rotation.z=a.balance;fork.rotation.z=a.fork;cannon.rotation.z=a.centre;minute.rotation.z=a.centre+Math.PI*.18;hourHand.rotation.z=a.centre/12+Math.PI*.65;secondsNeedle.rotation.z=a.fourth;
  // Fixed outer spring stud; deform only the inner turns with the balance.
  if((playing&&now-lastSpringFrame>33)||needsFrame){lastSpringFrame=now;const oldGeo=hairMesh.geometry;hairMesh.geometry=springGeometry(.09,.76,6,0,a.balance*.45);oldGeo.dispose();needsFrame=false;}
  for(const gs of registry.values())for(const g of gs){const b=g.userData.base,l=g.userData.layer;g.position.set(b.x+explode*b.x*.25,b.y+explode*b.y*.25,b.z+explode*l*.7)}
  if(targetCamera){camera.position.lerp(targetCamera,.09);controls.target.lerp(targetLook,.09);if(camera.position.distanceTo(targetCamera)<.015){targetCamera=null;targetLook=null}}controls.update();renderer.render(scene,camera)}let needsFrame=true,lastSpringFrame=0;requestAnimationFrame(animate);
- return {select,focus,zoom,view,setSpeed:v=>speed=v,setPlaying:v=>{playing=v;return playing},isPlaying:()=>playing,step:()=>{playing=false;time=(Math.floor(time*5+1e-6)+1)/5;needsFrame=true},setExplode:v=>explode=v,toggle:id=>{hidden.has(id)?hidden.delete(id):hidden.add(id);visibility();return !hidden.has(id)},setVisible:(ids,visible)=>{for(const id of ids)visible?hidden.delete(id):hidden.add(id);visibility()},isVisible:id=>!hidden.has(id),setLayer:layer=>{mode=layer;hidden.clear();if(layer==='movement')for(const id of ['winding','click','cannon','motion','hands','case'])hidden.add(id);visibility()},trace:v=>{trace=v;highlight()},reset:()=>{select(null);explode=0;view('angle')},dispose:()=>renderer.dispose()};
+ return {select,focus,setSpeed:v=>speed=v,setPlaying:v=>{playing=v;return playing},isPlaying:()=>playing,step:()=>{playing=false;time=(Math.floor(time*5+1e-6)+1)/5;needsFrame=true},setExplode:v=>explode=v,toggle:id=>{hidden.has(id)?hidden.delete(id):hidden.add(id);visibility();return !hidden.has(id)},setVisible:(ids,visible)=>{for(const id of ids)visible?hidden.delete(id):hidden.add(id);visibility()},isVisible:id=>!hidden.has(id),dispose:()=>renderer.dispose()};
 }
