@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="description" content="Canon — three famous paintings a day, one from each era, with a two-minute spoken history." />
+  <title>Canon · Jatin Pandey</title>
+  <link rel="icon" href="/projects/images/spot-canon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://commons.wikimedia.org" />
+  <link rel="preconnect" href="https://upload.wikimedia.org" />
+  <link rel="stylesheet" href="/styles/poolsuite.css" />
+  <link rel="stylesheet" href="/canon/style.css" />
+  <script src="/analytics.js"></script>
+</head>
+<body class="canon-page">
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="site-name" href="/" aria-label="Jatin Pandey, home"><span class="tittled"><span class="glyph">j</span><i class="tittle"></i></span>at<span class="tittled"><span class="glyph">i</span><i class="tittle"></i></span>n</a>
+      <nav class="day-nav" aria-label="Day">
+        <a class="day-link" id="prev-day" href="#" rel="prev">← Earlier</a>
+        <a class="day-link" id="today-link" href="/canon/" hidden>Today</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="canon-shell" id="main">
+    <section class="masthead">
+      <p class="dateline" id="dateline">Loading the day…</p>
+      <h1>Canon</h1>
+      <p class="standfirst">Three paintings a day, one from each era, with two minutes of history read aloud. Nothing to do but look.</p>
+    </section>
+
+    <div id="works" class="works"></div>
+  </main>
+
+  <footer class="canon-footer">
+    <p>Images are public-domain reproductions served from Wikimedia Commons. Narration is generated with Deepgram Aura.</p>
+    <button type="button" class="suggest-btn" id="suggest-open">What other topics should we add?</button>
+  </footer>
+
+  <dialog class="suggest-dialog" id="suggest-dialog">
+    <form id="suggest-form" method="dialog">
+      <h2>What else would you like to learn this way?</h2>
+      <p>A subject that suits a picture, a short history, and a voice. Buildings, birds, maps, typefaces, anything.</p>
+      <label class="visually-hidden" for="suggest-text">Your suggestion</label>
+      <textarea id="suggest-text" rows="4" placeholder="e.g. Famous photographs, one per decade" required maxlength="600"></textarea>
+      <label class="visually-hidden" for="suggest-email">Email, optional</label>
+      <input id="suggest-email" type="email" placeholder="Email, if you'd like a reply (optional)" autocomplete="email" />
+      <div class="suggest-actions">
+        <button type="button" class="tool-btn" id="suggest-cancel">Cancel</button>
+        <button type="submit" class="tool-btn primary" id="suggest-send">Send</button>
+      </div>
+      <p class="suggest-note" id="suggest-note"></p>
+    </form>
+  </dialog>
+
+  <template id="work-template">
+    <article class="work">
+      <p class="eyebrow"><span class="category"></span><span class="span"></span></p>
+      <figure class="plate">
+        <a class="plate-link" target="_blank" rel="noopener" title="Open the full-resolution file on Wikimedia Commons">
+          <img class="plate-img" alt="" loading="lazy" decoding="async" />
+        </a>
+        <figcaption class="plate-caption"></figcaption>
+      </figure>
+      <header class="work-head">
+        <h2 class="title"></h2>
+        <p class="byline"></p>
+      </header>
+
+      <div class="player" data-state="idle">
+        <button type="button" class="play" aria-label="Play narration">
+          <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l10-6.5z" fill="currentColor"/></svg>
+          <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h4v14H7zM13 5h4v14h-4z" fill="currentColor"/></svg>
+          <svg class="icon-wait" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="7" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="30 14"/></svg>
+        </button>
+        <div class="track" role="slider" tabindex="0" aria-label="Narration position" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div class="track-line"></div>
+          <div class="track-fill"></div>
+          <div class="track-knob"></div>
+        </div>
+        <div class="time"><span class="time-cur">0:00</span> / <span class="time-dur">–:––</span></div>
+        <p class="player-note" hidden></p>
+      </div>
+
+      <div class="prose">
+        <section class="col"><h3>History</h3><div class="history"></div></section>
+        <section class="col"><h3>What it depicts</h3><div class="depicts"></div></section>
+        <section class="col"><h3>The artist</h3><div class="about"></div></section>
+        <section class="col"><h3>Echoes</h3><ul class="echoes"></ul></section>
+      </div>
+    </article>
+  </template>
+
+  <script src="/canon/data.js"></script>
+  <script src="/canon/app.js"></script>
+</body>
+</html>
