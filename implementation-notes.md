@@ -6,12 +6,13 @@
 - The page checks the 4,000-character cap before sending on the free tier and shows specific messages for too long, still answering, daily limit (with an add-key button and a `coach_daily_limit` event), and server errors.
 - `web-context.md` now tells Coach to stay in role and decline unrelated work or instructions to become something else.
 - `/api/event` rejects bodies over 1 KB.
+- Per-IP limits in coach-api (Redis fixed window, keyed on Vercel's `x-real-ip`): 20 chat requests, 60 events and 60 balance checks per minute. Vercel Firewall rate limiting isn't available on the Hobby plan, so a staged firewall rule was discarded; Vercel's automatic DDoS mitigation still applies.
 
 ## Verification
 
 - Unit-checked the trimming: a 41-message, ~400k-character history is cut to the newest 7 messages (~22.5k characters) starting on a user turn; over-length prompts, system roles, non-string content and histories ending on an assistant turn are rejected.
 - In the browser with a mocked backend: the length pre-check keeps the text in the box, and 429 in-progress, 503 daily-limit, 413 and 502 each show the right message without saving the failed turn.
-- Against the deployed backend: unauthenticated chat is rejected, an oversized event body returns `too_large`, and CORS preflight still passes for the site.
+- Against the deployed backend: unauthenticated chat is rejected, an oversized event body returns `too_large`, CORS preflight still passes for the site, and a burst of 65 event requests from one IP starts returning 429 within the minute.
 
 ## 2026-09-16 — Coach v2: Google sign-in, free prompts, analytics
 
