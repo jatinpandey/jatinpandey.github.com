@@ -7,6 +7,7 @@ import { ANTHROPIC_MODEL, API_BASE, GOOGLE_CLIENT_ID, OPENAI_MODEL } from './con
 
 const SKILL_FILES = ['skill/web-context.md', 'skill/SKILL.md', 'skill/references/guide.md', 'skill/references/advisors.md'];
 const ANTHROPIC_SDK = 'https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.126.0/+esm';
+const FREE_PROMPT_CHARS = 4000; // matches coach-api MAX_PROMPT_CHARS
 const OPENAI_SDK = 'https://cdn.jsdelivr.net/npm/openai@7.15.0/+esm';
 const STORE = {
   key: 'coach.apiKey',
@@ -501,7 +502,7 @@ els.dialog.addEventListener('close', () => {
 class CoachError extends Error {
   constructor(message, kind = 'generic') {
     super(message);
-    this.kind = kind; // generic | key | credits | expired
+    this.kind = kind; // generic | key | credits | expired | daily
   }
 }
 
@@ -604,7 +605,15 @@ async function runFree({ signal, onText }) {
     credits = { used: body.limit ?? credits?.limit ?? 10, limit: body.limit ?? credits?.limit ?? 10 };
     throw new CoachError('You have run out of credits.', 'credits');
   }
-  if (res.status === 429) throw new CoachError('Coach is busy right now. Try again shortly.');
+  if (res.status === 413) throw new CoachError(`That message is too long for the free tier. Keep it under ${FREE_PROMPT_CHARS.toLocaleString()} characters, or use your own key.`);
+  if (res.status === 429) {
+    const body = await res.json().catch(() => ({}));
+    throw new CoachError(body.error === 'in_progress' ? 'Coach is still answering your last message.' : 'Coach is busy right now. Try again shortly.');
+  }
+  if (res.status === 503) {
+    const body = await res.json().catch(() => ({}));
+    if (body.error === 'daily_limit') throw new CoachError('Coach has used up today’s free prompts for everyone. Add your own key, or try again tomorrow.', 'daily');
+  }
   if (!res.ok || !res.body) throw new CoachError('Something went wrong on our side. Try again.');
 
   const used = Number(res.headers.get('X-Credits-Used'));
@@ -638,6 +647,14 @@ async function send(text) {
   if (m === 'free' && outOfCredits()) {
     pendingText = text;
     openAccess('credits');
+    return;
+  }
+
+  if (m === 'free' && text.length > FREE_PROMPT_CHARS) {
+    els.input.value = text;
+    autosize();
+    syncChrome();
+    els.creditsNote.textContent = `Free-tier messages are limited to ${FREE_PROMPT_CHARS.toLocaleString()} characters (this one is ${text.length.toLocaleString()}). Shorten it or use your own key.`;
     return;
   }
 
@@ -724,6 +741,9 @@ function showFailure(err, userLi, text) {
     save(STORE.session, null);
     addError('Your sign-in expired.', [retry]);
     openAccess('expired');
+  } else if (kind === 'daily') {
+    addError(err.message, [['Add your own API key', () => openAccess('key')], retry]);
+    track('daily_limit');
   } else if (kind === 'key') {
     addError(err.message, [['Update key', () => openAccess('key')], retry]);
   } else {
