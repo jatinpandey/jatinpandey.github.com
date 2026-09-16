@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="Coach — a personal board of directors in a chat window." />
+  <meta name="description" content="Coach — your personal board of directors. Candid advice through six lenses, from Buddha to Rick Rubin." />
   <meta name="robots" content="noindex" />
-  <title>Coach · Jatin Pandey</title>
+  <title>Coach - Your personal board of directors</title>
   <link rel="icon" href="/projects/images/spot-coach.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="/styles/poolsuite.css" />
   <link rel="stylesheet" href="/coach/style.css" />
@@ -18,31 +18,75 @@
     <div class="topbar-inner">
       <a class="site-name" href="/" aria-label="Jatin Pandey, home"><span class="tittled"><span class="glyph">j</span><i class="tittle"></i></span>at<span class="tittled"><span class="glyph">i</span><i class="tittle"></i></span>n</a>
       <nav class="coach-tools" aria-label="Coach controls">
-        <button type="button" class="tool-btn" id="new-chat">New</button>
-        <button type="button" class="tool-btn" id="open-key">Key</button>
+        <button type="button" class="tool-btn" id="new-chat">New chat</button>
+        <div class="account" id="account" hidden>
+          <button type="button" class="avatar-btn" id="account-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="account-menu">
+            <img id="account-avatar" alt="" referrerpolicy="no-referrer" hidden />
+            <span id="account-initial" aria-hidden="true"></span>
+            <span class="visually-hidden">Account</span>
+          </button>
+          <div class="account-menu" id="account-menu" role="menu" hidden>
+            <p class="account-name" id="account-name"></p>
+            <p class="account-credits" id="account-credits"></p>
+            <button type="button" role="menuitem" id="menu-key">Use your own API key</button>
+            <button type="button" role="menuitem" id="menu-signout">Sign out</button>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
 
   <main class="coach-shell" id="main">
-    <section class="coach-intro" id="intro">
-      <h1>Coach</h1>
-      <p>A board of directors for the questions that matter. Candid, specific, and not here to flatter you.</p>
+    <!-- landing -->
+    <section class="landing" id="landing" hidden>
+      <p class="eyebrow">Coach</p>
+      <h1>Your personal board of directors</h1>
+      <p class="lede">Bring a decision, a pattern you can’t shake, or a week that got away from you. Coach answers through six lenses and tells you where they disagree.</p>
       <p class="advisor-line">Buddha · Shah&nbsp;Rukh&nbsp;Khan · Jordan&nbsp;Peterson · Elon&nbsp;Musk · Naval&nbsp;Ravikant · Rick&nbsp;Rubin</p>
-      <div class="starters" id="starters">
-        <button type="button" class="starter">What should I focus on this week?</button>
-        <button type="button" class="starter">What am I not seeing?</button>
-        <button type="button" class="starter">I keep starting things and not finishing them.</button>
-        <button type="button" class="starter" data-fill="Help me pick between two paths: ">Help me pick between two paths.</button>
+      <div class="cta-row">
+        <button type="button" class="cta" id="cta-new-chat">New chat</button>
+        <div class="google-slot" id="landing-google" hidden></div>
       </div>
+      <p class="cta-note" id="landing-note">Sign in with Google for 10 free prompts, or bring your own Anthropic or OpenAI key.</p>
+
+      <figure class="sample" aria-label="Example conversation">
+        <figcaption>Example</figcaption>
+        <div class="msg msg-user"><div class="bubble">I have two offers: a stable role at a big company, or an early startup I’m excited about. How do I choose?</div></div>
+        <div class="msg msg-coach">
+          <div class="prose">
+            <p><strong>What seems true:</strong> you’re asking which is safer, but the question underneath is which version of you each job builds.</p>
+            <p><strong>Where the lenses disagree</strong></p>
+            <ul>
+              <li><strong>Naval:</strong> pick the game that compounds. If the startup teaches you skills few people have, that edge outlasts the salary gap.</li>
+              <li><strong>Jordan Peterson:</strong> name the responsibilities you carry first (rent, family, debt). Excitement doesn’t cancel them.</li>
+              <li><strong>Buddha:</strong> notice how much of the pull is fear of missing out rather than the work itself.</li>
+            </ul>
+            <p><strong>Do this week:</strong> write down what each role looks like on an ordinary Tuesday a year from now, then ask both teams the one question you’re avoiding.</p>
+            <p><code>Course-correct</code> if you’re choosing on status alone.</p>
+          </div>
+        </div>
+      </figure>
     </section>
 
-    <ol class="thread" id="thread" aria-live="polite"></ol>
+    <!-- chat -->
+    <section class="chat-view" id="chat-view" hidden>
+      <div class="coach-intro" id="intro">
+        <h1>New chat</h1>
+        <p>What’s on your mind? Coach is candid and specific, and it won’t flatter you.</p>
+        <div class="starters" id="starters">
+          <button type="button" class="starter">What should I focus on this week?</button>
+          <button type="button" class="starter">What am I not seeing?</button>
+          <button type="button" class="starter">I keep starting things and not finishing them.</button>
+          <button type="button" class="starter" data-fill="Help me pick between two paths: ">Help me pick between two paths.</button>
+        </div>
+      </div>
+      <ol class="thread" id="thread" aria-live="polite"></ol>
+    </section>
   </main>
 
   <form class="composer" id="composer">
     <div class="composer-inner">
-      <label class="visually-hidden" for="composer-input">Message the coach</label>
+      <label class="visually-hidden" for="composer-input">Message Coach</label>
       <textarea id="composer-input" rows="1" placeholder="What’s on your mind?" autocomplete="off"></textarea>
       <button type="submit" class="send-btn" id="send" aria-label="Send">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -51,27 +95,40 @@
         <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="7" width="10" height="10" rx="1.5" fill="currentColor"/></svg>
       </button>
     </div>
-    <p class="composer-note">Enter to send · Shift+Enter for a new line · Conversations stay in this browser</p>
+    <p class="composer-note"><span class="keys-hint">Enter to send · Shift+Enter for a new line</span><span id="credits-note"></span></p>
   </form>
 
-  <dialog class="key-dialog" id="key-dialog">
-    <form method="dialog" id="key-form">
-      <h2>Your Anthropic API key</h2>
-      <p>Coach runs entirely in your browser and talks to Claude directly. Your key is stored only in this browser’s local storage and is sent only to <code>api.anthropic.com</code>.</p>
-      <label class="visually-hidden" for="key-input">API key</label>
-      <input id="key-input" type="password" placeholder="sk-ant-…" autocomplete="off" spellcheck="false" />
-      <p class="key-hint">Get one at <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>.</p>
+  <dialog class="access-dialog" id="access-dialog" aria-labelledby="access-title">
+    <form method="dialog" id="access-form">
+      <h2 id="access-title">Start talking to Coach</h2>
+      <p id="access-lede">Sign in with Google for 10 free prompts, or use your own API key.</p>
+
+      <div class="access-google" id="access-google-section">
+        <div class="google-slot" id="dialog-google"></div>
+        <p class="access-error" id="google-error" hidden></p>
+      </div>
+
+      <p class="access-or" id="access-or"><span>or</span></p>
+
+      <div class="access-key">
+        <label for="key-input">Your Anthropic or OpenAI API key</label>
+        <input id="key-input" type="password" placeholder="sk-ant-… or sk-…" autocomplete="off" spellcheck="false" />
+        <p class="access-error" id="key-error" hidden></p>
+        <p class="key-hint">Stored only in this browser and sent only to the provider it belongs to. Get one from <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">Anthropic</a> or <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI</a>.</p>
+      </div>
+
       <div class="key-actions">
-        <button type="button" class="tool-btn" id="forget-key">Forget key</button>
+        <button type="button" class="tool-btn" id="forget-key" hidden>Forget key</button>
         <span class="spacer"></span>
-        <button type="button" class="tool-btn" id="cancel-key">Cancel</button>
-        <button type="submit" class="tool-btn primary" id="save-key">Save</button>
+        <button type="button" class="tool-btn" id="cancel-access">Cancel</button>
+        <button type="submit" class="tool-btn primary" id="save-key">Use key</button>
       </div>
     </form>
   </dialog>
 
   <script src="https://cdn.jsdelivr.net/npm/marked@15.0.12/marked.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/dompurify@3.2.6/dist/purify.min.js"></script>
+  <script src="https://accounts.google.com/gsi/client" async></script>
   <script type="module" src="/coach/app.js"></script>
   <script src="/motion.js"></script>
 </body>

@@ -1,5 +1,19 @@
 # Implementation notes
 
+## 2026-09-16 — Coach v2: Google sign-in, free prompts, analytics
+
+- `/coach/` now opens on a landing page, "Coach - Your personal board of directors", with a New chat button, Sign in with Google, and a sample exchange. `#chat` is the chat view. The header has "New chat" and, when signed in, an avatar menu (free prompts left, use your own key, sign out). The Key button and the "Conversations stay in this browser" line are gone.
+- Tapping the message box without a way to answer opens a dialog: sign in with Google, or paste an Anthropic (`sk-ant-…`) or OpenAI (`sk-…`) key. Own keys call the provider straight from the browser (Claude Opus 5 or gpt-5) with no limit.
+- Signed-in users without a key get 10 free prompts, served by `coach-api` (Vercel project in jatinpandey's projects, `https://coach-api-one.vercel.app`, source in `~/Desktop/life-coach/coach-api`). It verifies the Google ID token, reserves a credit atomically in Upstash Redis (refunded if no reply arrives), and streams gpt-5 on the site owner's OpenAI key, which never reaches the browser. The eleventh prompt shows "You have run out of credits" with a prompt to add a key.
+- The coach's environment notes moved to `coach/skill/web-context.md`, loaded by both the page and the server. It now treats people as themselves unless they say they are Jatin.
+- Analytics: GA4 events `coach_landing_view`, `coach_new_chat_click`, `coach_access_prompt`, `coach_sign_in`, `coach_key_added`, `coach_prompt_sent` (mode, prompt_number), `coach_out_of_credits`. The same steps are beaconed to `coach-api/api/event`, which keeps unique visitors per step and prompts per visitor in Redis; `GET /api/stats` (bearer token) reports the funnel and prompts-per-user histograms.
+- `coach/config.js` holds the public API base and Google client ID.
+
+## Verification
+
+- Mocked the provider and backend in the browser: gated message box, key validation, an own-OpenAI-key reply (request carries the skill prompt as the developer message), free replies decrementing the counter, the out-of-credits dialog when the page knows the balance, and the out-of-credits message when the server returns 402. Checked the account menu and 375px layout.
+- Against the deployed backend: CORS preflight allows only the listed origins, `/api/chat` rejects missing and forged Google tokens, `/api/event` validates steps, `/api/stats` requires the token and reads live Redis.
+
 ## 2026-09-16 — Coach
 
 - Added `/coach/`, a chat interface for the life-coach skill: the six advisor lenses (Buddha, Shah Rukh Khan, Jordan Peterson, Elon Musk, Naval Ravikant, Rick Rubin) answering in a streamed conversation. It uses the site's paper palette, Didot headings and masthead, with a pinned composer, starter prompts, stop/retry, and conversations kept in localStorage.
