@@ -156,6 +156,15 @@
 .prose h2 { font-size: 1.45rem; }
 .prose h3 { font-size: 1.22rem; }
 .prose h4 { font-size: 1.06rem; }
+/* board seats: each reply section starts with a ruled seat name */
+.msg-coach .prose h3 {
+  margin-top: 1.6em;
+  padding-top: 0.75em;
+  border-top: 1px solid var(--line);
+  font-size: 1.18rem;
+}
+.msg-coach .prose > h3:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.msg-coach .prose h3 + p { margin-top: 0.4em; }
 .prose > :first-child { margin-top: 0; }
 .prose strong { font-weight: 650; }
 .prose ul, .prose ol { padding-left: 1.3em; }

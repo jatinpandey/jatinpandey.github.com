@@ -1,5 +1,14 @@
 # Implementation notes
 
+## 2026-09-16 — Coach answers show each board seat
+
+- Coach's replies now follow a fixed shape: a short read, two to four board seats, where they clash, the board's call with time-boxed next moves, and a one-line verdict. Each seat has a name (The Calm Mind, The Heart, The Order-Keeper, The Builder, The Compounder, The Editor) and a distinct voice, and must take a clear position with one concrete move. Generic-assistant phrasing is ruled out. (Instructions live in coach-api.)
+- The landing example uses the new shape, and seat headings in replies get a hairline rule so each voice reads as its own section.
+
+## Verification
+
+- Checked the landing example at desktop width. Reply quality needs a real model call; `npm run try` in coach-api runs the current instructions from the terminal with your own key.
+
 ## 2026-09-16 — Coach privacy policy, logo, and clearer provider errors
 
 - Added `/coach/privacy/`, a plain-language privacy policy covering Google account data, messages, API keys, analytics and deletion, linked from the Coach landing page. Added `coach/logo.png` (120×120) for Google branding.
