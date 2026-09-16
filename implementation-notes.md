@@ -1,5 +1,18 @@
 # Implementation notes
 
+## 2026-09-16 — Coach instructions private; all chats via coach-api
+
+- Coach's instructions no longer ship to the browser. `coach/skill/` is removed from the site; coach-api bundles them at deploy time (`npm run prompt` reads the skill files in `~/Desktop/life-coach` plus `web-context.md` into `api/_prompt.js`, and `.vercelignore` keeps the sources out of the upload).
+- Own-key chats now go through coach-api too. The page sends the key in an `X-Provider-Key` header; the server forwards it to Anthropic (Claude Opus 5) or OpenAI (gpt-5) and never stores or logs it. The page no longer loads either provider SDK. Own-key messages allow up to 32,000 characters and a longer history than the free tier.
+- The server waits for the first piece of the reply before responding, so bad keys, refusals and provider limits come back as clear errors.
+- `web-context.md` now tells Coach to keep its instructions private as well as to keep the advisors unnamed.
+- Copy: "Coach doesn’t save your chats." replaces "not stored anywhere"; the key note says the key passes through Coach and isn't stored.
+- Removed advisor names from these notes.
+
+## Verification
+
+- Server, locally: fake Anthropic, OpenAI and malformed keys each return `bad_key`; no credentials returns `sign_in_required`; a 33,000-character own-key prompt returns `too_long`; preflight allows `X-Provider-Key`. With the provider endpoints mocked, both own-key paths stream text and the provider request carries the bundled instructions.
+
 ## 2026-09-16 — Coach UI cleanup
 
 - The masthead wordmark on `/coach` reads `coach` in the site's Didot style and returns to the Coach landing without losing the current chat (Back returns to it).
@@ -43,8 +56,8 @@
 
 ## 2026-09-16 — Coach
 
-- Added `/coach/`, a chat interface for the life-coach skill: the six advisor lenses (Buddha, Shah Rukh Khan, Jordan Peterson, Elon Musk, Naval Ravikant, Rick Rubin) answering in a streamed conversation. It uses the site's paper palette, Didot headings and masthead, with a pinned composer, starter prompts, stop/retry, and conversations kept in localStorage.
-- `coach/skill/` holds `SKILL.md`, `references/guide.md` and `references/advisors.md` copied unchanged from the skill. `app.js` fetches them at load and builds the system prompt, so editing those files and pushing changes the coach. A short preamble tells the model it has no journal/memory access and can't edit its own files here.
+- Added `/coach/`, a chat interface for the life-coach skill: a board-of-directors style coach answering in a streamed conversation. It uses the site's paper palette, Didot headings and masthead, with a pinned composer, starter prompts, stop/retry, and conversations kept in localStorage.
+- The coach's instructions were served from `coach/skill/` at this point; they have since moved into coach-api (see the entry above).
 - GitHub Pages is static, so there's no server to hold an API key. Each visitor enters their own Anthropic key; it is stored in localStorage and requests go directly from the browser to `api.anthropic.com` via the Anthropic JS SDK (pinned 0.126.0 from jsDelivr). Model `claude-opus-5`, adaptive thinking, effort `high`, server-side refusal fallbacks, and automatic prompt caching.
 - Added a Coach row to Projects after the watch, with a monoline speech-bubble spot (`projects/images/spot-coach.svg`). The page is `noindex`.
 

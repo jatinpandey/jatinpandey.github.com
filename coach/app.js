@@ -1,14 +1,11 @@
-// Coach: a chat front end for the life-coach skill in ./skill.
-// Three ways to talk to it:
-//   free       signed in with Google, no key: coach-api proxies to OpenAI on the site owner's key (limited prompts)
-//   anthropic  the visitor's own Anthropic key, straight from the browser
-//   openai     the visitor's own OpenAI key, straight from the browser
-import { ANTHROPIC_MODEL, API_BASE, GOOGLE_CLIENT_ID, OPENAI_MODEL } from './config.js';
+// Coach: the chat front end. Coach's instructions live only in coach-api; this page never sees them.
+// Three ways to talk to it, all through coach-api:
+//   free       signed in with Google, no key: runs on the site owner's OpenAI key (limited prompts)
+//   anthropic  the visitor's own Anthropic key, passed through for each message and never stored server-side
+//   openai     the visitor's own OpenAI key, same
+import { API_BASE, GOOGLE_CLIENT_ID } from './config.js';
 
-const SKILL_FILES = ['skill/web-context.md', 'skill/SKILL.md', 'skill/references/guide.md', 'skill/references/advisors.md'];
-const ANTHROPIC_SDK = 'https://cdn.jsdelivr.net/npm/@anthropic-ai/sdk@0.126.0/+esm';
 const FREE_PROMPT_CHARS = 4000; // matches coach-api MAX_PROMPT_CHARS
-const OPENAI_SDK = 'https://cdn.jsdelivr.net/npm/openai@7.15.0/+esm';
 const STORE = {
   key: 'coach.apiKey',
   history: 'coach.history', // no longer written; cleared on load
@@ -70,7 +67,7 @@ function save(name, value) {
 
 let apiKey = load(STORE.key, '');
 // Chats are ephemeral: history lives only in memory for this page.
-let history = []; // [{ role, content }] — content is a string or Anthropic content blocks
+let history = []; // [{ role, content: string }]
 save(STORE.history, null); // drop anything an earlier version saved
 let session = load(STORE.session, null); // { token, exp, name, email, picture }
 let credits = null; // { used, limit } for the free tier
@@ -108,21 +105,6 @@ function mode() {
 const outOfCredits = () => Boolean(credits && credits.used >= credits.limit);
 const hasAccess = () => Boolean(mode()) && !(mode() === 'free' && outOfCredits());
 
-/* ---------- system prompt ---------- */
-let instructionsPromise = null;
-function instructions() {
-  instructionsPromise ??= Promise.all(
-    SKILL_FILES.map(async (path) => {
-      const res = await fetch(new URL(path, import.meta.url));
-      if (!res.ok) throw new Error(`Couldn't load ${path} (${res.status})`);
-      const text = (await res.text()).trim();
-      return path.endsWith('web-context.md') ? text : `<file path="${path.replace(/^skill\//, '')}">\n${text}\n</file>`;
-    }),
-  ).then((parts) => parts.join('\n\n'));
-  instructionsPromise.catch(() => { instructionsPromise = null; });
-  return instructionsPromise;
-}
-
 /* ---------- rendering ---------- */
 const purify = window.DOMPurify;
 purify?.addHook('afterSanitizeAttributes', (node) => {
@@ -151,7 +133,6 @@ function textOf(content) {
   if (typeof content === 'string') return content;
   return content.filter((b) => b.type === 'text').map((b) => b.text).join('');
 }
-const asText = (messages) => messages.map((m) => ({ role: m.role, content: textOf(m.content) }));
 
 function syncChrome() {
   const busy = Boolean(activeRun);
@@ -520,92 +501,25 @@ class CoachError extends Error {
   }
 }
 
-let anthropicModule = null;
-async function runAnthropic({ signal, onText }) {
-  anthropicModule ??= import(ANTHROPIC_SDK);
-  const { default: Anthropic } = await anthropicModule;
-  const client = new Anthropic({ apiKey, dangerouslyAllowBrowser: true, maxRetries: 1 });
-  try {
-    const stream = client.beta.messages.stream(
-      {
-        model: ANTHROPIC_MODEL,
-        max_tokens: 64000,
-        betas: ['server-side-fallback-2026-07-01'],
-        fallbacks: 'default',
-        thinking: { type: 'adaptive' },
-        output_config: { effort: 'high' },
-        cache_control: { type: 'ephemeral' },
-        system: [{ type: 'text', text: await instructions() }],
-        messages: history,
-      },
-      { signal },
-    );
-    stream.on('text', onText);
-    const final = await stream.finalMessage();
-    if (final.stop_reason === 'refusal') throw new CoachError('Claude declined to answer that one.');
-    // keep text and thinking so the next turn continues cleanly; drop empty text blocks
-    const content = final.content.filter(
-      (b) => (b.type === 'text' && b.text) || b.type === 'thinking' || b.type === 'redacted_thinking',
-    );
-    return { content, note: final.stop_reason === 'max_tokens' ? 'Reply hit the length limit.' : '' };
-  } catch (err) {
-    if (err instanceof CoachError || signal.aborted) throw err;
-    if (err instanceof Anthropic.AuthenticationError || err instanceof Anthropic.PermissionDeniedError) {
-      throw new CoachError('That Anthropic API key was rejected.', 'key');
-    }
-    if (err instanceof Anthropic.RateLimitError) throw new CoachError('Rate limited. Give it a moment and retry.');
-    if (err instanceof Anthropic.APIConnectionError) throw new CoachError('Couldn’t reach the Anthropic API. Check your connection.');
-    if (err instanceof Anthropic.APIError && err.status === 529) throw new CoachError('Claude is overloaded right now. Try again shortly.');
-    if (err instanceof Anthropic.APIError) throw new CoachError(`Anthropic error ${err.status ?? ''}: ${err.error?.error?.message ?? err.message}`);
-    throw err;
-  }
-}
+const PROVIDER_NAMES = { anthropic: 'Anthropic', openai: 'OpenAI' };
 
-let openaiModule = null;
-async function runOpenAI({ signal, onText }) {
-  openaiModule ??= import(OPENAI_SDK);
-  const { default: OpenAI } = await openaiModule;
-  const client = new OpenAI({ apiKey, dangerouslyAllowBrowser: true, maxRetries: 1 });
-  let text = '';
-  try {
-    const stream = await client.chat.completions.create(
-      {
-        model: OPENAI_MODEL,
-        stream: true,
-        messages: [{ role: 'developer', content: await instructions() }, ...asText(history)],
-      },
-      { signal },
-    );
-    for await (const chunk of stream) {
-      const delta = chunk.choices[0]?.delta?.content;
-      if (delta) {
-        text += delta;
-        onText(delta);
-      }
-    }
-    return { content: [{ type: 'text', text }] };
-  } catch (err) {
-    if (signal.aborted) throw err;
-    if (err instanceof OpenAI.AuthenticationError || err instanceof OpenAI.PermissionDeniedError) {
-      throw new CoachError('That OpenAI API key was rejected.', 'key');
-    }
-    if (err instanceof OpenAI.RateLimitError) throw new CoachError('OpenAI rate limit or quota reached. Check your OpenAI billing, or retry shortly.');
-    if (err instanceof OpenAI.APIConnectionError) throw new CoachError('Couldn’t reach the OpenAI API. Check your connection.');
-    if (err instanceof OpenAI.APIError) throw new CoachError(`OpenAI error ${err.status ?? ''}: ${err.message}`);
-    throw err;
+// Every mode goes through coach-api, which holds Coach's instructions and talks to the provider.
+async function runChat({ signal, onText, mode: m }) {
+  const headers = { 'Content-Type': 'application/json' };
+  if (m === 'free') {
+    const token = await freshToken();
+    if (!token) throw new CoachError('Your sign-in expired.', 'expired');
+    headers.Authorization = `Bearer ${token}`;
+  } else {
+    headers['X-Provider-Key'] = apiKey;
   }
-}
-
-async function runFree({ signal, onText }) {
-  const token = await freshToken();
-  if (!token) throw new CoachError('Your sign-in expired.', 'expired');
 
   let res;
   try {
     res = await fetch(`${API_BASE}/api/chat`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ messages: asText(history) }),
+      headers,
+      body: JSON.stringify({ messages: history.map((msg) => ({ role: msg.role, content: textOf(msg.content) })) }),
       signal,
     });
   } catch (err) {
@@ -613,26 +527,16 @@ async function runFree({ signal, onText }) {
     throw new CoachError('Couldn’t reach Coach. Check your connection.');
   }
 
-  if (res.status === 401) throw new CoachError('Your sign-in expired.', 'expired');
-  if (res.status === 402) {
+  if (!res.ok || !res.body) {
     const body = await res.json().catch(() => ({}));
-    credits = { used: body.limit ?? credits?.limit ?? 10, limit: body.limit ?? credits?.limit ?? 10 };
-    throw new CoachError('You have run out of credits.', 'credits');
+    throw failure(res.status, body, m);
   }
-  if (res.status === 413) throw new CoachError(`That message is too long for the free tier. Keep it under ${FREE_PROMPT_CHARS.toLocaleString()} characters, or use your own key.`);
-  if (res.status === 429) {
-    const body = await res.json().catch(() => ({}));
-    throw new CoachError(body.error === 'in_progress' ? 'Coach is still answering your last message.' : 'Coach is busy right now. Try again shortly.');
-  }
-  if (res.status === 503) {
-    const body = await res.json().catch(() => ({}));
-    if (body.error === 'daily_limit') throw new CoachError('Coach has used up today’s free prompts for everyone. Add your own key, or try again tomorrow.', 'daily');
-  }
-  if (!res.ok || !res.body) throw new CoachError('Something went wrong on our side. Try again.');
 
-  const used = Number(res.headers.get('X-Credits-Used'));
-  const limit = Number(res.headers.get('X-Credits-Limit'));
-  if (limit) credits = { used, limit };
+  if (m === 'free') {
+    const used = Number(res.headers.get('X-Credits-Used'));
+    const limit = Number(res.headers.get('X-Credits-Limit'));
+    if (limit) credits = { used, limit };
+  }
 
   const reader = res.body.pipeThrough(new TextDecoderStream()).getReader();
   let text = '';
@@ -642,10 +546,44 @@ async function runFree({ signal, onText }) {
     text += value;
     onText(value);
   }
-  return { content: [{ type: 'text', text }] };
+  return { content: text };
 }
 
-const RUNNERS = { free: runFree, anthropic: runAnthropic, openai: runOpenAI };
+function failure(status, body, m) {
+  const provider = PROVIDER_NAMES[m];
+  switch (body.error) {
+    case 'sign_in_required':
+      return new CoachError('Your sign-in expired.', 'expired');
+    case 'bad_key':
+      return new CoachError(`That ${provider ?? 'API'} key was rejected.`, 'key');
+    case 'out_of_credits':
+      credits = { used: body.limit ?? 10, limit: body.limit ?? 10 };
+      return new CoachError('You have run out of credits.', 'credits');
+    case 'too_long':
+      return new CoachError(
+        m === 'free'
+          ? `That message is too long for the free tier. Keep it under ${(body.limit ?? FREE_PROMPT_CHARS).toLocaleString()} characters.`
+          : `That message is too long. Keep it under ${(body.limit ?? 32000).toLocaleString()} characters.`,
+      );
+    case 'too_large':
+      return new CoachError('This conversation is too long to send. Start a new chat.');
+    case 'in_progress':
+      return new CoachError('Coach is still answering your last message.');
+    case 'daily_limit':
+      return new CoachError('Coach has used up today’s free prompts for everyone. Try again tomorrow.', 'daily');
+    case 'provider_rate_limit':
+      return new CoachError(`${provider} rate limit or quota reached. Check your ${provider} billing, or retry shortly.`);
+    case 'refused':
+      return new CoachError('Coach can’t help with that one.');
+    case 'overloaded':
+      return new CoachError('Coach is overloaded right now. Try again shortly.');
+    case 'rate_limited':
+    case 'busy':
+      return new CoachError('Coach is busy right now. Try again shortly.');
+    default:
+      return new CoachError('Something went wrong on our side. Try again.');
+  }
+}
 
 /* ---------- conversation ---------- */
 async function send(text) {
@@ -700,7 +638,8 @@ async function send(text) {
   };
 
   try {
-    const result = await RUNNERS[m]({
+    const result = await runChat({
+      mode: m,
       signal: controller.signal,
       onText: (delta) => {
         streamed += delta;
@@ -713,14 +652,13 @@ async function send(text) {
     if (!reply.trim()) throw new CoachError('No reply came back. Try again.');
     history.push({ role: 'assistant', content: result.content });
     prose.innerHTML = markdown(reply);
-    if (result.note) addNote(coachLi, result.note);
     counted();
   } catch (err) {
     if (frame) cancelAnimationFrame(frame);
     if (convo !== history) return;
     if (controller.signal.aborted && streamed.trim()) {
       // keep what arrived so the conversation stays coherent
-      history.push({ role: 'assistant', content: [{ type: 'text', text: streamed }] });
+      history.push({ role: 'assistant', content: streamed });
       prose.innerHTML = markdown(streamed);
       addNote(coachLi, 'Stopped.');
       counted();
@@ -838,4 +776,3 @@ route();
 initGoogle();
 refreshCredits();
 track('landing_view');
-instructions().catch(() => {}); // warm the skill files
