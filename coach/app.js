@@ -11,7 +11,7 @@ const FREE_PROMPT_CHARS = 4000; // matches coach-api MAX_PROMPT_CHARS
 const OPENAI_SDK = 'https://cdn.jsdelivr.net/npm/openai@7.15.0/+esm';
 const STORE = {
   key: 'coach.apiKey',
-  history: 'coach.history',
+  history: 'coach.history', // no longer written; cleared on load
   session: 'coach.session',
   visitor: 'coach.visitor',
   sent: 'coach.promptsSent',
@@ -29,8 +29,7 @@ const els = {
   stop: $('stop'),
   creditsNote: $('credits-note'),
   newChat: $('new-chat'),
-  ctaNewChat: $('cta-new-chat'),
-  landingGoogle: $('landing-google'),
+  homeLink: $('home-link'),
   landingNote: $('landing-note'),
   account: $('account'),
   accountBtn: $('account-btn'),
@@ -50,7 +49,7 @@ const els = {
   keyInput: $('key-input'),
   keyError: $('key-error'),
   forgetKey: $('forget-key'),
-  cancelAccess: $('cancel-access'),
+  closeAccess: $('close-access'),
 };
 
 /* ---------- storage ---------- */
@@ -70,7 +69,9 @@ function save(name, value) {
 }
 
 let apiKey = load(STORE.key, '');
-let history = load(STORE.history, []); // [{ role, content }] — content is a string or Anthropic content blocks
+// Chats are ephemeral: history lives only in memory for this page.
+let history = []; // [{ role, content }] — content is a string or Anthropic content blocks
+save(STORE.history, null); // drop anything an earlier version saved
 let session = load(STORE.session, null); // { token, exp, name, email, picture }
 let credits = null; // { used, limit } for the free tier
 let activeRun = null; // AbortController
@@ -167,7 +168,6 @@ function renderAccount() {
   const freeLine = left == null ? '' : left ? `${left} of ${credits.limit} free prompts left` : 'You have run out of credits';
 
   els.account.hidden = !session;
-  els.landingGoogle.hidden = Boolean(session) || !GOOGLE_CLIENT_ID;
   if (session) {
     els.accountName.textContent = session.name || session.email || 'Signed in';
     els.accountInitial.textContent = (session.name || session.email || '?').trim().charAt(0).toUpperCase();
@@ -181,13 +181,12 @@ function renderAccount() {
   els.creditsNote.textContent = m === 'free' ? freeLine : '';
 
   if (session) {
-    els.landingNote.textContent = `Signed in as ${session.name || session.email}.${keyLine ? ` ${keyLine}.` : freeLine ? ` ${freeLine}.` : ''}`;
-  } else if (apiKey) {
-    els.landingNote.textContent = keyLine ? `${keyLine}.` : '';
+    const status = keyLine || freeLine;
+    els.landingNote.textContent = `Signed in as ${session.name || session.email}.${status ? ` ${status}.` : ''} Type a message below to start.`;
   } else {
     els.landingNote.textContent = GOOGLE_CLIENT_ID
-      ? 'Sign in with Google for 10 free prompts, or bring your own Anthropic or OpenAI key.'
-      : 'Bring your own Anthropic or OpenAI key to start.';
+      ? 'Type a message below to start. Sign in with Google for 10 free prompts.'
+      : 'Type a message below to start.';
   }
 }
 
@@ -225,8 +224,15 @@ function addError(message, actions = []) {
   const li = document.createElement('li');
   li.className = 'msg msg-error';
   li.setAttribute('role', 'alert');
-  li.append(message);
-  for (const [label, onClick] of actions) li.append(button(label, onClick));
+  const text = document.createElement('p');
+  text.textContent = message;
+  li.append(text);
+  if (actions.length) {
+    const row = document.createElement('div');
+    row.className = 'error-actions';
+    for (const [label, onClick] of actions) row.append(button(label, onClick));
+    li.append(row);
+  }
   els.thread.append(li);
   return li;
 }
@@ -234,7 +240,7 @@ function addError(message, actions = []) {
 function button(label, onClick) {
   const b = document.createElement('button');
   b.type = 'button';
-  b.className = 'tool-btn';
+  b.className = 'btn btn-small';
   b.textContent = label;
   b.addEventListener('click', onClick);
   return b;
@@ -251,7 +257,7 @@ function renderHistory() {
 
 /* ---------- views ---------- */
 function route() {
-  const chat = location.hash === '#chat' || history.length > 0;
+  const chat = location.hash === '#chat';
   els.landing.hidden = chat;
   els.chatView.hidden = !chat;
   document.body.classList.toggle('is-landing', !chat);
@@ -259,20 +265,25 @@ function route() {
   else window.scrollTo({ top: 0 });
 }
 window.addEventListener('hashchange', route);
+window.addEventListener('popstate', route);
 
 function startNewChat() {
   track('new_chat_click');
   if (history.length && !confirm('Start a new chat? This conversation will be cleared.')) return;
   activeRun?.abort();
   history = [];
-  save(STORE.history, null);
   renderHistory();
   if (location.hash !== '#chat') location.hash = 'chat';
   else route();
   if (hasAccess()) els.input.focus();
 }
 els.newChat.addEventListener('click', startNewChat);
-els.ctaNewChat.addEventListener('click', startNewChat);
+els.homeLink.addEventListener('click', (e) => {
+  if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  e.preventDefault();
+  if (location.hash) window.history.pushState(null, '', location.pathname); // Back returns to the chat
+  route();
+});
 
 /* ---------- google sign-in ---------- */
 let googleReady = null;
@@ -327,7 +338,6 @@ function initGoogle() {
           use_fedcm_for_prompt: true,
         });
         const style = { theme: 'outline', size: 'large', shape: 'pill', text: 'signin_with', logo_alignment: 'left' };
-        id.renderButton(els.landingGoogle, style);
         id.renderButton(els.dialogGoogle, { ...style, width: 280 });
         resolve(true);
       } else if (Date.now() - started > 15000) {
@@ -415,12 +425,12 @@ els.menuSignout.addEventListener('click', signOut);
 const VARIANTS = {
   start: {
     title: 'Start talking to Coach',
-    lede: 'Sign in with Google for 10 free prompts, or use your own API key.',
+    lede: 'Sign in with Google for 10 free prompts.',
     keyOnly: false,
   },
   expired: {
     title: 'Sign in again',
-    lede: 'Your Google sign-in expired. Sign in again to keep going, or use your own API key.',
+    lede: 'Your Google sign-in expired. Sign in again to keep going.',
     keyOnly: false,
   },
   credits: {
@@ -474,7 +484,11 @@ els.keyInput.addEventListener('keydown', (e) => {
   }
 });
 els.keyInput.addEventListener('input', () => { els.keyError.hidden = true; });
-els.cancelAccess.addEventListener('click', () => els.dialog.close('cancel'));
+els.closeAccess.addEventListener('click', () => els.dialog.close('cancel'));
+// the dialog's own box has no padding, so a click whose target is the dialog landed on the backdrop
+els.dialog.addEventListener('click', (e) => {
+  if (e.target === els.dialog) els.dialog.close('cancel');
+});
 els.forgetKey.addEventListener('click', () => {
   apiKey = '';
   save(STORE.key, null);
@@ -698,7 +712,6 @@ async function send(text) {
     const reply = textOf(result.content);
     if (!reply.trim()) throw new CoachError('No reply came back. Try again.');
     history.push({ role: 'assistant', content: result.content });
-    save(STORE.history, history);
     prose.innerHTML = markdown(reply);
     if (result.note) addNote(coachLi, result.note);
     counted();
@@ -708,7 +721,6 @@ async function send(text) {
     if (controller.signal.aborted && streamed.trim()) {
       // keep what arrived so the conversation stays coherent
       history.push({ role: 'assistant', content: [{ type: 'text', text: streamed }] });
-      save(STORE.history, history);
       prose.innerHTML = markdown(streamed);
       addNote(coachLi, 'Stopped.');
       counted();
@@ -734,7 +746,7 @@ function showFailure(err, userLi, text) {
   const retry = ['Retry', () => retryFrom(userLi, text)];
   const kind = err instanceof CoachError ? err.kind : 'generic';
   if (kind === 'credits') {
-    addError('You have run out of credits.', [['Add your own API key', () => openAccess('credits')], retry]);
+    addError('You have run out of credits.', [['Add API key', () => openAccess('credits')], retry]);
     track('out_of_credits');
   } else if (kind === 'expired') {
     session = null;
@@ -742,7 +754,7 @@ function showFailure(err, userLi, text) {
     addError('Your sign-in expired.', [retry]);
     openAccess('expired');
   } else if (kind === 'daily') {
-    addError(err.message, [['Add your own API key', () => openAccess('key')], retry]);
+    addError(err.message, [['Add API key', () => openAccess('key')], retry]);
     track('daily_limit');
   } else if (kind === 'key') {
     addError(err.message, [['Update key', () => openAccess('key')], retry]);

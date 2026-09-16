@@ -18,29 +18,49 @@
 
 /* ---------- masthead tools ---------- */
 .coach-page .topbar-inner { justify-content: space-between; }
-.coach-tools { display: flex; gap: 8px; }
-.tool-btn {
-  padding: 7px 14px;
-  border: 0;
+.coach-tools { display: flex; align-items: center; gap: 10px; }
+/* buttons: ink outline reads clearly on paper; the primary adds weight, not a black slab */
+.btn {
+  min-height: 40px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex: none;
+  border: 1.5px solid rgba(17, 17, 17, 0.28);
   border-radius: 999px;
-  background: linear-gradient(180deg, #f8f6f1, #e8e5dd);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 4px 10px -7px rgba(17, 17, 17, 0.45);
+  background: var(--paper-hi);
   color: var(--ink);
   cursor: pointer;
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.68rem;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  transition: transform 220ms var(--ease), color 160ms ease-out;
+  font: 600 0.9rem/1 "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+  white-space: nowrap;
+  transition: border-color 160ms ease-out, background 160ms ease-out, transform 220ms var(--ease);
 }
-.tool-btn:hover { color: var(--accent); transform: translateY(-1px); }
-.tool-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-.tool-btn.primary {
-  background: linear-gradient(180deg, #2a2a2a 0%, var(--ink) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 14px -8px rgba(17, 17, 17, 0.8);
-  color: var(--paper);
+@media (hover: hover) {
+  .btn:hover { border-color: var(--ink); background: #fff; }
+  .btn-primary:hover { background: #fff; box-shadow: inset 0 0 0 1px var(--ink), 0 8px 18px -10px rgba(17, 17, 17, 0.5); }
 }
-.tool-btn.primary:hover { color: var(--paper); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.btn-primary { border-color: var(--ink); box-shadow: 0 1px 0 rgba(255, 255, 255, 0.9) inset, 0 6px 14px -10px rgba(17, 17, 17, 0.5); }
+.btn-small { min-height: 32px; padding: 0 13px; font-size: 0.82rem; }
+.btn-link {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--graphite);
+  cursor: pointer;
+  font: 0.82rem "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+.btn-link:hover { color: var(--ink); }
+.btn-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+/* the coach wordmark: same Didot treatment as the site's, set in lowercase */
+.coach-mark { letter-spacing: -0.035em; }
 
 /* ---------- column ---------- */
 .coach-shell {
@@ -164,13 +184,15 @@
 @keyframes dot { 0%, 80%, 100% { opacity: 0.25; transform: translateY(0); } 40% { opacity: 1; transform: translateY(-3px); } }
 
 .msg-error {
-  padding: 12px 16px;
+  padding: 14px 16px;
   border: 1px solid rgba(150, 60, 40, 0.28);
   border-radius: 12px;
   background: rgba(190, 90, 60, 0.07);
   color: #6b2c1c;
-  font-size: 0.92rem;
+  font-size: 0.94rem;
+  line-height: 1.5;
 }
+.error-actions { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px; }
 .msg-meta { margin-top: 8px; color: var(--graphite); font-family: "Courier New", Courier, monospace; font-size: 0.66rem; }
 
 /* ---------- composer ---------- */
@@ -214,14 +236,14 @@
   place-items: center;
   width: 38px;
   height: 38px;
-  border: 0;
+  border: 1.5px solid var(--ink);
   border-radius: 50%;
-  background: linear-gradient(180deg, #2a2a2a 0%, var(--ink) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 6px 14px -8px rgba(17, 17, 17, 0.85);
-  color: var(--paper);
+  background: var(--paper-hi);
+  color: var(--ink);
   cursor: pointer;
-  transition: transform 200ms var(--ease), opacity 160ms ease-out;
+  transition: transform 200ms var(--ease), opacity 160ms ease-out, background 160ms ease-out;
 }
+.send-btn:not(:disabled):hover { background: #fff; }
 .send-btn svg { width: 18px; height: 18px; }
 .send-btn:hover { transform: translateY(-1px); }
 .send-btn:disabled { opacity: 0.3; cursor: default; transform: none; }
@@ -242,38 +264,57 @@
 .access-dialog {
   width: min(92vw, 440px);
   margin: auto;
-  padding: 26px 26px 22px;
+  padding: 0;
   border: 0;
   border-radius: 20px;
   background: var(--paper-hi);
   box-shadow: var(--lift-hover);
   color: var(--ink);
 }
+/* padding lives on the form so a click on the dialog element itself means the backdrop */
+.access-dialog form { position: relative; padding: 26px 26px 24px; }
 .access-dialog::backdrop { background: rgba(30, 28, 24, 0.32); backdrop-filter: blur(3px); -webkit-backdrop-filter: blur(3px); }
-.access-dialog h2 { font-family: var(--serif); font-size: 1.7rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1; }
+.access-dialog h2:focus { outline: none; }
+.access-dialog h2 { padding-right: 32px; font-family: var(--serif); font-size: 1.7rem; font-weight: 400; letter-spacing: -0.01em; line-height: 1.1; }
 .access-dialog p { margin-top: 10px; color: var(--graphite); font-size: 0.9rem; line-height: 1.55; }
-.access-dialog code { font-size: 0.84em; }
+.dialog-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--graphite);
+  cursor: pointer;
+}
+.dialog-close svg { width: 18px; height: 18px; }
+.dialog-close:hover { background: var(--accent-soft); color: var(--ink); }
+.dialog-close:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.key-row { margin-top: 8px; display: flex; gap: 8px; }
 .access-dialog input {
-  width: 100%;
-  margin-top: 16px;
-  padding: 11px 14px;
+  flex: 1;
+  min-width: 0;
+  min-height: 40px;
+  padding: 0 14px;
   border: 1px solid rgba(17, 17, 17, 0.18);
-  border-radius: 12px;
+  border-radius: 999px;
   background: #fff;
   color: var(--ink);
-  font: 0.9rem ui-monospace, "SF Mono", Menlo, monospace;
+  font: 0.88rem ui-monospace, "SF Mono", Menlo, monospace;
 }
 .access-dialog input:focus { border-color: var(--accent); outline: 2px solid var(--accent-soft); }
 .access-dialog .key-hint { margin-top: 8px; font-size: 0.8rem; }
-.key-actions { margin-top: 20px; display: flex; align-items: center; gap: 8px; }
-.key-actions .spacer { flex: 1; }
+.beta-mark { color: #8a3420; }
+.beta-note { color: var(--graphite); font-weight: 400; }
 
 /* ---------- small screens ---------- */
 @media (max-width: 620px) {
   .coach-shell { padding: 24px 20px 16px; }
   .starters { grid-template-columns: 1fr; }
-  .cta-row { flex-direction: column; align-items: stretch; }
-  .cta, .google-slot { width: 100%; justify-content: center; }
   .sample { padding: 18px 16px 20px; }
   .composer { padding-inline: 12px; }
   .composer-inner { width: 100%; }
@@ -308,31 +349,18 @@
   line-height: 1.6;
   text-wrap: pretty;
 }
-.advisor-line {
-  margin-top: 12px;
-  color: var(--graphite);
-  font-family: "Courier New", Courier, monospace;
-  font-size: 0.7rem;
-  letter-spacing: 0.02em;
-}
-.cta-row { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.cta {
-  min-height: 44px;
-  padding: 0 26px;
-  border: 0;
-  border-radius: 999px;
-  background: linear-gradient(180deg, #2a2a2a 0%, var(--ink) 100%);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18), 0 10px 24px -12px rgba(17, 17, 17, 0.85);
-  color: var(--paper);
-  cursor: pointer;
-  font: 600 0.98rem/1 "Avenir Next", Avenir, "Helvetica Neue", Arial, sans-serif;
-  transition: transform 220ms var(--ease);
-}
-.cta:hover { transform: translateY(-2px); }
-.cta:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
-.google-slot { min-height: 44px; display: flex; align-items: center; }
+.google-slot { min-height: 44px; display: flex; align-items: center; justify-content: center; }
 .google-slot:empty { display: none; }
-.cta-note { margin-top: 12px; color: var(--graphite); font-size: 0.86rem; }
+.cta-note { margin-top: 18px; color: var(--ink); font-size: 0.95rem; font-weight: 500; }
+.ephemeral {
+  max-width: 60ch;
+  margin-top: 10px;
+  padding-left: 12px;
+  border-left: 2px solid var(--line);
+  color: var(--graphite);
+  font-size: 0.84rem !important;
+  line-height: 1.5 !important;
+}
 
 .sample {
   position: relative;
@@ -362,7 +390,6 @@
 .sample .prose { font-size: 0.96rem; }
 
 /* ---------- account ---------- */
-.coach-tools { align-items: center; }
 .account { position: relative; }
 .avatar-btn {
   display: grid;
@@ -427,4 +454,3 @@
 .access-error { color: #8a3420 !important; font-size: 0.84rem !important; }
 .access-dialog.key-only .access-google, .access-dialog.key-only .access-or { display: none; }
 #credits-note:empty { display: none; }
-.msg-error .tool-btn { margin-left: 8px; }

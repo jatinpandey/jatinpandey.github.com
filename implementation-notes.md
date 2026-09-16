@@ -1,5 +1,18 @@
 # Implementation notes
 
+## 2026-09-16 — Coach UI cleanup
+
+- The masthead wordmark on `/coach` reads `coach` in the site's Didot style and returns to the Coach landing without losing the current chat (Back returns to it).
+- Landing: removed the in-page New chat and Google buttons (sign-in now happens from the message box dialog), the advisor names, "six lenses" (now "the POV of a curated set of people"), and the example's closing verdict. The example labels perspectives by what they stress instead of by name. The homepage Coach row and page description no longer name anyone. Added the ephemeral-chats notice to the landing and new-chat views.
+- Chats are now memory-only: nothing is written to localStorage, and history saved by the previous version is cleared on load.
+- Dialog: Google button centred; lede is just the free-prompt offer; the key field is marked "* (beta testers only)" with Use key beside it; the provider links and Cancel are gone; a close button, Escape, or a tap outside dismisses it.
+- Buttons are now ink-outlined pills in sentence case instead of black slabs and small uppercase mono; the send button matches. Error messages put their actions on their own row ("Add API key", "Retry").
+- `web-context.md` tells Coach never to name or identify the people behind the lenses and to describe them by what they emphasise.
+
+## Verification
+
+- Checked the landing, dialog and out-of-credits error at 1100px and 375px: Google button centred, tap outside closes the dialog, focus starts on the dialog title, no horizontal overflow, and no advisor names in the page text. No console errors.
+
 ## 2026-09-16 — Coach spend and abuse limits
 
 - Free-tier requests (coach-api) now go through, in order: a verified Google account, a 256 KB body cap, a 4,000-character cap on the new message, history trimmed to the newest ~24,000 characters (older turns dropped, long ones truncated), one in-flight reply per account, a 200-prompt daily ceiling across all users, the 10-prompt lifetime credit, and a 4,000-token reply cap (gpt-5 at low reasoning effort). Credit and daily slot are refunded when no reply arrives. All limits are environment variables.

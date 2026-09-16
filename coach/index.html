@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="description" content="Coach — your personal board of directors. Candid advice through six lenses, from Buddha to Rick Rubin." />
+  <meta name="description" content="Coach — your personal board of directors. Candid advice from the POV of a curated set of people." />
   <meta name="robots" content="noindex" />
   <title>Coach - Your personal board of directors</title>
   <link rel="icon" href="/projects/images/spot-coach.svg" type="image/svg+xml" />
@@ -16,9 +16,9 @@
 
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="site-name" href="/" aria-label="Jatin Pandey, home"><span class="tittled"><span class="glyph">j</span><i class="tittle"></i></span>at<span class="tittled"><span class="glyph">i</span><i class="tittle"></i></span>n</a>
+      <a class="site-name coach-mark" href="/coach/" id="home-link" aria-label="Coach, home">coach</a>
       <nav class="coach-tools" aria-label="Coach controls">
-        <button type="button" class="tool-btn" id="new-chat">New chat</button>
+        <button type="button" class="btn btn-small" id="new-chat">New chat</button>
         <div class="account" id="account" hidden>
           <button type="button" class="avatar-btn" id="account-btn" aria-haspopup="menu" aria-expanded="false" aria-controls="account-menu">
             <img id="account-avatar" alt="" referrerpolicy="no-referrer" hidden />
@@ -41,13 +41,9 @@
     <section class="landing" id="landing" hidden>
       <p class="eyebrow">Coach</p>
       <h1>Your personal board of directors</h1>
-      <p class="lede">Bring a decision, a pattern you can’t shake, or a week that got away from you. Coach answers through six lenses and tells you where they disagree.</p>
-      <p class="advisor-line">Buddha · Shah&nbsp;Rukh&nbsp;Khan · Jordan&nbsp;Peterson · Elon&nbsp;Musk · Naval&nbsp;Ravikant · Rick&nbsp;Rubin</p>
-      <div class="cta-row">
-        <button type="button" class="cta" id="cta-new-chat">New chat</button>
-        <div class="google-slot" id="landing-google" hidden></div>
-      </div>
-      <p class="cta-note" id="landing-note">Sign in with Google for 10 free prompts, or bring your own Anthropic or OpenAI key.</p>
+      <p class="lede">Bring a decision, a pattern you can’t shake, or a week that got away from you. Coach answers from the POV of a curated set of people and tells you where they disagree.</p>
+      <p class="cta-note" id="landing-note">Type a message below to start.</p>
+      <p class="ephemeral">These chats are ephemeral and are not stored anywhere. Once you close or start a new chat, you lose your older chats and responses.</p>
 
       <figure class="sample" aria-label="Example conversation">
         <figcaption>Example</figcaption>
@@ -55,14 +51,13 @@
         <div class="msg msg-coach">
           <div class="prose">
             <p><strong>What seems true:</strong> you’re asking which is safer, but the question underneath is which version of you each job builds.</p>
-            <p><strong>Where the lenses disagree</strong></p>
+            <p><strong>Where the perspectives disagree</strong></p>
             <ul>
-              <li><strong>Naval:</strong> pick the game that compounds. If the startup teaches you skills few people have, that edge outlasts the salary gap.</li>
-              <li><strong>Jordan Peterson:</strong> name the responsibilities you carry first (rent, family, debt). Excitement doesn’t cancel them.</li>
-              <li><strong>Buddha:</strong> notice how much of the pull is fear of missing out rather than the work itself.</li>
+              <li><strong>The long game:</strong> pick what compounds. If the startup teaches you skills few people have, that edge outlasts the salary gap.</li>
+              <li><strong>Responsibility first:</strong> name what you already carry (rent, family, debt). Excitement doesn’t cancel it.</li>
+              <li><strong>Clear-eyed calm:</strong> notice how much of the pull is fear of missing out rather than the work itself.</li>
             </ul>
             <p><strong>Do this week:</strong> write down what each role looks like on an ordinary Tuesday a year from now, then ask both teams the one question you’re avoiding.</p>
-            <p><code>Course-correct</code> if you’re choosing on status alone.</p>
           </div>
         </div>
       </figure>
@@ -73,6 +68,7 @@
       <div class="coach-intro" id="intro">
         <h1>New chat</h1>
         <p>What’s on your mind? Coach is candid and specific, and it won’t flatter you.</p>
+        <p class="ephemeral">These chats are ephemeral and are not stored anywhere. Once you close or start a new chat, you lose your older chats and responses.</p>
         <div class="starters" id="starters">
           <button type="button" class="starter">What should I focus on this week?</button>
           <button type="button" class="starter">What am I not seeing?</button>
@@ -100,8 +96,11 @@
 
   <dialog class="access-dialog" id="access-dialog" aria-labelledby="access-title">
     <form method="dialog" id="access-form">
-      <h2 id="access-title">Start talking to Coach</h2>
-      <p id="access-lede">Sign in with Google for 10 free prompts, or use your own API key.</p>
+      <button type="button" class="dialog-close" id="close-access" aria-label="Close">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <h2 id="access-title" tabindex="-1" autofocus>Start talking to Coach</h2>
+      <p id="access-lede">Sign in with Google for 10 free prompts.</p>
 
       <div class="access-google" id="access-google-section">
         <div class="google-slot" id="dialog-google"></div>
@@ -111,17 +110,14 @@
       <p class="access-or" id="access-or"><span>or</span></p>
 
       <div class="access-key">
-        <label for="key-input">Your Anthropic or OpenAI API key</label>
-        <input id="key-input" type="password" placeholder="sk-ant-… or sk-…" autocomplete="off" spellcheck="false" />
+        <label for="key-input">Your Anthropic or OpenAI API key<span class="beta-mark">*</span> <span class="beta-note">(beta testers only)</span></label>
+        <div class="key-row">
+          <input id="key-input" type="password" placeholder="sk-ant-… or sk-…" autocomplete="off" spellcheck="false" />
+          <button type="submit" class="btn btn-primary" id="save-key">Use key</button>
+        </div>
         <p class="access-error" id="key-error" hidden></p>
-        <p class="key-hint">Stored only in this browser and sent only to the provider it belongs to. Get one from <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">Anthropic</a> or <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">OpenAI</a>.</p>
-      </div>
-
-      <div class="key-actions">
-        <button type="button" class="tool-btn" id="forget-key" hidden>Forget key</button>
-        <span class="spacer"></span>
-        <button type="button" class="tool-btn" id="cancel-access">Cancel</button>
-        <button type="submit" class="tool-btn primary" id="save-key">Use key</button>
+        <p class="key-hint">Stored only in this browser and sent only to the provider it belongs to.</p>
+        <button type="button" class="btn-link" id="forget-key" hidden>Forget saved key</button>
       </div>
     </form>
   </dialog>
