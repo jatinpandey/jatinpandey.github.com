@@ -571,6 +571,10 @@ function failure(status, body, m) {
       return new CoachError('Coach is still answering your last message.');
     case 'daily_limit':
       return new CoachError('Coach has used up today’s free prompts for everyone. Try again tomorrow.', 'daily');
+    case 'free_unavailable':
+      return new CoachError('Free prompts are paused right now. Try again later.');
+    case 'provider_no_credits':
+      return new CoachError(`Your ${provider} account is out of credits. Add credits with ${provider}, or use a different key.`, 'key');
     case 'provider_rate_limit':
       return new CoachError(`${provider} rate limit or quota reached. Check your ${provider} billing, or retry shortly.`);
     case 'refused':

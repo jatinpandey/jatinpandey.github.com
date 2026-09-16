@@ -1,5 +1,14 @@
 # Implementation notes
 
+## 2026-09-16 — Coach privacy policy, logo, and clearer provider errors
+
+- Added `/coach/privacy/`, a plain-language privacy policy covering Google account data, messages, API keys, analytics and deletion, linked from the Coach landing page. Added `coach/logo.png` (120×120) for Google branding.
+- coach-api now tells an OpenAI account with no credits apart from a rate limit: free prompts show "Free prompts are paused right now" (and log an error for the owner), own keys show that the provider account is out of credits. Anthropic's empty-balance error maps to the same own-key message.
+
+## Verification
+
+- Checked the privacy page at phone width and the logo render. Confirmed from coach-api logs that the earlier "busy" message came from OpenAI's no-credits response.
+
 ## 2026-09-16 — Coach instructions private; all chats via coach-api
 
 - Coach's instructions no longer ship to the browser. `coach/skill/` is removed from the site; coach-api bundles them at deploy time (`npm run prompt` reads the skill files in `~/Desktop/life-coach` plus `web-context.md` into `api/_prompt.js`, and `.vercelignore` keeps the sources out of the upload).
