@@ -10,22 +10,28 @@ let step=-1;
 const track=$('#flow-track');
 flow.forEach((s,i)=>{const dot=document.createElement('button');dot.className='flow-dot';dot.dataset.phase=s.phase;dot.title=`${i+1}. ${s.title}`;dot.setAttribute('aria-label',`Step ${i+1}: ${s.title}`);if(i&&s.phase!==flow[i-1].phase)dot.classList.add('phase-start');dot.onclick=()=>goTo(i);track.append(dot)});
 function goTo(i){step=i;const s=flow[i],last=i===flow.length-1;
- $('#flow-phase').textContent=phases[s.phase];$('#flow-count').textContent=`Step ${i+1} of ${flow.length}`;
+ $('#flow-phase').textContent=phases[s.phase];
  $('#flow-title').textContent=s.title;$('#flow-what').textContent=s.what;$('#flow-handoff').textContent=s.handoff;
  const branch=displayBranch.from===s.part;$('#flow-branch').hidden=!branch;
  if(branch)$('#flow-branch').textContent=`${displayBranch.title} — ${displayBranch.steps.map(b=>parts.find(p=>p.id===b.part).name).join(' → ')}.`;
- // The last step hands back to the escape wheel, so the loop is where Next goes.
+ // The last step glows at the escape wheel it hands back to, even though Next restarts.
  const nextPart=last?s.loopsBackTo:flow[i+1].part;
  model?.flowStep({part:s.part,supporting:s.supporting,done:flow.slice(0,i).flatMap(d=>[d.part,...(d.supporting??[])]),next:nextPart});
- $('#flow-back').disabled=i===0;$('#flow-next').textContent=last?'Watch it repeat':'Next';
+ $('#flow-back').disabled=i===0;$('#flow-next').textContent=last?'Start over':'Next';renderBar();
  [...track.children].forEach((dot,n)=>{dot.classList.toggle('current',n===i);dot.classList.toggle('done',n<i)});
 }
+// Collapsed leaves the bar, progress track and Back/Next, so the watch stays visible.
+let collapsed=false;
+function renderBar(){const s=flow[step];$('#flow-count').textContent=collapsed&&s?`Step ${step+1} of ${flow.length} · ${s.title}`:`Step ${step+1} of ${flow.length}`}
+function setCollapsed(v){collapsed=v;$('#flow-body').hidden=v;$('#flow-toggle').textContent=v?'▴':'▾';$('#flow-toggle').setAttribute('aria-expanded',String(!v));$('#flow-toggle').setAttribute('aria-label',`${v?'Expand':'Collapse'} walkthrough`);renderBar()}
+$('#flow-toggle').onclick=()=>setCollapsed(!collapsed);
 function startFlow(){clear();$('#flow').hidden=false;$('#flow-start').hidden=true;goTo(0);$('#flow-next').focus()}
 // Leaves the walkthrough. A part picked on the model or in search takes over the highlight itself.
 function stopFlow(keepHighlight){if(step<0)return;step=-1;$('#flow').hidden=true;$('#flow-start').hidden=false;if(!keepHighlight)model?.select(null)}
 $('#flow-start').onclick=startFlow;$('#flow-close').onclick=()=>stopFlow();
 $('#flow-back').onclick=()=>step>0&&goTo(step-1);
-$('#flow-next').onclick=()=>goTo(step===flow.length-1?flow.findIndex(s=>s.part===flow.at(-1).loopsBackTo):step+1);
+// The last step still points at the escape wheel it hands back to, but Next starts again at step 1.
+$('#flow-next').onclick=()=>goTo(step===flow.length-1?0:step+1);
 const search=$('#search'),results=$('#search-results');function updateSearch(){const q=search.value.trim();results.replaceChildren();if(!q){results.hidden=true;return}const matches=findParts(q);results.hidden=false;if(!matches.length){const p=document.createElement('p');p.textContent='No components found. Try “spring” or “seconds”.';results.append(p);return}for(const p of matches){const button=document.createElement('button');const label=document.createElement('span');label.textContent=p.name;const meta=document.createElement('small');meta.textContent=p.category;button.append(label,meta);button.onclick=()=>{select(p.id);search.value=p.name;search.focus()};results.append(button)}}search.oninput=updateSearch;search.onfocus=()=>{if(search.value)updateSearch()};search.onkeydown=e=>{if(e.key==='ArrowDown'){e.preventDefault();results.querySelector('button')?.focus()}if(e.key==='Enter'){const match=findParts(search.value)[0];if(match){select(match.id);search.value=match.name}}if(e.key==='Escape'){results.hidden=true;search.blur()}};results.onkeydown=e=>{const buttons=[...results.querySelectorAll('button')],i=buttons.indexOf(document.activeElement);if(e.key==='ArrowDown'){e.preventDefault();buttons[(i+1)%buttons.length]?.focus()}if(e.key==='ArrowUp'){e.preventDefault();if(i===0)search.focus();else buttons[i-1]?.focus()}if(e.key==='Escape'){results.hidden=true;search.focus()}};document.addEventListener('pointerdown',e=>{if(!e.target.closest('.search-wrap'))results.hidden=true});
 function playUI(){const playing=model?.isPlaying()??false;$('#play').textContent=playing?'Ⅱ':'▶';$('#play').setAttribute('aria-label',playing?'Pause animation':'Play animation')}
 $('#play').onclick=()=>{model?.setPlaying(!model.isPlaying());playUI()};$('#step').onclick=()=>{model?.step();playUI()};$('#speed').onchange=e=>model?.setSpeed(Number(e.target.value));$('#explode').oninput=e=>{const v=Number(e.target.value);$('#explode-value').textContent=`${v}%`;model?.setExplode(v/100)};
