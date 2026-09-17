@@ -53,21 +53,30 @@ export function createWatch(host,onPick,onMiss=()=>{}){
  const casing=part('case',0,0,-.3,0);ring(casing,3.50,.24,.80,mats.silver);const bezel=part('case',0,0,-1.1,-2.6);ring(bezel,3.5,.43,.15,mats.silver);const glass=part('case',0,0,-1.25,-2.8);const crystalMat=new THREE.MeshPhysicalMaterial({color:0xe1f0fa,metalness:0,roughness:.05,transparent:true,opacity:.13,depthWrite:false});cylinder(glass,3.05,.025,crystalMat);
  // Contact shadow anchors the assembly without a distracting floor plane.
  const cv=document.createElement('canvas');cv.width=cv.height=128;const ctx=cv.getContext('2d');const grad=ctx.createRadialGradient(64,64,5,64,64,64);grad.addColorStop(0,'rgba(58,72,88,.25)');grad.addColorStop(1,'rgba(58,72,88,0)');ctx.fillStyle=grad;ctx.fillRect(0,0,128,128);const shadow=new THREE.Mesh(new THREE.PlaneGeometry(10,10),new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(cv),transparent:true,depthWrite:false}));shadow.position.z=-1.5;scene.add(shadow);
- let selected=null,explode=0,time=0,last=performance.now(),playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,speed=.1,targetCamera=null,targetLook=null;
- // Every part starts visible; the component list hides parts or whole sections.
+ let explode=0,time=0,last=performance.now(),playing=!matchMedia('(prefers-reduced-motion: reduce)').matches,speed=.1,targetCamera=null,targetLook=null;
+ // Every part is visible; only a search pick that sits under the dial hides what covers it.
  const hidden=new Set();
  function visibility(){for(const [id,gs] of registry)for(const g of gs)g.visible=!hidden.has(id)}
  visibility();
+ // Three highlight states: the parts in focus now, the ones the energy has already passed
+ // through, and the one it reaches next. Everything else keeps its own finish.
+ let current=new Set(),trail=new Set(),nextId=null;
+ const trailTint=new THREE.Color(0x35638f);
  function highlight(){
   for(const m of meshes){
-   const mat=m.material,base=m.userData.baseSurface;
+   const mat=m.material,base=m.userData.baseSurface,id=m.userData.id;
    mat.color.copy(m.userData.baseColor);mat.emissive.set(0);mat.emissiveIntensity=0;
    Object.assign(mat,base);
-   // Only the selected part changes; everything else keeps its own finish.
-   if(selected&&m.userData.id===selected){
+   if(current.has(id)){
     // Matte navy stays distinct under bright studio reflections, including jewels.
     mat.color.set(0x082b50);mat.metalness=0;mat.roughness=.78;
     mat.opacity=1;mat.transparent=false;mat.depthWrite=true;
+   }else if(id===nextId){
+    // The part about to receive the energy glows faintly, without going solid.
+    mat.emissive.set(0x1f4b73);mat.emissiveIntensity=.45;
+   }else if(trail.has(id)){
+    // Already covered: tinted toward the highlight colour, but still metallic.
+    mat.color.lerp(trailTint,.5);mat.metalness=Math.min(mat.metalness,.4);mat.roughness=.62;
    }
    mat.needsUpdate=true;
   }
@@ -75,10 +84,13 @@ export function createWatch(host,onPick,onMiss=()=>{}){
 
  // A part tapped on the model is already in view, so leave the camera and layers alone.
  // Parts chosen from search or links may be buried, so reveal them.
- function select(id,{fromModel=false}={}){selected=id;if(id&&!fromModel){hidden.delete(id);if(id==='mainspring'){hidden.add('winding');hidden.add('click')}if(['cannon','motion','hands'].includes(id)){view('dial');if(id!=='hands')hidden.add('hands');hidden.add('case')}}visibility();highlight()}
+ function reveal(id){hidden.clear();if(id==='mainspring'){hidden.add('winding');hidden.add('click')}if(['cannon','motion','hands'].includes(id)){view('dial');if(id!=='hands')hidden.add('hands');hidden.add('case')}}
+ function select(id,{fromModel=false}={}){current=new Set(id?[id]:[]);trail.clear();nextId=null;if(id&&!fromModel)reveal(id);visibility();highlight()}
+ // One step of the guided walkthrough, with the parts behind and ahead of it.
+ function flowStep({part,supporting=[],done=[],next=null}){current=new Set([part,...supporting]);trail=new Set(done);nextId=next;reveal(part);visibility();highlight()}
  // Back the camera off until the whole watch, crown included, fits between the side panels.
  // A page opened in a hidden tab can report a zero-sized window, so fall back to a laptop size.
- function fitDistance(){const w=innerWidth||1280,h=innerHeight||800;const radius=4.3,halfFov=Math.tan(THREE.MathUtils.degToRad(camera.fov/2)),aspect=w/h;const clearWidth=w<700?.95:Math.min(1,Math.max(.45,(w-640)/w));return Math.min(38,Math.max(radius/(halfFov*.72),radius/(halfFov*aspect*clearWidth)))}
+ function fitDistance(){const w=innerWidth||1280,h=innerHeight||800;const radius=4.3,halfFov=Math.tan(THREE.MathUtils.degToRad(camera.fov/2)),aspect=w/h;const clearWidth=w<700?.95:Math.min(1,Math.max(.45,(w-380)/w));return Math.min(38,Math.max(radius/(halfFov*.72),radius/(halfFov*aspect*clearWidth)))}
  function viewPosition(name){const distance=fitDistance();const map={angle:[0,-distance*.44,distance*.91],top:[0,-.01,distance],side:[0,-distance,1],dial:[0,.01,-distance]};return new THREE.Vector3(...map[name])}
  function view(name){const target=new THREE.Vector3(0,0,explode?1:0);targetCamera=viewPosition(name).add(target);targetLook=target;}
  function focus(id){const gs=registry.get(id);if(!gs)return;const box=new THREE.Box3();gs.filter(g=>g.visible).forEach(g=>box.expandByObject(g));const center=box.getCenter(new THREE.Vector3());const radius=box.getSize(new THREE.Vector3()).length()/2;const direction=camera.position.clone().sub(controls.target).normalize();targetLook=center;targetCamera=center.clone().add(direction.multiplyScalar(Math.max(1.6,radius*3.3)));}
@@ -89,5 +101,5 @@ export function createWatch(host,onPick,onMiss=()=>{}){
  if((playing&&now-lastSpringFrame>33)||needsFrame){lastSpringFrame=now;const oldGeo=hairMesh.geometry;hairMesh.geometry=springGeometry(.09,.76,6,0,a.balance*.45);oldGeo.dispose();needsFrame=false;}
  for(const gs of registry.values())for(const g of gs){const b=g.userData.base,l=g.userData.layer;g.position.set(b.x+explode*b.x*.25,b.y+explode*b.y*.25,b.z+explode*l*.7)}
  if(targetCamera){camera.position.lerp(targetCamera,.09);controls.target.lerp(targetLook,.09);if(camera.position.distanceTo(targetCamera)<.015){targetCamera=null;targetLook=null}}controls.update();renderer.render(scene,camera)}let needsFrame=true,lastSpringFrame=0;requestAnimationFrame(animate);
- return {select,focus,setSpeed:v=>speed=v,setPlaying:v=>{playing=v;return playing},isPlaying:()=>playing,step:()=>{playing=false;time=(Math.floor(time*5+1e-6)+1)/5;needsFrame=true},setExplode:v=>explode=v,toggle:id=>{hidden.has(id)?hidden.delete(id):hidden.add(id);visibility();return !hidden.has(id)},setVisible:(ids,visible)=>{for(const id of ids)visible?hidden.delete(id):hidden.add(id);visibility()},isVisible:id=>!hidden.has(id),dispose:()=>renderer.dispose()};
+ return {select,flowStep,focus,setSpeed:v=>speed=v,setPlaying:v=>{playing=v;return playing},isPlaying:()=>playing,step:()=>{playing=false;time=(Math.floor(time*5+1e-6)+1)/5;needsFrame=true},setExplode:v=>explode=v,dispose:()=>renderer.dispose()};
 }
