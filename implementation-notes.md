@@ -1,5 +1,13 @@
 # Implementation notes
 
+## 2026-09-17 — Coach verdict shows the whole scale
+
+- Replies now end with all three verdicts in order — Keep going · Course-correct · Stop kidding yourself — with the board's choice in bold rather than only the chosen one. The page turns that line into a row of chips under a hairline rule, with the chosen chip outlined in ink, filled with the accent tint and bold, and marked `aria-current`. The landing example runs through the same transform.
+
+## Verification
+
+- With a mocked reply in the browser: the streamed reply and the landing example both render three chips with Course-correct marked, and the transform is idempotent while the text streams in.
+
 ## 2026-09-17 — Coach names its advisors again
 
 - Replies name Buddha, Shah Rukh Khan, Jordan Peterson, Elon Musk, Naval Ravikant and Rick Rubin instead of the abstract seat names; each still gets its own heading, voice and clear position. The instructions keep them as lenses rather than impersonations: no invented quotes, no "X would say", no claim that they are involved, no caricature.

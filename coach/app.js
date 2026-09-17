@@ -122,6 +122,36 @@ function markdown(text) {
   return purify.sanitize(window.marked.parse(text, { gfm: true, breaks: false }));
 }
 
+// Coach ends on "Verdict: Keep going · Course-correct · Stop kidding yourself" with its
+// choice in bold. Show the whole scale, with that option marked.
+function renderVerdict(container) {
+  for (const p of container.querySelectorAll('p')) {
+    const match = p.textContent.trim().match(/^Verdict:\s*(.+)$/i);
+    if (!match || p.querySelector('.verdict-chip')) continue;
+    const chosen = p.querySelector('strong, b')?.textContent.trim().toLowerCase();
+    const options = match[1].split('·').map((o) => o.trim()).filter(Boolean);
+    if (options.length < 2) continue;
+
+    const line = document.createElement('p');
+    line.className = 'verdict';
+    const label = document.createElement('span');
+    label.className = 'verdict-label';
+    label.textContent = 'Verdict';
+    line.append(label);
+    for (const option of options) {
+      const chip = document.createElement('span');
+      chip.className = 'verdict-chip';
+      chip.textContent = option;
+      if (chosen && option.toLowerCase() === chosen) {
+        chip.classList.add('is-chosen');
+        chip.setAttribute('aria-current', 'true');
+      }
+      line.append(chip);
+    }
+    p.replaceWith(line);
+  }
+}
+
 function nearBottom() {
   return window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 160;
 }
@@ -187,7 +217,10 @@ function addCoach(text = '') {
   li.className = 'msg msg-coach';
   const prose = document.createElement('div');
   prose.className = 'prose';
-  if (text) prose.innerHTML = markdown(text);
+  if (text) {
+    prose.innerHTML = markdown(text);
+    renderVerdict(prose);
+  }
   else prose.innerHTML = '<span class="pending" aria-label="Coach is thinking"><i></i><i></i><i></i></span>';
   li.append(prose);
   els.thread.append(li);
@@ -633,6 +666,7 @@ async function send(text) {
     frame = 0;
     const follow = nearBottom();
     prose.innerHTML = markdown(streamed);
+    renderVerdict(prose);
     if (follow) scrollToEnd(true);
   };
   const counted = () => {
@@ -656,6 +690,7 @@ async function send(text) {
     if (!reply.trim()) throw new CoachError('No reply came back. Try again.');
     history.push({ role: 'assistant', content: result.content });
     prose.innerHTML = markdown(reply);
+    renderVerdict(prose);
     counted();
   } catch (err) {
     if (frame) cancelAnimationFrame(frame);
@@ -664,6 +699,7 @@ async function send(text) {
       // keep what arrived so the conversation stays coherent
       history.push({ role: 'assistant', content: streamed });
       prose.innerHTML = markdown(streamed);
+      renderVerdict(prose);
       addNote(coachLi, 'Stopped.');
       counted();
     } else {
@@ -775,6 +811,7 @@ if (session && session.exp < Date.now() - 30 * 24 * 3600 * 1000) {
   session = null;
   save(STORE.session, null);
 }
+document.querySelectorAll('.sample .prose').forEach(renderVerdict); // the landing example uses the same scale
 renderHistory();
 route();
 initGoogle();
