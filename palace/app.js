@@ -4,8 +4,9 @@
 (() => {
   'use strict';
 
-  const { PALACES, ORDER, OBJECTS, DIGIT_SOUNDS, PEGS, LEVELS } = window.MEMORY_PALACE;
-  const KEY = 'memory-palace:v1';
+  const { PALACES, ORDER, OBJECTS, DIGIT_SOUNDS, PEGS, LEVELS } = window.PALACE;
+  const KEY = 'palace:v1';
+  const OLD_KEY = 'memory-palace:v1'; // before the move to /palace/
   const PASS = 0.9;            // share right that counts as a passing day
   const PASSES_NEEDED = 3;     // passing days in a row to unlock the next level
   const STALE_DAYS = 7;        // older lists skip the next-day check
@@ -33,7 +34,6 @@
   const view = document.getElementById('view');
   const streakEl = document.getElementById('streak');
   const storageNote = document.getElementById('storage-note');
-  const resetDialog = document.getElementById('reset-dialog');
 
   let storageOk = true;
   let state = load();
@@ -72,6 +72,11 @@
   }
   function load() {
     try {
+      const old = localStorage.getItem(OLD_KEY);
+      if (old != null) {
+        if (localStorage.getItem(KEY) == null) localStorage.setItem(KEY, old);
+        localStorage.removeItem(OLD_KEY);
+      }
       const saved = JSON.parse(localStorage.getItem(KEY));
       if (saved && saved.v === 1) return Object.assign(blank(), saved);
     } catch (e) {
@@ -87,7 +92,7 @@
       storageOk = false;
     }
   }
-  const track = (step, params) => window.gtag?.('event', `memory_palace_${step}`, params);
+  const track = (step, params) => window.gtag?.('event', `palace_${step}`, params);
 
   /* ---------- picking lists ---------- */
   function shuffle(list) {
@@ -712,28 +717,38 @@
       heading, lede, form, fb, after, skip));
   }
 
-  // one spot at a time: today's recall and the next-day check share this
-  function walkPanel({ palaceId, levelN, items, answers, i, eyebrow, onBack, onDone, onSave }) {
+  // one spot at a time: today's recall and the next-day check share this.
+  // Submitting a spot checks it straight away; a checked spot's answers are locked.
+  function walkPanel({ palaceId, levelN, items, scenes, answers, checked, i, eyebrow, onBack, onDone, onSave }) {
     const p = PALACES[palaceId];
     const level = levelOf(levelN);
     const isNum = level.kind === 'numbers';
     const sp = p.spots[i];
     const ks = itemsAt(items, i);
+    const done = checked.includes(i);
     const inputs = ks.map((k, j) => {
       const el = h('input', {
         type: 'text', id: `answer-${j}`, maxlength: 40, autocomplete: 'off', autocapitalize: 'off', spellcheck: 'false',
-        inputmode: isNum ? 'numeric' : null, 'data-autofocus': j === 0,
+        inputmode: isNum ? 'numeric' : null, 'data-autofocus': !done && j === 0, readonly: done,
         oninput: (e) => { answers[k] = e.target.value; onSave(); }
       });
       el.value = answers[k] || '';
       el.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter' && j < ks.length - 1) {
+        if (e.key === 'Enter' && !done && j < ks.length - 1) {
           e.preventDefault();
           inputs[j + 1].focus();
         }
       });
       return el;
     });
+    const verdict = (k) => {
+      const it = items[k];
+      if (grade(level.kind, answers[k], it.value)) return h('p', { class: 'verdict is-right' }, '✓ Right');
+      const shown = isNum ? `${it.value} (${PEGS[Number(it.value)]})` : it.value;
+      return h('div', { class: 'verdict is-wrong' },
+        h('p', {}, '✗ It was ', h('strong', {}, shown)),
+        scenes[k] ? h('p', { class: 'hint' }, 'Your scene: ', h('q', {}, scenes[k])) : null);
+    };
     const noun = isNum ? 'number' : 'thing';
     const labelFor = (j) => (ks.length > 1 ? `${j === 0 ? 'First' : 'Second'} ${noun}` : (isNum ? 'The number' : 'What did you leave here?'));
     const last = i === p.spots.length - 1;
@@ -741,15 +756,23 @@
       class: 'walk-form',
       onsubmit: (e) => {
         e.preventDefault();
+        if (done) { onDone(last); return; }
         ks.forEach((k, j) => { answers[k] = inputs[j].value.trim(); });
-        onDone(last);
+        checked.push(i);
+        onSave();
+        render();
       }
     },
-      inputs.map((el, j) => [h('label', { for: el.id, class: 'field-label' }, labelFor(j)), el]),
-      h('p', { class: 'tip' }, 'Leave it blank if nothing comes.'),
+      inputs.map((el, j) => [
+        h('label', { for: el.id, class: 'field-label' }, labelFor(j)),
+        el,
+        done ? h('div', { role: j === 0 ? 'status' : null }, verdict(ks[j])) : null
+      ]),
+      done ? null : h('p', { class: 'tip' }, 'Leave it blank if nothing comes.'),
       h('div', { class: 'actions' },
         i > 0 ? btn('Back', onBack) : null,
-        h('button', { type: 'submit', class: 'btn btn-primary' }, last ? 'Finish' : 'Next spot')));
+        h('button', { type: 'submit', class: 'btn btn-primary', 'data-autofocus': done },
+          !done ? 'Check' : last ? 'See results' : 'Next spot')));
 
     return stage(palaceId, { current: i, done: new Set(range(i)) }, [
       h('p', { class: 'eyebrow' }, eyebrow),
@@ -764,8 +787,9 @@
   function viewRecall() {
     const a = active();
     const n = PALACES[a.palace].spots.length;
+    if (!a.checked) a.checked = [];
     return sessionFrame(walkPanel({
-      palaceId: a.palace, levelN: a.level, items: a.items, answers: a.answers, i: a.i,
+      palaceId: a.palace, levelN: a.level, items: a.items, scenes: a.scenes, answers: a.answers, checked: a.checked, i: a.i,
       eyebrow: `Recall · spot ${a.i + 1} of ${n}`,
       onSave: save,
       onBack: () => { a.i -= 1; save(); render(); },
@@ -783,8 +807,9 @@
     const c = a.check;
     const rec = state.sessions[c.index];
     const n = PALACES[rec.palace].spots.length;
+    if (!c.checked) c.checked = [];
     return sessionFrame(walkPanel({
-      palaceId: rec.palace, levelN: rec.level, items: rec.items, answers: c.answers, i: a.i,
+      palaceId: rec.palace, levelN: rec.level, items: rec.items, scenes: rec.scenes, answers: c.answers, checked: c.checked, i: a.i,
       eyebrow: `${capital(whenLabel(rec.date, a.date))} · spot ${a.i + 1} of ${n}`,
       onSave: save,
       onBack: () => { a.i -= 1; save(); render(); },
@@ -1023,11 +1048,11 @@
   }
 
   function how() {
-    return h('details', { class: 'how' },
+    return h('details', { class: 'how', open: true },
       h('summary', {}, 'How it works'),
       h('div', { class: 'how-body' },
         h('p', {}, 'A memory palace is a route through a place you know well. You leave a vivid picture at each stop, then walk the route in your head to collect them. Memory competitors use versions of it to learn whole decks of cards and thousands of digits.'),
-        h('p', {}, 'Each day you check yesterday’s list, place a new one, take a 30-second break, and walk back through. The three apartments take turns, so a new list never lands on top of yesterday’s.'),
+        h('p', {}, 'Each day you check yesterday’s list, place a new one, take a 30-second break, and walk back through. The two apartments take turns, so a new list never lands on top of yesterday’s.'),
         h('p', {}, 'Make the scenes strange. A violin kicking the purple door open will stick. A violin leaning against the door won’t.'),
         h('p', {}, 'Numbers use the Major system. Each digit is a consonant sound, and you add vowels to make a word you can picture. 47 is r then k, so it becomes a rock.'),
         h('div', { class: 'table-wrap' },
@@ -1074,11 +1099,11 @@
     }
   }
 
-  // Enter submits from any text box; Shift+Enter still breaks a line in the scene box
+  // Enter submits from any text box or submit button; Shift+Enter still breaks a line in the scene box
   view.addEventListener('keydown', (e) => {
     const el = e.target;
     if (e.key !== 'Enter' || e.shiftKey || e.isComposing || e.defaultPrevented || !el.form) return;
-    if (!el.matches('input[type="text"], textarea')) return;
+    if (!el.matches('input[type="text"], textarea, button[type="submit"]')) return;
     e.preventDefault();
     el.form.requestSubmit();
   });
@@ -1088,18 +1113,6 @@
     if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     e.preventDefault();
     showHome();
-  });
-
-  document.getElementById('reset-open').addEventListener('click', () => resetDialog.showModal());
-  document.getElementById('reset-cancel').addEventListener('click', () => resetDialog.close());
-  document.getElementById('reset-confirm').addEventListener('click', () => {
-    try { localStorage.removeItem(KEY); } catch (e) { /* nothing saved */ }
-    state = blank();
-    practice = null;
-    homeRequested = false;
-    notice = '';
-    resetDialog.close();
-    render();
   });
 
   tidy();

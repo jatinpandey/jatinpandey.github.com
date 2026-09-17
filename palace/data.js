@@ -3,7 +3,7 @@
    Each palace is a fixed walking route of ten spots. Floor plans are our own
    rough sketches in a 400 × 300 box: `shapes` draw the rooms, each spot has a
    marker position (x, y), and `via` bends the dashed route through doorways. */
-window.MEMORY_PALACE = (function () {
+window.PALACE = (function () {
   'use strict';
 
   // Layouts follow the real sets. The two Friends front doors face each other
@@ -264,5 +264,6 @@ window.MEMORY_PALACE = (function () {
     { n: 6, name: 'Two numbers per spot', blurb: 'Forty digits, two numbers at each spot.', kind: 'numbers', perSpot: 2, names: false }
   ];
 
-  return { PALACES: PALACES, ORDER: ['monica', 'joey', 'jerry'], OBJECTS: OBJECTS, DIGIT_SOUNDS: DIGIT_SOUNDS, PEGS: PEGS, LEVELS: LEVELS };
+  return { PALACES: PALACES, // Jerry's is drawn but hidden for now; add 'jerry' back here to use it
+    ORDER: ['monica', 'joey'], OBJECTS: OBJECTS, DIGIT_SOUNDS: DIGIT_SOUNDS, PEGS: PEGS, LEVELS: LEVELS };
 })();

@@ -1,12 +1,32 @@
 # Implementation notes
 
+## 2026-09-17 — Memory Palace moves to /palace/
+
+- The project now lives at `/palace/` (was `/memory-palace/`); the homepage row, masthead link and asset paths follow. The icon is now `projects/images/spot-palace.svg`, the data global is `window.PALACE`, analytics events are `palace_*`, and progress is stored under `palace:v1`. Anything saved under the old `memory-palace:v1` key is moved over on first load. The old URL has no redirect.
+- Footer: removed "Progress is saved in this browser only." and the Start over button (with its confirmation dialog).
+- The How it works section on the Memory Palace home view is open by default.
+- Jerry's apartment is hidden for the first release, which is Friends only: it stays in `data.js` but is left out of `ORDER`, so only Monica's and Joey and Chandler's appear and take turns.
+
+## Verification
+
+- Loaded `/palace/` and the homepage; the row links to `/palace/`, the icon loads, and a session saved under the old key came back after the move. `/memory-palace/` now returns 404.
+
+## 2026-09-17 — Memory Palace: instant feedback during recall
+
+- Recall and the next-day check now grade each spot when you submit it: "✓ Right", or "✗ It was …" with the scene you wrote. The button then reads Next spot (See results on the last spot). A checked spot's answer is locked, including when you go Back to it. The results screen and "Count it" work as before.
+- Enter on a focused submit button now submits the form, the same as Enter in a text box.
+
+## Verification
+
+- In the browser: a typo ("lipstik") showed Right, a wrong answer showed the correct word and its scene, Back showed the earlier spot still locked, the checked state survived a reload, and after all ten spots the results screen matched the answers as they were checked (5 of 10). No console errors.
+
 ## 2026-09-17 — Memory Palace
 
-- New project at `/memory-palace/`: a daily memory-palace practice built on two apartments from Friends, Monica's and Joey and Chandler's. Each has ten spots along a fixed route, shown on our own simplified floor plan (no stills or set art). The plans follow the sets' layout: the front doors face each other across the hall; Monica's has the kitchen by the door, the bathroom and locked closet off a short hallway, the balcony beyond the big window, and both bedrooms at the far end; Joey and Chandler's has the foosball table and kitchen counter by the door, the couch under the window, and the bedrooms at the far end.
+- New project at `/palace/`: a daily memory-palace practice built on two apartments from Friends, Monica's and Joey and Chandler's. Each has ten spots along a fixed route, shown on our own simplified floor plan (no stills or set art). The plans follow the sets' layout: the front doors face each other across the hall; Monica's has the kitchen by the door, the bathroom and locked closet off a short hallway, the balcony beyond the big window, and both bedrooms at the far end; Joey and Chandler's has the foosball table and kitchen counter by the door, the couch under the window, and the bedrooms at the far end.
 - Day one: a one-minute warm-up with no method, a guided tour of Monica's (walk the spots, then tap them in order forwards and backwards), then place ten objects, a 30-second counting break, and recall. The results screen puts the warm-up score next to the palace score.
 - Each later day: recall the previous list, then place a new one in the other apartment (first visit there includes its tour). Placing requires a written scene of at least three words. Misses show that scene, and "Count it" overrides the grader.
 - Six levels: objects (names shown, then hidden, then two per spot), then two-digit numbers using the Major system (with the picture shown, then on request, then two per spot). Three days in a row at 90%+ unlocks the next level. The home page shows the streak, level, last score, overnight retention, recent lists, both floor plans with a practice walk-through, and a How it works section.
-- Everything is stored in `localStorage` (`memory-palace:v1`). Sessions resume after a reload, "Save and exit" keeps them, and a session left unfinished from an earlier day is cleared. `?d=YYYY-MM-DD` pretends it's that day, for testing.
+- Everything is stored in `localStorage` (`palace:v1`). Sessions resume after a reload, "Save and exit" keeps them, and a session left unfinished from an earlier day is cleared. `?d=YYYY-MM-DD` pretends it's that day, for testing.
 - Added a Memory Palace row, with a new door icon, to the top of the homepage project list.
 - Added a third palace, Jerry's apartment from Seinfeld: front door, bike on the wall, kitchen counter, cereal shelf, dining table, couch, big window, desk, bed and bathtub. The three apartments now take turns, and each apartment card on the home page names its show. Swapped "bicycle" out of the word list so it can't land on the bike.
 - Project pages now show the project's name in place of the `jatin` wordmark, as Coach already did: `palace`, `canon` and `pi`. Each links to that project's own home. On Memory Palace it opens the home view in place, so a session in progress stays available to resume. External projects (Flixelated, Meanwhile in History) are unchanged.

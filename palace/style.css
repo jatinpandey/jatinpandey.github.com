@@ -67,10 +67,6 @@
 @media (hover: hover) {
   .btn-primary:hover { background: #2b2b2b; }
 }
-.btn-danger { border-color: var(--bad); background: var(--bad); color: #fff; }
-@media (hover: hover) {
-  .btn-danger:hover { border-color: #7f2e22; background: #7f2e22; }
-}
 .btn-small { min-height: 32px; padding: 0 13px; font-size: 0.82rem; }
 .btn-link {
   padding: 4px 0;
@@ -113,7 +109,7 @@
   font-family: var(--mono);
   font-size: 0.8rem;
 }
-.card h2, .panel h2, .mp-dialog h2 {
+.card h2, .panel h2 {
   margin: 0 0 10px;
   font-family: var(--serif);
   font-size: clamp(1.8rem, 3.6vw, 2.5rem);
@@ -239,6 +235,13 @@
 .tip { margin-top: 8px; color: var(--graphite); font-size: 0.88rem; }
 .error { min-height: 1.3em; margin-top: 6px; color: var(--bad); font-size: 0.88rem; }
 .feedback { min-height: 1.5em; margin-top: 14px; font-size: 0.95rem; }
+.verdict { margin-top: 8px; font-size: 0.95rem; }
+.verdict.is-right { color: var(--good); font-weight: 600; }
+.verdict.is-wrong > p:first-child { color: var(--bad); }
+.verdict.is-wrong strong { color: var(--ink); }
+.verdict .hint { margin-top: 2px; }
+.verdict q { font-style: italic; overflow-wrap: anywhere; }
+.mp-page input[readonly] { background: transparent; color: var(--graphite); }
 
 /* warm-up */
 .entry-row { display: flex; gap: 8px; }
@@ -405,24 +408,10 @@
 .digits { width: auto; }
 .digits th, .digits td { text-align: center; }
 
-/* ---------- footer and dialog ---------- */
+/* ---------- footer ---------- */
 .mp-footer { flex-direction: column; gap: 6px; }
 .mp-footer p { max-width: 46em; }
 .storage-note { color: var(--bad); }
-.mp-footer .btn-link { font-family: var(--mono); font-size: 0.82rem; }
-
-.mp-dialog {
-  width: min(92vw, 460px);
-  margin: auto;
-  padding: 26px 26px 22px;
-  border: 1px solid var(--card-line);
-  border-radius: 10px;
-  background: var(--card);
-  color: var(--ink);
-  box-shadow: var(--lift-hover);
-}
-.mp-dialog::backdrop { background: rgba(17, 17, 17, 0.35); }
-.mp-dialog p { color: var(--graphite); }
 
 /* ---------- small screens ---------- */
 @media (max-width: 760px) {
