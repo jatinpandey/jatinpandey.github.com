@@ -1,0 +1,37 @@
+# Memory Palace
+
+Ten minutes a day of memory-palace practice. You leave a list of things along a fixed route through a sitcom apartment (Monica's or Joey and Chandler's from Friends, or Jerry's from Seinfeld), take a short break, then walk back through and pick them up. The next day starts by checking what stuck.
+
+- `index.html`, `style.css`, `app.js`: the page. Static, no build step.
+- `data.js`: the three apartments (floor-plan shapes, ten spots each, route bends), the word list, the Major-system pictures for 00–99, and the six levels.
+
+Progress is kept in `localStorage` under `memory-palace:v1` and never leaves the browser.
+
+## A session
+
+1. **Warm-up** (day one only): ten words for a minute, then free recall with no method. Its score is shown next to the first palace score.
+2. **Last list**: walk the previous list's apartment and type what was at each spot. Skipped if that list is more than 7 days old.
+3. **Tour** (first visit to an apartment): walk the ten spots one by one, then tap them in order forwards and backwards. After two wrong taps the next spot lights up on the plan.
+4. **Place**: one item per screen. You must write a scene of at least three words.
+5. **Break**: 30 seconds of counting down by sevens.
+6. **Recall**: one spot at a time. Answers are forgiving about articles, plurals and small typos, and misses can be counted by hand.
+7. **Results**: the score, the scene you wrote for each miss, level progress, and what's next tomorrow.
+
+The three apartments take turns (Monica's, Joey and Chandler's, Jerry's), so a new list never goes where yesterday's still is. An unfinished session is cleared the next day, except one that only needed "Done" pressed; that one is saved.
+
+## Levels
+
+Scoring 90% or better on three days in a row, at the highest level you've unlocked, unlocks the next one. You can pick any unlocked level from the home page.
+
+| level | what |
+| --- | --- |
+| 1 | 10 objects |
+| 2 | 10 objects, spot names hidden during recall |
+| 3 | 20 objects, two per spot |
+| 4 | 10 two-digit numbers, with their Major-system picture shown |
+| 5 | 10 numbers, picture only on request |
+| 6 | 20 numbers, two per spot |
+
+## Testing
+
+`?d=2026-09-20` makes the page treat that date as today, so you can step through several days in a row. Start over (in the footer) clears everything.

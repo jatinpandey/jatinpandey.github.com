@@ -1,5 +1,23 @@
 # Implementation notes
 
+## 2026-09-17 — Memory Palace
+
+- New project at `/memory-palace/`: a daily memory-palace practice built on two apartments from Friends, Monica's and Joey and Chandler's. Each has ten spots along a fixed route, shown on our own simplified floor plan (no stills or set art). The plans follow the sets' layout: the front doors face each other across the hall; Monica's has the kitchen by the door, the bathroom and locked closet off a short hallway, the balcony beyond the big window, and both bedrooms at the far end; Joey and Chandler's has the foosball table and kitchen counter by the door, the couch under the window, and the bedrooms at the far end.
+- Day one: a one-minute warm-up with no method, a guided tour of Monica's (walk the spots, then tap them in order forwards and backwards), then place ten objects, a 30-second counting break, and recall. The results screen puts the warm-up score next to the palace score.
+- Each later day: recall the previous list, then place a new one in the other apartment (first visit there includes its tour). Placing requires a written scene of at least three words. Misses show that scene, and "Count it" overrides the grader.
+- Six levels: objects (names shown, then hidden, then two per spot), then two-digit numbers using the Major system (with the picture shown, then on request, then two per spot). Three days in a row at 90%+ unlocks the next level. The home page shows the streak, level, last score, overnight retention, recent lists, both floor plans with a practice walk-through, and a How it works section.
+- Everything is stored in `localStorage` (`memory-palace:v1`). Sessions resume after a reload, "Save and exit" keeps them, and a session left unfinished from an earlier day is cleared. `?d=YYYY-MM-DD` pretends it's that day, for testing.
+- Added a Memory Palace row, with a new door icon, to the top of the homepage project list.
+- Added a third palace, Jerry's apartment from Seinfeld: front door, bike on the wall, kitchen counter, cereal shelf, dining table, couch, big window, desk, bed and bathtub. The three apartments now take turns, and each apartment card on the home page names its show. Swapped "bicycle" out of the word list so it can't land on the bike.
+- Project pages now show the project's name in place of the `jatin` wordmark, as Coach already did: `palace`, `canon` and `pi`. Each links to that project's own home. On Memory Palace it opens the home view in place, so a session in progress stays available to resume. External projects (Flixelated, Meanwhile in History) are unchanged.
+
+## Verification
+
+- Ran the full day-one flow in the browser: warm-up grading (typo, plural and "the" all accepted), removing a warm-up answer, the tour with the wrong-pick hint, the short-scene error, the break timer running out, recall, and the "Count it" override (score went from 7 to 8 and scroll position held).
+- Used `?d=` to step through days 2 to 7: the next-day check, alternating apartments, Save and exit then Resume (the half-typed answer was still there), level 2 unlocking after three passing days, numbers with hints, answers like " 3 " matching "03", two numbers per spot (Enter moves to the second box, then submits), and clearing a session left unfinished from an earlier day.
+- Checked the home page and a walk-through at phone width, the Start over dialog (cancel keeps data, confirm clears it), and the homepage row. No console errors.
+- Rendered both floor plans to images to check that labels and the route stay clear of each other. Checked the new wordmarks on Memory Palace, Canon and Pi, and that clicking `palace` mid-session shows Resume.
+
 ## 2026-09-16 — Coach answers show each board seat
 
 - Coach's replies now follow a fixed shape: a short read, two to four board seats, where they clash, the board's call with time-boxed next moves, and a one-line verdict. Each seat has a name (The Calm Mind, The Heart, The Order-Keeper, The Builder, The Compounder, The Editor) and a distinct voice, and must take a clear position with one concrete move. Generic-assistant phrasing is ruled out. (Instructions live in coach-api.)
