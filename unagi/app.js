@@ -1,12 +1,12 @@
-/* Memory Palace — ten minutes a day of memory-palace practice.
+/* Unagi — ten minutes a day of memory-palace practice.
    Progress lives in localStorage under one key and never leaves the browser.
    ?d=YYYY-MM-DD pretends it is that day, for testing the daily flow. */
 (() => {
   'use strict';
 
   const { PALACES, ORDER, OBJECTS, DIGIT_SOUNDS, PEGS, LEVELS } = window.PALACE;
-  const KEY = 'palace:v1';
-  const OLD_KEY = 'memory-palace:v1'; // before the move to /palace/
+  const KEY = 'unagi:v1';
+  const OLD_KEYS = ['palace:v1', 'memory-palace:v1']; // earlier homes: /palace/, /memory-palace/
   const PASS = 0.9;            // share right that counts as a passing day
   const PASSES_NEEDED = 3;     // passing days in a row to unlock the next level
   const STALE_DAYS = 7;        // older lists skip the next-day check
@@ -72,10 +72,11 @@
   }
   function load() {
     try {
-      const old = localStorage.getItem(OLD_KEY);
-      if (old != null) {
+      for (const oldKey of OLD_KEYS) {
+        const old = localStorage.getItem(oldKey);
+        if (old == null) continue;
         if (localStorage.getItem(KEY) == null) localStorage.setItem(KEY, old);
-        localStorage.removeItem(OLD_KEY);
+        localStorage.removeItem(oldKey);
       }
       const saved = JSON.parse(localStorage.getItem(KEY));
       if (saved && saved.v === 1) return Object.assign(blank(), saved);
@@ -92,7 +93,7 @@
       storageOk = false;
     }
   }
-  const track = (step, params) => window.gtag?.('event', `palace_${step}`, params);
+  const track = (step, params) => window.gtag?.('event', `unagi_${step}`, params);
 
   /* ---------- picking lists ---------- */
   function shuffle(list) {
@@ -925,7 +926,7 @@
 
     out.push(h('header', { class: 'masthead' },
       h('p', { class: 'dateline' }, longDate(t)),
-      h('h1', {}, 'Memory Palace'),
+      h('h1', {}, 'Unagi'),
       h('p', { class: 'standfirst' }, 'Ten minutes a day to get better at remembering. Leave things around an apartment you know by heart, then walk back through and pick them up.')));
 
     if (notice) out.push(h('p', { class: 'notice', role: 'status' }, notice));

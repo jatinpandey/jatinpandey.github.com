@@ -1,4 +1,4 @@
-/* Memory Palace — palaces, word lists, and levels.
+/* Unagi — palaces, word lists, and levels.
 
    Each palace is a fixed walking route of ten spots. Floor plans are our own
    rough sketches in a 400 × 300 box: `shapes` draw the rooms, each spot has a

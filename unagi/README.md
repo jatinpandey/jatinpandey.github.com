@@ -1,6 +1,6 @@
-# Memory Palace
+# Unagi
 
-Lives at `/palace/`.
+The one where you remember. A memory-palace trainer set in the Friends apartments, named for Ross’s “state of total awareness”. Lives at `/unagi/`.
 
 Ten minutes a day of memory-palace practice. You leave a list of things along a fixed route through a sitcom apartment (Monica's or Joey and Chandler's from Friends), take a short break, then walk back through and pick them up. The next day starts by checking what stuck.
 
@@ -9,7 +9,7 @@ Ten minutes a day of memory-palace practice. You leave a list of things along a 
 
 Jerry's apartment from Seinfeld is drawn in `data.js` but left out of `ORDER`, so it doesn't appear yet. Add `'jerry'` to `ORDER` to bring it back.
 
-Progress is kept in `localStorage` under `palace:v1` (progress saved under the old `memory-palace:v1` key is moved over on first load) and never leaves the browser.
+Progress is kept in `localStorage` under `unagi:v1` (progress saved under the older `palace:v1` or `memory-palace:v1` keys is moved over on first load) and never leaves the browser.
 
 ## A session
 
@@ -38,4 +38,4 @@ Scoring 90% or better on three days in a row, at the highest level you've unlock
 
 ## Testing
 
-`?d=2026-09-20` makes the page treat that date as today, so you can step through several days in a row. To start fresh, run `localStorage.removeItem('palace:v1')` in the console and reload.
+`?d=2026-09-20` makes the page treat that date as today, so you can step through several days in a row. To start fresh, run `localStorage.removeItem('unagi:v1')` in the console and reload.

@@ -1,5 +1,13 @@
 # Implementation notes
 
+## 2026-09-17 — Memory Palace renamed Unagi
+
+- The project is now called Unagi, after Ross's "state of total awareness" in Friends: page title, heading, description, the `unagi` wordmark, and code comments. The homepage row reads "Unagi — The one where you remember." It now lives at `/unagi/` (moved from `/palace/`, no redirect), with the icon at `projects/images/spot-unagi.svg`, analytics events named `unagi_*`, and progress under `unagi:v1`; anything saved under `palace:v1` or `memory-palace:v1` is moved over on first load. The memory-palace technique keeps its name in the How it works text.
+
+## Verification
+
+- Checked the `/unagi/` page title, heading and wordmark, the homepage row link and text, that progress saved under `palace:v1` carries over, and that `/palace/` now returns 404.
+
 ## 2026-09-17 — Memory Palace moves to /palace/
 
 - The project now lives at `/palace/` (was `/memory-palace/`); the homepage row, masthead link and asset paths follow. The icon is now `projects/images/spot-palace.svg`, the data global is `window.PALACE`, analytics events are `palace_*`, and progress is stored under `palace:v1`. Anything saved under the old `memory-palace:v1` key is moved over on first load. The old URL has no redirect.
