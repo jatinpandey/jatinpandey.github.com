@@ -156,7 +156,7 @@
 .prose h2 { font-size: 1.45rem; }
 .prose h3 { font-size: 1.22rem; }
 .prose h4 { font-size: 1.06rem; }
-/* board seats: each reply section starts with a ruled seat name */
+/* each advisor's take starts with a ruled name */
 .msg-coach .prose h3 {
   margin-top: 1.6em;
   padding-top: 0.75em;
@@ -360,6 +360,7 @@
 }
 .google-slot { min-height: 44px; display: flex; align-items: center; justify-content: center; }
 .google-slot:empty { display: none; }
+.advisor-note { margin-top: 6px; color: var(--graphite); font-size: 0.78rem !important; }
 .cta-note { margin-top: 18px; color: var(--ink); font-size: 0.95rem; font-weight: 500; }
 .ephemeral {
   max-width: 60ch;

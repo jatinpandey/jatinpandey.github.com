@@ -1,5 +1,15 @@
 # Implementation notes
 
+## 2026-09-17 — Coach names its advisors again
+
+- Replies name Buddha, Shah Rukh Khan, Jordan Peterson, Elon Musk, Naval Ravikant and Rick Rubin instead of the abstract seat names; each still gets its own heading, voice and clear position. The instructions keep them as lenses rather than impersonations: no invented quotes, no "X would say", no claim that they are involved, no caricature.
+- The Coach landing page lists the advisors again, with a line saying Coach argues in the spirit of their public thinking and doesn't quote them. The example reply and the page description use the names.
+- The homepage project row still describes Coach without naming anyone.
+
+## Verification
+
+- Checked the landing page and example at desktop width. Reply wording still needs a real model call (`npm run try` in coach-api).
+
 ## 2026-09-17 — Memory Palace renamed Unagi
 
 - The project is now called Unagi, after Ross's "state of total awareness" in Friends: page title, heading, description, the `unagi` wordmark, and code comments. The homepage row reads "Unagi — The one where you remember." It now lives at `/unagi/` (moved from `/palace/`, no redirect), with the icon at `projects/images/spot-unagi.svg`, analytics events named `unagi_*`, and progress under `unagi:v1`; anything saved under `palace:v1` or `memory-palace:v1` is moved over on first load. The memory-palace technique keeps its name in the How it works text.
