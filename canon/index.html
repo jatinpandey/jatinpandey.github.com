@@ -57,6 +57,23 @@
     </form>
   </dialog>
 
+  <dialog class="spotlight" id="spotlight" aria-label="The work, lit">
+    <div class="room">
+      <figure class="spot-plate">
+        <span class="spot-frame">
+          <span class="spot-lip"><img class="spot-img" alt="" /></span>
+        </span>
+        <figcaption class="spot-label">
+          <span class="spot-title"></span>
+          <span class="spot-meta"></span>
+        </figcaption>
+      </figure>
+    </div>
+    <button type="button" class="spot-close" aria-label="Leave the spotlight">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+    </button>
+  </dialog>
+
   <template id="work-template">
     <article class="work">
       <p class="eyebrow"><span class="ordinal"></span><span class="category"></span><span class="span"></span></p>
@@ -68,6 +85,12 @@
             </span>
           </span>
         </a>
+        <button type="button" class="spotlight-btn">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3v2M5.2 5.2l1.4 1.4M18.8 5.2l-1.4 1.4M3 12h2M19 12h2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <circle cx="12" cy="13.5" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
+          </svg>Spotlight
+        </button>
       </figure>
       <header class="work-head">
         <h2 class="title"><span class="title-name"></span><span class="title-year"></span></h2>

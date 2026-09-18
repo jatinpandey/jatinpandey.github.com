@@ -79,6 +79,16 @@ the height cap, and `aspect-ratio` supplies the rest. Until the picture arrives
 the gilt is held back entirely and a plain silhouette stands in the same box,
 breathing slowly; the frame and the painting then fade in together.
 
+## The spotlight
+
+Under each plate is a control that opens the work in a dark room: a modal dialog
+filling the top layer, the page behind it covered and unscrollable, one warm
+wash falling from above the way a picture light does. The gilt is brightened a
+little and a faint rake of light crosses the canvas, both falling from the upper
+left, which is where the frame's own lighting was drawn from — so the room and
+the moulding agree about where the light is. A museum label sits underneath.
+Anywhere in the room closes it, as does Escape.
+
 ## The frame
 
 `scripts/frame.mjs` draws one carved moulding section and lights it per pixel —

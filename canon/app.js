@@ -158,8 +158,50 @@
       ul.appendChild(li);
     });
 
+    node.querySelector('.spotlight-btn').addEventListener('click', function () { spotlight(a); });
+
     new Player(node.querySelector('.player'), a);
     return node;
+  }
+
+  /* ---------- the spotlight ----------
+     One room, reused. The page behind is left in place and simply covered: a
+     modal dialog sits in the top layer, so nothing else can be reached or read
+     while the work is lit. */
+  var room = null;
+  function spotlight(a) {
+    if (!room) room = wireSpotlight();
+    if (!room) return;
+    room.plate.style.setProperty('--w', a.w);
+    room.plate.style.setProperty('--h', a.h);
+    room.img.src = img(a.file, 2600);
+    room.img.srcset = srcset(a);
+    room.img.sizes = '92vw';
+    room.img.alt = a.title + ' by ' + a.artist + ', ' + a.year;
+    room.title.textContent = a.title;
+    room.meta.textContent = a.artist + '  ·  ' + a.year + '  ·  ' + a.museum + ', ' + a.city;
+    room.dialog.showModal();
+    /* the page behind must not scroll under the room */
+    document.documentElement.style.overflow = 'hidden';
+  }
+  function wireSpotlight() {
+    var dialog = document.getElementById('spotlight');
+    if (!dialog || !dialog.showModal) return null;
+    var kit = {
+      dialog: dialog,
+      plate: dialog.querySelector('.spot-plate'),
+      img: dialog.querySelector('.spot-img'),
+      title: dialog.querySelector('.spot-title'),
+      meta: dialog.querySelector('.spot-meta'),
+    };
+    dialog.addEventListener('close', function () {
+      document.documentElement.style.overflow = '';
+      kit.img.removeAttribute('src');
+      kit.img.removeAttribute('srcset');
+    });
+    /* anywhere in the room leaves it; there is nothing else in here to press */
+    dialog.addEventListener('click', function (ev) { if (ev.detail) dialog.close(); });
+    return kit;
   }
 
   /* ---------- Deepgram, on a leash ----------
