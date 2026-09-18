@@ -1,0 +1,20 @@
+{
+  "name": "canon-suggestions",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Worker and D1 database behind Canon's suggestion form",
+  "scripts": {
+    "deploy": "wrangler deploy",
+    "logs": "wrangler tail",
+    "list": "wrangler d1 execute canon-suggestions --remote --command \"SELECT id, created_at, topic, email FROM suggestions ORDER BY id DESC LIMIT 50\"",
+    "count": "wrangler d1 execute canon-suggestions --remote --command \"SELECT COUNT(*) AS suggestions FROM suggestions\"",
+    "token:new": "security add-generic-password -a \"$USER\" -s canon-admin-token -U -w \"$(openssl rand -base64 24 | tr -d '=+/')\" && echo 'Stored in Keychain as canon-admin-token. Now run: npm run token:push'",
+    "token:set": "security add-generic-password -a \"$USER\" -s canon-admin-token -U -w",
+    "token:push": "security find-generic-password -a \"$USER\" -s canon-admin-token -w | wrangler secret put ADMIN_TOKEN",
+    "token:show": "security find-generic-password -a \"$USER\" -s canon-admin-token -w",
+    "read": "curl -sS -H \"Authorization: Bearer $(security find-generic-password -a \"$USER\" -s canon-admin-token -w)\" https://canon-suggestions.jatinpandey5.workers.dev"
+  },
+  "devDependencies": {
+    "wrangler": "^4.135.0"
+  }
+}
