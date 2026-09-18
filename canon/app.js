@@ -18,6 +18,12 @@
   var WIKI_SEARCH = 'https://en.wikipedia.org/wiki/Special:Search?go=Go&search=';
   var WIKI_ARTICLE = 'https://en.wikipedia.org/wiki/';
 
+  /* How long each recording runs, measured by scripts/durations.mjs. The files
+     carry no duration header, so without this the player can only guess. */
+  var timings = (typeof fetch === 'function'
+    ? fetch(AUDIO_DIR + 'manifest.json').then(function (r) { return r.ok ? r.json() : {}; }).catch(function () { return {}; })
+    : Promise.resolve({}));
+
   var works = window.ARTWORKS || (typeof ARTWORKS !== 'undefined' ? ARTWORKS : []);
   var cats = window.CATEGORIES || (typeof CATEGORIES !== 'undefined' ? CATEGORIES : {});
 
@@ -258,7 +264,26 @@
     this.audio = new Audio();
     this.audio.preload = 'metadata';
     this.audio.src = AUDIO_DIR + work.id + '.mp3';
-    this.audio.addEventListener('loadedmetadata', function () { self.duration = self.audio.duration; self.dur.textContent = fmt(self.duration); });
+    /* Deepgram's mp3 carries no duration header, so the browser reports Infinity
+       until the whole file has arrived. Start from the length the text implies
+       and take the real figure the moment it settles. */
+    this.duration = this.estimate();
+    this.dur.textContent = fmt(this.duration);
+    function adopt() {
+      if (!isFinite(self.audio.duration) || self.audio.duration <= 0) return;
+      self.duration = self.audio.duration;
+      self.dur.textContent = fmt(self.duration);
+      self.paint();
+    }
+    this.audio.addEventListener('loadedmetadata', adopt);
+    this.audio.addEventListener('durationchange', adopt);
+    timings.then(function (all) {
+      var known = all[work.id] && all[work.id].seconds;
+      if (!known || self.mode !== 'audio' || isFinite(self.audio.duration)) return;
+      self.duration = known;
+      self.dur.textContent = fmt(self.duration);
+      self.paint();
+    });
     this.audio.addEventListener('timeupdate', function () { self.position = self.audio.currentTime; self.paint(); });
     this.audio.addEventListener('ended', function () { self.setState('idle'); self.position = 0; self.paint(); });
     /* A missing file is only worth acting on once someone presses play —
@@ -285,6 +310,9 @@
     });
     this.setState('idle');
   }
+  Player.prototype.estimate = function () {
+    return (this.work.summary || '').split(/\s+/).length / WORDS_PER_SECOND;
+  };
   Player.prototype.fraction = function () { return this.duration ? Math.min(1, this.position / this.duration) : 0; };
   Player.prototype.setState = function (s) {
     this.state = s;
@@ -337,7 +365,10 @@
     f = Math.max(0, Math.min(1, f));
     if (this.mode === 'audio') {
       if (!this.duration) return;
-      this.audio.currentTime = f * this.duration;
+      var to = f * this.duration;
+      var reach = this.audio.seekable.length ? this.audio.seekable.end(this.audio.seekable.length - 1) : 0;
+      if (!isFinite(this.audio.duration) && reach) to = Math.min(to, reach);
+      try { this.audio.currentTime = to; } catch (e) { return; }
       this.position = this.audio.currentTime; this.paint();
     } else {
       var idx = Math.floor(f * this.sentences.length);
@@ -358,8 +389,7 @@
     this.offsets = []; var c = 0;
     for (var i = 0; i < this.sentences.length; i++) { this.offsets.push(c); c += this.sentences[i].length; }
     this.chars = c;
-    var words = text.split(/\s+/).length;
-    this.duration = words / WORDS_PER_SECOND;
+    this.duration = this.estimate();
     this.sentenceIndex = 0; this.position = 0;
     this.dur.textContent = fmt(this.duration);
     if (!('speechSynthesis' in window)) {

@@ -6,9 +6,12 @@ Three famous paintings a day, one from each of three eras, each with a short wri
 - `data.js` — the catalogue (32 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
 - `references.js` — generated. Each reference label resolved to its Wikipedia article and, where there is one, the Wikimedia image file, so a reference to a painting opens the painting.
 - `frame.png` — generated. The gilt moulding the plates are framed in.
-- `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura.
+- `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura. All 32 are committed, so every visitor hears the Aura voice and no key goes near the browser.
+- `audio/manifest.json` — what each recording is and how long it runs.
 - `config.js` — narration settings: an optional Deepgram key and the generation caps.
 - `scripts/speak.mjs` — renders the audio. `DEEPGRAM_API_KEY=… node canon/scripts/speak.mjs`
+- `scripts/durations.mjs` — times the mp3s into the manifest. `node canon/scripts/durations.mjs`
+- `scripts/mp3.mjs` — counts MP3 frames; used by the two above.
 - `scripts/frame.mjs` — draws the frame. `node canon/scripts/frame.mjs > canon/frame.png`
 - `scripts/references.mjs` — resolves the references against Wikipedia. `node canon/scripts/references.mjs > canon/references.js`
 - `suggestions/` — a Cloudflare Worker and D1 database for the suggestion form. See its README.
@@ -18,11 +21,19 @@ Three famous paintings a day, one from each of three eras, each with a short wri
 
 The player looks in three places, in order:
 
-1. `audio/<id>.mp3`, pre-rendered by `scripts/speak.mjs` and committed.
+1. `audio/<id>.mp3`, pre-rendered by `scripts/speak.mjs` and committed — which is what every visitor gets today.
 2. the browser's Cache Storage, holding anything Deepgram has already made on that device.
 3. Deepgram Aura live, but only if `config.js` carries a key and both caps allow it.
 
 Failing all three, the browser's own British voice reads the summary.
+
+Deepgram's files carry no duration header, so a browser reports their length as
+Infinity until the whole file arrives, and Chrome often keeps reporting it after
+that. `scripts/durations.mjs` counts the MP3 frames and writes the real length
+into the manifest, which the page reads so the scrubber is right from the start.
+`speak.mjs` records it for anything it renders; run `durations.mjs` by hand only
+to backfill. Without a figure there the player falls back to estimating from the
+word count.
 
 Live generation is capped twice — `perDay` (3) and `totalLimit` (30), counted per
 browser in `localStorage` — and each recording is generated once and then cached, so

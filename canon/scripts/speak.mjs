@@ -13,6 +13,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
+import { durationOf } from './mp3.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -68,7 +69,11 @@ for (const a of todo) {
     for (const p of parts) buffers.push(await speak(p));
     const mp3 = Buffer.concat(buffers);
     await fs.writeFile(file, mp3);
-    manifest[a.id] = { bytes: mp3.length, chars: a.summary.length, voice, generatedAt: new Date().toISOString() };
+    manifest[a.id] = {
+      bytes: mp3.length, chars: a.summary.length, voice,
+      seconds: Math.round(durationOf(mp3) * 100) / 100,
+      generatedAt: new Date().toISOString(),
+    };
     await fs.writeFile(manifestPath, JSON.stringify(manifest, null, 2) + '\n');
     made++;
     console.log(`${(mp3.length / 1024).toFixed(0)} KB`);
