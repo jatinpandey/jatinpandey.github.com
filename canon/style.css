@@ -259,11 +259,15 @@
 .echoes { list-style: none; margin: 0; padding: 0; }
 .echoes li { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.5; }
 .echoes li:last-child { margin-bottom: 0; }
-.echo-link {
+/* A reference that leads somewhere worth going is underlined; one that does not
+   is set the same way, without the invitation. */
+.echo-link, .echo-name {
   display: inline-block;
   margin-bottom: 2px;
   font-weight: 600;
   color: var(--ink);
+}
+.echo-link {
   text-decoration: underline;
   text-decoration-color: rgba(17, 17, 17, 0.22);
   text-underline-offset: 3px;

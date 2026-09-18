@@ -14,8 +14,8 @@
   var AUDIO_DIR = '/canon/audio/';
   var WORDS_PER_SECOND = 2.35; // Draco's pace, used only for the spoken fallback estimate
   var NARRATION_NOTE = 'Details of the piece narrated in a sophisticated British voice.';
-  var WIKI_SEARCH = 'https://en.wikipedia.org/wiki/Special:Search?go=Go&search=';
   var WIKI_ARTICLE = 'https://en.wikipedia.org/wiki/';
+  var REFERENCE_LIMIT = 3;
 
   /* How long each recording runs, measured by scripts/durations.mjs. The files
      carry no duration header, so without this the player can only guess. */
@@ -87,35 +87,16 @@
   }
 
   /* ---------- render ---------- */
-  /* Where a reference points. scripts/references.mjs has already resolved every
-     label in the catalogue to the Wikipedia article that explains it, which
-     carries the picture and the account of it both — a bare image file on
-     upload.wikimedia.org carries only the picture, and often the wrong one.
-     Labels the script has not seen fall back to a search. */
+  /* Where a reference points, when it points anywhere. scripts/references.mjs
+     keeps only the labels that resolve to an article about an actual work — a
+     painting, a film, a book. A reference that would land on a person's page
+     instead is left as plain text, because an article about Keith Haring is not
+     a reference to Keith Haring's dancing figures and does not even show them.
+     Better no link than one that does not repay the click. */
   var refs = window.REFERENCES || (typeof REFERENCES !== 'undefined' ? REFERENCES : {});
-  function destination(label) {
+  function article(label) {
     var ref = refs[label];
-    if (ref && ref.page) return { href: WIKI_ARTICLE + encodeURIComponent(ref.page.replace(/ /g, '_')), hint: 'Read “' + ref.page + '” on Wikipedia' };
-    var term = lookup(label);
-    return { href: WIKI_SEARCH + encodeURIComponent(term), hint: 'Look up “' + term + '” on Wikipedia' };
-  }
-
-  /* A reference label is prose — “Velázquez, Las Meninas (1656)”, “Salvador Dalí,
-     Francis Bacon, Joel-Peter Witkin”. Pull out the thing most likely to be a
-     Wikipedia title: drop the dates and anything past a semicolon, then take the
-     part after the comma when there is exactly one (that shape is artist, work)
-     and the part before it when there are several (that shape is a list). */
-  function lookup(label) {
-    var text = String(label)
-      .split(';')[0]
-      .replace(/\([^)]*\)/g, ' ')
-      .replace(/[“”"]/g, ' ')
-      .replace(/\s+/g, ' ')
-      .trim();
-    var parts = text.split(',').map(function (t) { return t.trim(); }).filter(Boolean);
-    if (parts.length === 2) return parts[1];
-    if (parts.length > 2) return parts[0];
-    return text;
+    return ref && ref.page ? ref.page : null;
   }
 
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
@@ -148,15 +129,19 @@
     paras(node.querySelector('.depicts'), a.depicts);
     paras(node.querySelector('.about'), a.about);
     var ul = node.querySelector('.echoes');
-    (a.echoes || []).forEach(function (e) {
+    (a.echoes || []).slice(0, REFERENCE_LIMIT).forEach(function (e) {
       var li = el('li');
-      var to = destination(e.label);
-      var link = el('a', 'echo-link', e.label);
-      link.href = to.href;
-      link.target = '_blank';
-      link.rel = 'noopener';
-      link.title = to.hint;
-      li.appendChild(link);
+      var page = article(e.label);
+      if (page) {
+        var link = el('a', 'echo-link', e.label);
+        link.href = WIKI_ARTICLE + encodeURIComponent(page.replace(/ /g, '_'));
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.title = 'Read “' + page + '” on Wikipedia';
+        li.appendChild(link);
+      } else {
+        li.appendChild(el('b', 'echo-name', e.label));
+      }
       li.appendChild(el('span', null, e.note));
       ul.appendChild(li);
     });

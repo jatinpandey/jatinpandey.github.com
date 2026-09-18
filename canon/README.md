@@ -4,7 +4,7 @@ Three famous paintings a day, each from a different era, with a short written hi
 
 - `index.html`, `style.css`, `app.js` — the page. Static; no build step.
 - `data.js` — the catalogue (32 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
-- `references.js` — generated. Each reference label resolved to the Wikipedia article that explains it, which carries both the picture and the account of it.
+- `references.js` — generated. The reference labels that resolve to an article about an actual work. Labels absent from it render as plain text.
 - `frame.png` — generated. The gilt moulding the plates are framed in.
 - `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura. All 32 are committed, so every visitor hears the Aura voice and no key goes near the browser.
 - `audio/manifest.json` — what each recording is and how long it runs.
@@ -14,6 +14,17 @@ Three famous paintings a day, each from a different era, with a short written hi
 - `scripts/mp3.mjs` — counts MP3 frames; used by the two above.
 - `scripts/frame.mjs` — draws the frame. `node canon/scripts/frame.mjs > canon/frame.png`
 - `scripts/references.mjs` — resolves the references against Wikipedia. Takes a couple of minutes; it searches one label at a time so as not to hammer the API. `node canon/scripts/references.mjs > canon/references.js`
+
+## References
+
+Three a work, and only linked when the link is worth following. A label is
+searched whole, because the name in front of a work is what disambiguates it,
+and the result is then checked against Wikidata: a link is kept only if it lands
+on a creative or written work, a work of art, or a structure. An article about a
+person is not a reference to their work — Keith Haring's page does not show his
+dancing figures, and Michelangelo's does not show the Last Judgement — so those
+render as plain text instead, along with movements and institutions. 58 of the
+96 currently link; the rest say their piece and leave the reader to it.
 - `suggestions/` — a Cloudflare Worker and D1 database for the suggestion form. See its README.
 - `scripts/fame.mjs` — scores works (or candidate Wikipedia titles) by pageviews, language editions, and inbound links. `node canon/scripts/fame.mjs "Guernica"`
 

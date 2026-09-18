@@ -11,8 +11,14 @@
    label finds the novel, Picasso's Las Meninas rather than Velázquez's, and the
    Nat King Cole song rather than the Mona Lisa.
 
-   The article is the destination on purpose. It carries the picture and the
-   explanation both, which a bare image file on upload.wikimedia.org does not. */
+   A link is only kept when it lands on a *thing* — a painting, a film, a song,
+   a book, a building. An article about a person is not a reference to a work:
+   "Keith Haring's dancing figures" resolving to Keith Haring tells a reader
+   nothing about the figures, and his page does not even show them. Wikidata
+   decides this, by asking whether the target is a creative or written work, a
+   work of art or a structure, rather than a human, an institution or a movement.
+   Anything that is not gets no link at all, and the reference stands as plain
+   text — an art movement is a subject, not a thing you can go and look at. */
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { createRequire } from 'node:module';
@@ -121,21 +127,98 @@ async function exact(term) {
   return page && !page.missing ? page.title : null;
 }
 
-const labels = [...new Set(ARTWORKS.flatMap((a) => (a.echoes || []).map((e) => e.label)))];
-const out = {};
-let resolved = 0;
+/* ---------- is the target a thing, or just a person? ---------- */
+
+/* Wikidata's own hierarchy answers this: everything worth linking to here is a
+   creative work or an architectural structure, however many levels down. A
+   human, a museum, a company or a city is none of those. */
+const ROOTS = ['Q17537576' /* creative work */, 'Q47461344' /* written work */,
+  'Q811979' /* architectural structure */, 'Q838948' /* work of art */,
+  'Q2424752' /* product */];
+
+async function entitiesFor(titles) {
+  const found = new Map();
+  for (let i = 0; i < titles.length; i += 45) {
+    const data = await api({
+      action: 'query', prop: 'pageprops', ppprop: 'wikibase_item',
+      redirects: '1', titles: titles.slice(i, i + 45).join('|'),
+    });
+    const alias = new Map();
+    for (const n of data?.query?.normalized || []) alias.set(n.from, n.to);
+    for (const n of data?.query?.redirects || []) alias.set(n.from, n.to);
+    const trail = (t) => { let cur = t; for (let k = 0; k < 4 && alias.has(cur); k++) cur = alias.get(cur); return cur; };
+    const pages = new Map((data?.query?.pages || []).map((p) => [p.title, p]));
+    for (const asked of titles.slice(i, i + 45)) {
+      const id = pages.get(trail(asked))?.pageprops?.wikibase_item;
+      if (id) found.set(asked, id);
+    }
+    await wait(PAUSE);
+  }
+  return found;
+}
+
+async function creativeWorks(ids) {
+  const keep = new Set();
+  for (let i = 0; i < ids.length; i += 120) {
+    const batch = ids.slice(i, i + 120);
+    const sparql = `SELECT DISTINCT ?item WHERE {
+      VALUES ?item { ${batch.map((q) => 'wd:' + q).join(' ')} }
+      VALUES ?root { ${ROOTS.map((q) => 'wd:' + q).join(' ')} }
+      ?item wdt:P31/wdt:P279* ?root .
+    }`;
+    const url = 'https://query.wikidata.org/sparql?format=json&query=' + encodeURIComponent(sparql);
+    try {
+      const r = await fetch(url, { headers: { 'User-Agent': AGENT, Accept: 'application/sparql-results+json' } });
+      if (!r.ok) throw new Error('WDQS ' + r.status);
+      const data = await r.json();
+      for (const row of data.results.bindings) keep.add(row.item.value.split('/').pop());
+    } catch (e) {
+      process.stderr.write(`\n  Wikidata query failed (${e.message}); keeping nothing from this batch.\n`);
+    }
+    await wait(800);
+  }
+  return keep;
+}
+
+/* ---------- resolve ---------- */
+
+/* Three references a work. Four was more than the column wanted to carry, and
+   the fourth was usually the weakest. */
+const LIMIT = 3;
+const labels = [...new Set(ARTWORKS.flatMap((a) => (a.echoes || []).slice(0, LIMIT).map((e) => e.label)))];
+
+const candidate = new Map();
 for (const [i, label] of labels.entries()) {
-  process.stderr.write(`${String(i + 1).padStart(3)}/${labels.length}  ${label.slice(0, 44).padEnd(46)}`);
+  process.stderr.write(`${String(i + 1).padStart(3)}/${labels.length}  ${label.slice(0, 42).padEnd(44)}`);
   let title = await search(label);
   await wait(PAUSE);
   if (!title) { title = await exact(narrow(label)); await wait(PAUSE); }
-  if (title) { out[label] = { page: title }; resolved++; process.stderr.write(`→ ${title}\n`); }
-  else process.stderr.write('→ (search link)\n');
+  if (title) candidate.set(label, title);
+  process.stderr.write(`${title || '—'}\n`);
 }
-process.stderr.write(`\n${resolved} of ${labels.length} resolved to an article.\n`);
+
+process.stderr.write(`\nchecking what ${candidate.size} of them actually point at…\n`);
+const titles = [...new Set(candidate.values())];
+const entity = await entitiesFor(titles);
+const works = await creativeWorks([...new Set(entity.values())]);
+
+const out = {};
+const dropped = [];
+for (const [label, title] of candidate) {
+  const id = entity.get(title);
+  if (id && works.has(id)) out[label] = { page: title };
+  else dropped.push([label, title, id ? 'not a work' : 'no wikidata entry']);
+}
+
+process.stderr.write(`\n${Object.keys(out).length} of ${labels.length} references link to a work.\n`);
+process.stderr.write(`${dropped.length} left as plain text:\n`);
+for (const [label, title, why] of dropped) {
+  process.stderr.write(`  ${label.slice(0, 44).padEnd(46)} ${String(title).slice(0, 30).padEnd(32)} ${why}\n`);
+}
 
 process.stdout.write('/* Generated by scripts/references.mjs — do not edit by hand.\n'
-  + '   Each reference label mapped to the Wikipedia article that explains it. */\n'
+  + '   Reference labels that resolve to a Wikipedia article about an actual work.\n'
+  + '   Labels absent here point at no article worth offering, and render unlinked. */\n'
   + 'const REFERENCES = ' + JSON.stringify(out, null, 1) + ';\n'
   + "if (typeof window !== 'undefined') window.REFERENCES = REFERENCES;\n"
   + "if (typeof module !== 'undefined') module.exports = { REFERENCES };\n");
