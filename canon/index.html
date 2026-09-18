@@ -66,6 +66,7 @@
         <figcaption class="spot-label">
           <span class="spot-title"></span>
           <span class="spot-meta"></span>
+          <a class="spot-source" target="_blank" rel="noopener">Wikimedia Commons</a>
         </figcaption>
       </figure>
     </div>
@@ -78,18 +79,15 @@
     <article class="work">
       <p class="eyebrow"><span class="ordinal"></span><span class="category"></span><span class="span"></span></p>
       <figure class="plate" data-state="loading">
-        <a class="plate-link" target="_blank" rel="noopener" title="Open the full-resolution file on Wikimedia Commons">
+        <button type="button" class="plate-link">
           <span class="frame">
             <span class="frame-lip">
               <img class="plate-img" alt="" loading="lazy" decoding="async" />
             </span>
           </span>
-        </a>
-        <button type="button" class="spotlight-btn">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 3v2M5.2 5.2l1.4 1.4M18.8 5.2l-1.4 1.4M3 12h2M19 12h2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            <circle cx="12" cy="13.5" r="4.2" fill="none" stroke="currentColor" stroke-width="1.6"/>
-          </svg>Spotlight
+        </button>
+        <button type="button" class="spotlight-btn" aria-pressed="false">
+          <span class="switch" aria-hidden="true"><span class="knob"></span></span>Spotlight
         </button>
       </figure>
       <header class="work-head">

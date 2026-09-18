@@ -127,7 +127,6 @@
     image.srcset = srcset(a);
     image.src = img(a.file, 1800);
     if (image.complete && image.naturalWidth) plate.dataset.state = 'ready';
-    node.querySelector('.plate-link').href = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(a.file);
     node.querySelector('.caption-venue').textContent = a.museum + ', ' + a.city;
     node.querySelector('.caption-spec').textContent = [a.medium, a.dims].join('  ·  ');
 
@@ -158,10 +157,49 @@
       ul.appendChild(li);
     });
 
-    node.querySelector('.spotlight-btn').addEventListener('click', function () { spotlight(a); });
+    /* The plate opens the light too — tapping a painting to be shown the
+       painting is what anyone expects, and the file on Commons is the same
+       picture again. Its page is still one click away, from inside the room. */
+    var toggle = node.querySelector('.spotlight-btn');
+    toggle.addEventListener('click', function () { spotlight(a, toggle); });
+    var plate_link = node.querySelector('.plate-link');
+    plate_link.setAttribute('aria-label', 'Light ' + a.title + ' in the spotlight');
+    plate_link.addEventListener('click', function () { spotlight(a, toggle); });
 
     new Player(node.querySelector('.player'), a);
     return node;
+  }
+
+  /* The switch wants to sound and feel like a switch. The click is synthesised
+     rather than fetched — a short burst of noise through a bandpass, decaying
+     fast, pitched a little higher going on than coming off, which is roughly
+     what a real toggle does. Both are quiet, and both follow a press, so
+     nothing makes a noise the reader did not ask for. */
+  var audio = null;
+  function clack(on) {
+    /* Haptics where there are any. Chrome refuses this until the page has been
+       tapped and throws as it does, which must not take the sound down with it. */
+    try { if (navigator.vibrate) navigator.vibrate(on ? 12 : 8); } catch (e) {}
+    var Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    try {
+      audio = audio || new Ctx();
+      if (audio.state === 'suspended') audio.resume();
+      var length = Math.floor(audio.sampleRate * 0.028);
+      var buffer = audio.createBuffer(1, length, audio.sampleRate);
+      var data = buffer.getChannelData(0);
+      for (var i = 0; i < length; i++) data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / length, 7);
+      var source = audio.createBufferSource();
+      source.buffer = buffer;
+      var band = audio.createBiquadFilter();
+      band.type = 'bandpass';
+      band.frequency.value = on ? 2500 : 1550;
+      band.Q.value = 1.2;
+      var level = audio.createGain();
+      level.gain.value = 0.075;
+      source.connect(band); band.connect(level); level.connect(audio.destination);
+      source.start();
+    } catch (e) { /* no sound is not a failure */ }
   }
 
   /* ---------- the spotlight ----------
@@ -169,11 +207,17 @@
      modal dialog sits in the top layer, so nothing else can be reached or read
      while the work is lit. */
   var room = null;
-  function spotlight(a) {
+  function spotlight(a, toggle) {
     if (!room) room = wireSpotlight();
     if (!room) return;
+    if (room.toggle) room.toggle.setAttribute('aria-pressed', 'false');
+    room.toggle = toggle || null;
+    if (toggle) toggle.setAttribute('aria-pressed', 'true');
+    clack(true);
+    room.source.href = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(a.file);
     room.plate.style.setProperty('--w', a.w);
     room.plate.style.setProperty('--h', a.h);
+    room.plate.dataset.state = 'loading';
     room.img.src = img(a.file, 2600);
     room.img.srcset = srcset(a);
     room.img.sizes = '92vw';
@@ -193,13 +237,22 @@
       img: dialog.querySelector('.spot-img'),
       title: dialog.querySelector('.spot-title'),
       meta: dialog.querySelector('.spot-meta'),
+      source: dialog.querySelector('.spot-source'),
+      toggle: null,
     };
+    /* the canvas lights up once it is actually there, rather than showing its
+       own alt text against the dark */
+    kit.img.addEventListener('load', function () { kit.plate.dataset.state = 'ready'; });
     dialog.addEventListener('close', function () {
       document.documentElement.style.overflow = '';
       kit.img.removeAttribute('src');
       kit.img.removeAttribute('srcset');
+      if (kit.toggle) { kit.toggle.setAttribute('aria-pressed', 'false'); kit.toggle.focus(); }
+      kit.toggle = null;
+      clack(false);
     });
-    /* anywhere in the room leaves it; there is nothing else in here to press */
+    /* anywhere in the room leaves it; the one thing in here worth pressing says so */
+    kit.source.addEventListener('click', function (ev) { ev.stopPropagation(); });
     dialog.addEventListener('click', function (ev) { if (ev.detail) dialog.close(); });
     return kit;
   }

@@ -81,13 +81,24 @@ breathing slowly; the frame and the painting then fade in together.
 
 ## The spotlight
 
-Under each plate is a control that opens the work in a dark room: a modal dialog
+The plate itself opens the work in a dark room, and so does the switch beneath
+it — the file on Commons is the same picture again, so tapping a painting shows
+the painting rather than leaving the site. Its page is still a click away, from
+inside the room.
+
+The room is a modal dialog: a modal dialog
 filling the top layer, the page behind it covered and unscrollable, one warm
 wash falling from above the way a picture light does. The gilt is brightened a
 little and a faint rake of light crosses the canvas, both falling from the upper
 left, which is where the frame's own lighting was drawn from — so the room and
 the moulding agree about where the light is. A museum label sits underneath.
 Anywhere in the room closes it, as does Escape.
+
+The switch is a switch: it flicks across and warms when the light goes on, and
+each throw is answered by a short synthesised click — a burst of noise through a
+bandpass, decaying fast, pitched higher going on than coming off — and a brief
+haptic where the device has one. Both follow a press, so nothing makes a noise
+the reader did not ask for.
 
 ## The frame
 
