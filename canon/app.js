@@ -8,7 +8,6 @@
   'use strict';
 
   /* ---------- configuration ---------- */
-  var SUGGEST_ENDPOINT = ''; // e.g. 'https://formspree.io/f/abcdwxyz' — POSTs JSON {topic, email, page}
   var REPO = 'jatinpandey/jatinpandey.github.com';
   var LAUNCH = Date.UTC(2026, 8, 16); // day zero of the rotation (16 Sep 2026)
   var ORDER = ['old', 'nineteenth', 'modern'];
@@ -17,6 +16,7 @@
   var WORDS_PER_SECOND = 2.35; // Draco's pace, used only for the spoken fallback estimate
   var NARRATION_NOTE = 'Details of the piece narrated in a sophisticated British voice.';
   var WIKI_SEARCH = 'https://en.wikipedia.org/wiki/Special:Search?go=Go&search=';
+  var WIKI_ARTICLE = 'https://en.wikipedia.org/wiki/';
 
   var works = window.ARTWORKS || (typeof ARTWORKS !== 'undefined' ? ARTWORKS : []);
   var cats = window.CATEGORIES || (typeof CATEGORIES !== 'undefined' ? CATEGORIES : {});
@@ -82,13 +82,24 @@
   }
 
   /* ---------- render ---------- */
+  /* Where a reference points. scripts/references.mjs has already resolved every
+     label in the catalogue to a Wikipedia article and, for most of them, the
+     Wikimedia image file itself — so a reference to a painting opens the
+     painting. Labels the script has not seen fall back to a search. */
+  var refs = window.REFERENCES || (typeof REFERENCES !== 'undefined' ? REFERENCES : {});
+  function destination(label) {
+    var ref = refs[label];
+    if (ref && ref.image) return { href: ref.image, hint: 'Open the picture for “' + ref.page + '” on Wikimedia' };
+    if (ref && ref.page) return { href: WIKI_ARTICLE + encodeURIComponent(ref.page.replace(/ /g, '_')), hint: 'Read “' + ref.page + '” on Wikipedia' };
+    var term = lookup(label);
+    return { href: WIKI_SEARCH + encodeURIComponent(term), hint: 'Look up “' + term + '” on Wikipedia' };
+  }
+
   /* A reference label is prose — “Velázquez, Las Meninas (1656)”, “Salvador Dalí,
      Francis Bacon, Joel-Peter Witkin”. Pull out the thing most likely to be a
      Wikipedia title: drop the dates and anything past a semicolon, then take the
      part after the comma when there is exactly one (that shape is artist, work)
-     and the part before it when there are several (that shape is a list). With
-     go=Go an exact title opens the article and its pictures; anything looser
-     lands on the search results. */
+     and the part before it when there are several (that shape is a list). */
   function lookup(label) {
     var text = String(label)
       .split(';')[0]
@@ -134,11 +145,12 @@
     var ul = node.querySelector('.echoes');
     (a.echoes || []).forEach(function (e) {
       var li = el('li');
+      var to = destination(e.label);
       var link = el('a', 'echo-link', e.label);
-      link.href = WIKI_SEARCH + encodeURIComponent(lookup(e.label));
+      link.href = to.href;
       link.target = '_blank';
       link.rel = 'noopener';
-      link.title = 'Look up “' + lookup(e.label) + '” on Wikipedia';
+      link.title = to.hint;
       li.appendChild(link);
       li.appendChild(el('span', null, e.note));
       ul.appendChild(li);
@@ -405,6 +417,7 @@
     var text = document.getElementById('suggest-text');
     var email = document.getElementById('suggest-email');
     var note = document.getElementById('suggest-note');
+    var trap = document.getElementById('suggest-website');
     var send = document.getElementById('suggest-send');
     if (!dialog || !dialog.showModal) return;
     document.getElementById('suggest-open').addEventListener('click', function () { note.textContent = ''; dialog.showModal(); text.focus(); });
@@ -413,12 +426,22 @@
       ev.preventDefault();
       var topic = text.value.trim();
       if (!topic) return;
-      var payload = { topic: topic, email: email.value.trim(), page: location.href, date: new Date().toISOString() };
-      if (SUGGEST_ENDPOINT) {
+      var endpoint = (window.CANON_CONFIG || {}).suggestEndpoint || '';
+      var payload = {
+        topic: topic, email: email.value.trim(), page: location.href,
+        date: new Date().toISOString(), website: trap.value,
+      };
+      if (endpoint) {
         send.disabled = true; note.textContent = 'Sending…';
-        fetch(SUGGEST_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
-          .then(function (r) { if (!r.ok) throw new Error(r.status); note.textContent = 'Thank you. Noted.'; text.value = ''; email.value = ''; setTimeout(function () { dialog.close(); }, 900); })
-          .catch(function () { note.textContent = 'That didn’t go through. Try again in a moment.'; })
+        fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
+          .then(function (r) {
+            return r.json().catch(function () { return {}; }).then(function (data) {
+              if (!r.ok) throw new Error(data.error || r.status);
+              note.textContent = 'Thank you. Noted.'; text.value = ''; email.value = '';
+              setTimeout(function () { dialog.close(); }, 900);
+            });
+          })
+          .catch(function (err) { note.textContent = String(err.message || '').slice(0, 120) || 'That didn’t go through. Try again in a moment.'; })
           .then(function () { send.disabled = false; });
       } else {
         var title = 'Topic suggestion: ' + topic.slice(0, 60);

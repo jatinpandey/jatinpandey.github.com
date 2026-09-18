@@ -90,51 +90,30 @@
 .plate { margin: 0 0 22px; text-align: center; }
 .plate-link { display: inline-block; max-width: 100%; line-height: 0; }
 
-/* A gilt moulding in the museum manner, drawn entirely in CSS. The profile is a
-   stack of concentric inset rings, so the carving runs perpendicular to every
-   edge the way a real moulding does: a dark arris outside, the crest of the
-   ogee, a scotia in shadow, and a bright fillet against the canvas. A diagonal
-   wash over the top gives the whole thing one light source, upper left. */
+/* The frame is drawn by scripts/frame.mjs into frame.png — one carved moulding
+   section, lit per pixel, mitred at the corners by border-image. The section
+   never varies along an edge, so stretching one to any length is lossless. */
 .frame {
   display: inline-block;
   max-width: 100%;
-  padding: clamp(16px, 2.4vw, 30px);
-  background:
-    linear-gradient(135deg, rgba(255, 249, 226, 0.34) 0%, rgba(255, 249, 226, 0) 42%,
-                            rgba(46, 31, 8, 0.1) 62%, rgba(46, 31, 8, 0.3) 100%),
-    linear-gradient(160deg, #c7a04c 0%, #b08a37 40%, #9c7729 100%);
+  border: clamp(22px, 3.4vw, 40px) solid transparent;
+  border-image: url(/canon/frame.png) 80 stretch;
   box-shadow:
-    /* the carved profile, outside in */
-    inset 0 0 0 1px rgba(52, 35, 10, 0.9),
-    inset 0 0 0 3px rgba(246, 230, 179, 0.85),
-    inset 0 0 0 5px rgba(180, 139, 56, 0.5),
-    inset 0 0 0 8px rgba(92, 64, 20, 0.62),
-    inset 0 0 0 11px rgba(238, 216, 158, 0.8),
-    inset 0 0 0 16px rgba(176, 136, 55, 0.35),
-    inset 0 0 0 21px rgba(104, 73, 24, 0.5),
-    inset 0 0 0 24px rgba(242, 224, 172, 0.75),
-    /* the frame hanging off the wall */
-    0 0 0 1px rgba(46, 31, 8, 0.75),
-    0 2px 2px rgba(17, 17, 17, 0.1),
-    0 20px 40px -22px rgba(17, 17, 17, 0.5),
-    0 64px 104px -54px rgba(17, 17, 17, 0.42);
+    0 2px 3px rgba(17, 17, 17, 0.13),
+    0 22px 44px -24px rgba(17, 17, 17, 0.5),
+    0 70px 112px -58px rgba(17, 17, 17, 0.45);
   transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
 }
-.frame-lip {
-  position: relative;
-  display: block;
-  padding: clamp(3px, 0.5vw, 6px);
-  background: linear-gradient(160deg, #e3c684 0%, #a87f31 100%);
-  box-shadow: inset 0 0 0 1px rgba(70, 48, 15, 0.5), 0 0 0 1px rgba(52, 35, 10, 0.6);
-}
+/* the rebate: the frame's lip throws a shadow across the canvas edge */
+.frame-lip { position: relative; display: block; }
 .frame-lip::after {
   content: "";
   position: absolute;
-  inset: clamp(3px, 0.5vw, 6px);
+  inset: 0;
   pointer-events: none;
   box-shadow:
-    inset 0 0 0 1px rgba(22, 15, 3, 0.32),
-    inset 0 3px 9px -3px rgba(22, 15, 3, 0.6);
+    inset 0 0 0 1px rgba(20, 14, 4, 0.4),
+    inset 0 5px 13px -5px rgba(20, 14, 4, 0.62);
 }
 .plate-img {
   display: block;
@@ -148,25 +127,19 @@
 .plate-link:hover .frame { transform: translateY(-2px); }
 .plate-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 8px; }
 
-.plate-caption {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  margin-top: 18px;
-  line-height: 1.45;
-}
-.caption-venue { font-size: 0.95rem; letter-spacing: 0.01em; color: var(--ink); }
-.caption-spec { font-size: 0.86rem; color: var(--graphite); }
-
-.work-head { text-align: center; margin-bottom: 26px; }
+/* Below the painting, in the order a museum label reads:
+   the work, who made it, where it hangs, what it is made of. */
+.work-head { text-align: center; margin-bottom: 30px; line-height: 1.45; }
 .title {
   font-family: var(--serif);
   font-weight: 400;
   font-size: clamp(2rem, 4.6vw, 3.2rem);
   line-height: 1.08;
   letter-spacing: -0.005em;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
 }
+.caption-venue { margin-top: 14px; font-size: 0.95rem; letter-spacing: 0.01em; color: var(--ink); }
+.caption-spec { font-size: 0.86rem; color: var(--graphite); }
 .title-year {
   margin-left: 0.9em;
   font-family: var(--mono);

@@ -1,0 +1,8 @@
+name = "canon-suggestions"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "canon-suggestions"
+database_id = "PASTE_THE_ID_FROM_WRANGLER_D1_CREATE"

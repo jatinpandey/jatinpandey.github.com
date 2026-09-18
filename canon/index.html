@@ -45,6 +45,8 @@
       <p>A subject that suits a picture, a short history, and a voice. Buildings, birds, maps, typefaces, anything.</p>
       <label class="visually-hidden" for="suggest-text">Your suggestion</label>
       <textarea id="suggest-text" rows="4" placeholder="e.g. Famous photographs, one per decade" required maxlength="600"></textarea>
+      <label class="visually-hidden" for="suggest-website">Leave this empty</label>
+      <input id="suggest-website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
       <label class="visually-hidden" for="suggest-email">Email, optional</label>
       <input id="suggest-email" type="email" placeholder="Email, if you'd like a reply (optional)" autocomplete="email" />
       <div class="suggest-actions">
@@ -66,14 +68,12 @@
             </span>
           </span>
         </a>
-        <figcaption class="plate-caption">
-          <span class="caption-venue"></span>
-          <span class="caption-spec"></span>
-        </figcaption>
       </figure>
       <header class="work-head">
         <h2 class="title"><span class="title-name"></span><span class="title-year"></span></h2>
         <p class="byline"></p>
+        <p class="caption-venue"></p>
+        <p class="caption-spec"></p>
       </header>
 
       <div class="player" data-state="idle">
@@ -101,6 +101,7 @@
   </template>
 
   <script src="/canon/data.js"></script>
+  <script src="/canon/references.js"></script>
   <script src="/canon/config.js"></script>
   <script src="/canon/app.js"></script>
 </body>
