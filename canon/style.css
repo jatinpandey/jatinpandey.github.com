@@ -73,8 +73,10 @@
 }
 .eyebrow {
   display: flex;
-  justify-content: space-between;
-  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 10px;
   font-family: var(--mono);
   font-size: 0.7rem;
   letter-spacing: 0.14em;
@@ -83,32 +85,78 @@
   margin-bottom: 18px;
 }
 .eyebrow .category { color: var(--ink); }
+.eyebrow .span::before { content: "·"; margin-right: 10px; color: var(--line); }
 
 .plate { margin: 0 0 22px; text-align: center; }
 .plate-link { display: inline-block; max-width: 100%; line-height: 0; }
+
+/* A gilt moulding in the museum manner, drawn entirely in CSS. The profile is a
+   stack of concentric inset rings, so the carving runs perpendicular to every
+   edge the way a real moulding does: a dark arris outside, the crest of the
+   ogee, a scotia in shadow, and a bright fillet against the canvas. A diagonal
+   wash over the top gives the whole thing one light source, upper left. */
+.frame {
+  display: inline-block;
+  max-width: 100%;
+  padding: clamp(16px, 2.4vw, 30px);
+  background:
+    linear-gradient(135deg, rgba(255, 249, 226, 0.34) 0%, rgba(255, 249, 226, 0) 42%,
+                            rgba(46, 31, 8, 0.1) 62%, rgba(46, 31, 8, 0.3) 100%),
+    linear-gradient(160deg, #c7a04c 0%, #b08a37 40%, #9c7729 100%);
+  box-shadow:
+    /* the carved profile, outside in */
+    inset 0 0 0 1px rgba(52, 35, 10, 0.9),
+    inset 0 0 0 3px rgba(246, 230, 179, 0.85),
+    inset 0 0 0 5px rgba(180, 139, 56, 0.5),
+    inset 0 0 0 8px rgba(92, 64, 20, 0.62),
+    inset 0 0 0 11px rgba(238, 216, 158, 0.8),
+    inset 0 0 0 16px rgba(176, 136, 55, 0.35),
+    inset 0 0 0 21px rgba(104, 73, 24, 0.5),
+    inset 0 0 0 24px rgba(242, 224, 172, 0.75),
+    /* the frame hanging off the wall */
+    0 0 0 1px rgba(46, 31, 8, 0.75),
+    0 2px 2px rgba(17, 17, 17, 0.1),
+    0 20px 40px -22px rgba(17, 17, 17, 0.5),
+    0 64px 104px -54px rgba(17, 17, 17, 0.42);
+  transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
+}
+.frame-lip {
+  position: relative;
+  display: block;
+  padding: clamp(3px, 0.5vw, 6px);
+  background: linear-gradient(160deg, #e3c684 0%, #a87f31 100%);
+  box-shadow: inset 0 0 0 1px rgba(70, 48, 15, 0.5), 0 0 0 1px rgba(52, 35, 10, 0.6);
+}
+.frame-lip::after {
+  content: "";
+  position: absolute;
+  inset: clamp(3px, 0.5vw, 6px);
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 0 1px rgba(22, 15, 3, 0.32),
+    inset 0 3px 9px -3px rgba(22, 15, 3, 0.6);
+}
 .plate-img {
   display: block;
   max-width: 100%;
-  max-height: min(86vh, 900px);
+  max-height: min(78vh, 820px);
   width: auto;
   height: auto;
   margin: 0 auto;
   background: var(--soft);
-  box-shadow:
-    0 1px 1px rgba(17, 17, 17, 0.06),
-    0 18px 40px -22px rgba(17, 17, 17, 0.45),
-    0 60px 100px -50px rgba(17, 17, 17, 0.35);
-  transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
 }
-.plate-link:hover .plate-img { transform: translateY(-2px); }
+.plate-link:hover .frame { transform: translateY(-2px); }
 .plate-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 8px; }
+
 .plate-caption {
-  margin-top: 14px;
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.04em;
-  color: var(--graphite);
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  margin-top: 18px;
+  line-height: 1.45;
 }
+.caption-venue { font-size: 0.95rem; letter-spacing: 0.01em; color: var(--ink); }
+.caption-spec { font-size: 0.86rem; color: var(--graphite); }
 
 .work-head { text-align: center; margin-bottom: 26px; }
 .title {
@@ -119,6 +167,16 @@
   letter-spacing: -0.005em;
   margin: 0 0 8px;
 }
+.title-year {
+  margin-left: 0.9em;
+  font-family: var(--mono);
+  font-size: 0.36em;
+  letter-spacing: 0.06em;
+  color: var(--graphite);
+  white-space: nowrap;
+}
+.title-year::before { content: "("; }
+.title-year::after { content: ")"; }
 .byline { color: var(--graphite); font-size: 1rem; }
 .byline b { font-weight: 600; color: var(--ink); }
 
@@ -228,8 +286,18 @@
 .echoes { list-style: none; margin: 0; padding: 0; }
 .echoes li { margin: 0 0 12px; font-size: 0.95rem; line-height: 1.5; }
 .echoes li:last-child { margin-bottom: 0; }
-.echoes b { font-weight: 600; display: block; }
-.echoes span { color: var(--graphite); }
+.echo-link {
+  display: inline-block;
+  margin-bottom: 2px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: rgba(17, 17, 17, 0.22);
+  text-underline-offset: 3px;
+}
+.echo-link:hover { text-decoration-color: currentColor; }
+.echo-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+.echoes span { display: block; color: var(--graphite); }
 
 /* ---------- footer ---------- */
 .canon-footer {
@@ -308,9 +376,8 @@
   .player { gap: 0 16px; padding: 16px 18px; }
   .play { width: 46px; height: 46px; }
   .time { font-size: 0.92rem; }
-  .eyebrow { flex-direction: column; gap: 4px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .plate-img, .play, .track-knob { transition: none; }
+  .frame, .play, .track-knob { transition: none; }
   .player[data-state="loading"] .icon-wait { animation: none; }
 }

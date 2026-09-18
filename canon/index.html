@@ -19,8 +19,8 @@
     <div class="topbar-inner">
       <a class="site-name" href="/canon/" aria-label="Canon, home">canon</a>
       <nav class="day-nav" aria-label="Day">
-        <a class="day-link" id="prev-day" href="#" rel="prev">← Earlier</a>
-        <a class="day-link" id="today-link" href="/canon/" hidden>Today</a>
+        <a class="day-link" id="prev-day" href="#" rel="prev">← Previous Day</a>
+        <a class="day-link" id="next-day" href="/canon/" rel="next" hidden>Next Day →</a>
       </nav>
     </div>
   </header>
@@ -29,14 +29,13 @@
     <section class="masthead">
       <p class="dateline" id="dateline">Loading the day…</p>
       <h1>Canon</h1>
-      <p class="standfirst">Three paintings a day, one from each era, with two minutes of history read aloud. Nothing to do but look.</p>
+      <p class="standfirst">Three paintings a day, one from each era. Nothing to do but look.</p>
     </section>
 
     <div id="works" class="works"></div>
   </main>
 
   <footer class="canon-footer">
-    <p>Images are public-domain reproductions served from Wikimedia Commons. Narration is generated with Deepgram Aura.</p>
     <button type="button" class="suggest-btn" id="suggest-open">What other topics should we add?</button>
   </footer>
 
@@ -61,12 +60,19 @@
       <p class="eyebrow"><span class="category"></span><span class="span"></span></p>
       <figure class="plate">
         <a class="plate-link" target="_blank" rel="noopener" title="Open the full-resolution file on Wikimedia Commons">
-          <img class="plate-img" alt="" loading="lazy" decoding="async" />
+          <span class="frame">
+            <span class="frame-lip">
+              <img class="plate-img" alt="" loading="lazy" decoding="async" />
+            </span>
+          </span>
         </a>
-        <figcaption class="plate-caption"></figcaption>
+        <figcaption class="plate-caption">
+          <span class="caption-venue"></span>
+          <span class="caption-spec"></span>
+        </figcaption>
       </figure>
       <header class="work-head">
-        <h2 class="title"></h2>
+        <h2 class="title"><span class="title-name"></span><span class="title-year"></span></h2>
         <p class="byline"></p>
       </header>
 
@@ -89,12 +95,13 @@
         <section class="col"><h3>History</h3><div class="history"></div></section>
         <section class="col"><h3>What it depicts</h3><div class="depicts"></div></section>
         <section class="col"><h3>The artist</h3><div class="about"></div></section>
-        <section class="col"><h3>Echoes</h3><ul class="echoes"></ul></section>
+        <section class="col"><h3>References to this piece</h3><ul class="echoes"></ul></section>
       </div>
     </article>
   </template>
 
   <script src="/canon/data.js"></script>
+  <script src="/canon/config.js"></script>
   <script src="/canon/app.js"></script>
 </body>
 </html>

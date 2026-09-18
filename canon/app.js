@@ -1,6 +1,9 @@
 /* Canon — pick three works for the day, lay them out, narrate them.
-   Audio: /canon/audio/<id>.mp3 (pre-rendered with Deepgram, scripts/speak.mjs).
-   If a file is missing the player falls back to the browser's British voice. */
+   Narration is looked for in three places, in this order:
+     1. /canon/audio/<id>.mp3   pre-rendered with Deepgram (scripts/speak.mjs)
+     2. the browser's cache     anything Deepgram has already made on this device
+     3. Deepgram Aura, live     only if config.js carries a key and the caps allow
+   Failing all three, the browser's own British voice reads the summary. */
 (function () {
   'use strict';
 
@@ -12,6 +15,8 @@
   var COMMONS = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
   var AUDIO_DIR = '/canon/audio/';
   var WORDS_PER_SECOND = 2.35; // Draco's pace, used only for the spoken fallback estimate
+  var NARRATION_NOTE = 'Details of the piece narrated in a sophisticated British voice.';
+  var WIKI_SEARCH = 'https://en.wikipedia.org/wiki/Special:Search?go=Go&search=';
 
   var works = window.ARTWORKS || (typeof ARTWORKS !== 'undefined' ? ARTWORKS : []);
   var cats = window.CATEGORIES || (typeof CATEGORIES !== 'undefined' ? CATEGORIES : {});
@@ -31,6 +36,10 @@
   function utc(o) { return Date.UTC(o.y, o.m - 1, o.d); }
   function iso(o) { return o.y + '-' + pad(o.m) + '-' + pad(o.d); }
   function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function shift(o, days) {
+    var d = new Date(utc(o) + days * 86400000);
+    return { y: d.getUTCFullYear(), m: d.getUTCMonth() + 1, d: d.getUTCDate() };
+  }
   function dayNumber(o) { return Math.round((utc(o) - LAUNCH) / 86400000); }
   function longDate(o) {
     return new Date(o.y, o.m - 1, o.d).toLocaleDateString('en-GB', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -73,6 +82,26 @@
   }
 
   /* ---------- render ---------- */
+  /* A reference label is prose — “Velázquez, Las Meninas (1656)”, “Salvador Dalí,
+     Francis Bacon, Joel-Peter Witkin”. Pull out the thing most likely to be a
+     Wikipedia title: drop the dates and anything past a semicolon, then take the
+     part after the comma when there is exactly one (that shape is artist, work)
+     and the part before it when there are several (that shape is a list). With
+     go=Go an exact title opens the article and its pictures; anything looser
+     lands on the search results. */
+  function lookup(label) {
+    var text = String(label)
+      .split(';')[0]
+      .replace(/\([^)]*\)/g, ' ')
+      .replace(/[“”"]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    var parts = text.split(',').map(function (t) { return t.trim(); }).filter(Boolean);
+    if (parts.length === 2) return parts[1];
+    if (parts.length > 2) return parts[0];
+    return text;
+  }
+
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function paras(container, list) { (list || []).forEach(function (p) { container.appendChild(el('p', null, p)); }); }
 
@@ -90,12 +119,14 @@
     image.width = a.w; image.height = a.h;
     image.alt = a.title + ' by ' + a.artist + ', ' + a.year;
     node.querySelector('.plate-link').href = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(a.file);
-    node.querySelector('.plate-caption').textContent = [a.museum + ', ' + a.city, a.medium, a.dims].join('  ·  ');
+    node.querySelector('.caption-venue').textContent = a.museum + ', ' + a.city;
+    node.querySelector('.caption-spec').textContent = [a.medium, a.dims].join('  ·  ');
 
-    node.querySelector('.title').textContent = a.title;
+    node.querySelector('.title-name').textContent = a.title;
+    node.querySelector('.title-year').textContent = a.year;
     var by = node.querySelector('.byline');
     by.appendChild(el('b', null, a.artist));
-    by.appendChild(document.createTextNode(' (' + a.artistDates + ')  ·  ' + a.year));
+    by.appendChild(document.createTextNode(' (' + a.artistDates + ')'));
 
     paras(node.querySelector('.history'), a.history);
     paras(node.querySelector('.depicts'), a.depicts);
@@ -103,7 +134,12 @@
     var ul = node.querySelector('.echoes');
     (a.echoes || []).forEach(function (e) {
       var li = el('li');
-      li.appendChild(el('b', null, e.label));
+      var link = el('a', 'echo-link', e.label);
+      link.href = WIKI_SEARCH + encodeURIComponent(lookup(e.label));
+      link.target = '_blank';
+      link.rel = 'noopener';
+      link.title = 'Look up “' + lookup(e.label) + '” on Wikipedia';
+      li.appendChild(link);
       li.appendChild(el('span', null, e.note));
       ul.appendChild(li);
     });
@@ -111,6 +147,80 @@
     new Player(node.querySelector('.player'), a);
     return node;
   }
+
+  /* ---------- Deepgram, on a leash ----------
+     A recording is generated at most once: after that it lives in the browser's
+     Cache Storage and costs nothing to play again. Generation is capped twice —
+     `perDay` a day and `totalLimit` ever, counted per browser in localStorage —
+     and once either cap is reached the browser's own voice takes over. */
+  var TTS = (function () {
+    var QUOTA = 'canon.narration.quota.v1';
+    var CACHE = 'canon-narration-v1';
+    var ENDPOINT = 'https://api.deepgram.com/v1/speak';
+
+    function cfg() { return window.CANON_CONFIG || {}; }
+    function cap(name, fallback) { var v = cfg()[name]; return typeof v === 'number' && v >= 0 ? v : fallback; }
+    function stamp() { var n = new Date(); return n.getFullYear() + '-' + pad(n.getMonth() + 1) + '-' + pad(n.getDate()); }
+
+    function quota() {
+      var q;
+      try { q = JSON.parse(localStorage.getItem(QUOTA) || '{}'); } catch (e) { q = {}; }
+      if (q.day !== stamp()) { q.day = stamp(); q.today = 0; }
+      q.today = q.today || 0;
+      q.total = q.total || 0;
+      return q;
+    }
+    function spend() {
+      var q = quota();
+      q.today++; q.total++;
+      try { localStorage.setItem(QUOTA, JSON.stringify(q)); } catch (e) {}
+    }
+    function allowed() {
+      var q = quota();
+      return q.today < cap('perDay', 3) && q.total < cap('totalLimit', 30);
+    }
+
+    function slot(id) { return location.origin + AUDIO_DIR + 'generated/' + id + '.mp3'; }
+    function fromCache(id) {
+      if (!('caches' in window)) return Promise.resolve(null);
+      return caches.open(CACHE)
+        .then(function (c) { return c.match(slot(id)); })
+        .then(function (r) { return r ? r.blob() : null; })
+        .catch(function () { return null; });
+    }
+    function toCache(id, blob) {
+      if (!('caches' in window)) return Promise.resolve();
+      return caches.open(CACHE)
+        .then(function (c) { return c.put(slot(id), new Response(blob, { headers: { 'Content-Type': 'audio/mpeg' } })); })
+        .catch(function () {});
+    }
+
+    /* Resolves to a Blob, or to null when there is nothing to be had — no key,
+       a cap reached, or Deepgram refusing. Never rejects: the caller's only
+       other option is the browser voice either way. */
+    function obtain(work) {
+      return fromCache(work.id).then(function (blob) {
+        if (blob) return blob;
+        var key = cfg().deepgramKey;
+        if (!key || !allowed()) return null;
+        var voice = cfg().voice || 'aura-2-draco-en';
+        var url = ENDPOINT + '?model=' + encodeURIComponent(voice) + '&encoding=mp3&bit_rate=48000';
+        return fetch(url, {
+          method: 'POST',
+          headers: { Authorization: 'Token ' + key, 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: work.summary }),
+        }).then(function (r) {
+          if (!r.ok) throw new Error('Deepgram ' + r.status);
+          return r.blob();
+        }).then(function (made) {
+          spend();
+          return toCache(work.id, made).then(function () { return made; });
+        }).catch(function () { return null; });
+      }).catch(function () { return null; });
+    }
+
+    return { obtain: obtain };
+  })();
 
   /* ---------- player ---------- */
   var current = null; // the player that owns the speakers
@@ -126,6 +236,11 @@
     this.mode = 'audio'; // or 'speech'
     this.duration = 0;
     this.position = 0;
+    this.missing = false;  // the pre-rendered file is not there
+    this.asked = false;    // we have already been round to Deepgram for this one
+
+    this.note.textContent = NARRATION_NOTE;
+    this.note.hidden = false;
 
     var self = this;
     this.audio = new Audio();
@@ -134,7 +249,14 @@
     this.audio.addEventListener('loadedmetadata', function () { self.duration = self.audio.duration; self.dur.textContent = fmt(self.duration); });
     this.audio.addEventListener('timeupdate', function () { self.position = self.audio.currentTime; self.paint(); });
     this.audio.addEventListener('ended', function () { self.setState('idle'); self.position = 0; self.paint(); });
-    this.audio.addEventListener('error', function () { self.useSpeech(); });
+    /* A missing file is only worth acting on once someone presses play —
+       resolving it on page load would spend the day's generations unheard. */
+    this.audio.addEventListener('error', function () {
+      if (self.mode === 'speech') return;
+      if (self.asked) { self.useSpeech(); if (self.state === 'loading') self.speakFrom(0); return; }
+      self.missing = true;
+      if (self.state === 'loading') self.resolve();
+    });
     this.audio.addEventListener('waiting', function () { if (self.state === 'playing') self.setState('loading'); });
     this.audio.addEventListener('playing', function () { self.setState('playing'); });
 
@@ -173,14 +295,26 @@
   };
   Player.prototype.play = function () {
     this.claim();
-    if (this.mode === 'audio') {
-      var self = this;
-      this.setState('loading');
-      var p = this.audio.play();
-      if (p && p.catch) p.catch(function () { /* error handler switches to speech */ });
-    } else {
-      this.speakFrom(this.sentenceIndex || 0);
-    }
+    if (this.mode !== 'audio') { this.speakFrom(this.sentenceIndex || 0); return; }
+    this.setState('loading');
+    if (this.missing && !this.asked) { this.resolve(); return; }
+    var p = this.audio.play();
+    if (p && p.catch) p.catch(function () { /* the error handler picks it up */ });
+  };
+
+  /* No pre-rendered file: look in the cache, then ask Deepgram, then give up
+     and let the browser read it. */
+  Player.prototype.resolve = function () {
+    var self = this;
+    this.asked = true;
+    TTS.obtain(this.work).then(function (blob) {
+      if (!blob) { self.useSpeech(); if (self.state === 'loading') self.speakFrom(0); return; }
+      self.missing = false;
+      self.audio.src = URL.createObjectURL(blob);
+      self.audio.load();
+      var p = self.audio.play();
+      if (p && p.catch) p.catch(function () { self.useSpeech(); });
+    });
   };
   Player.prototype.pause = function () {
     if (this.mode === 'audio') this.audio.pause();
@@ -215,13 +349,11 @@
     var words = text.split(/\s+/).length;
     this.duration = words / WORDS_PER_SECOND;
     this.sentenceIndex = 0; this.position = 0;
-    this.dur.textContent = '~' + fmt(this.duration);
+    this.dur.textContent = fmt(this.duration);
     if (!('speechSynthesis' in window)) {
-      this.note.textContent = 'Narration has not been generated for this work yet.';
-      this.note.hidden = false; this.btn.disabled = true; return;
+      this.note.textContent = 'This browser cannot read the piece aloud.';
+      this.btn.disabled = true; return;
     }
-    this.note.textContent = 'Narration not rendered yet — read by your browser’s British voice.';
-    this.note.hidden = false;
     this.paint();
     if (this.state === 'loading') this.speakFrom(0);
   };
@@ -307,15 +439,20 @@
     var picks = ORDER.map(function (c) { return pickFor(c, n); }).filter(Boolean);
     picks.forEach(function (a) { mount.appendChild(render(a, tpl)); });
 
-    document.getElementById('dateline').textContent = longDate(ctx.day) + (ctx.archive ? '  ·  from the archive' : '');
+    document.getElementById('dateline').textContent = longDate(ctx.day);
     document.title = picks.map(function (a) { return a.title; }).join(' · ') + ' · Canon';
 
+    /* The first day has nothing before it; today has nothing after it. */
     var prev = document.getElementById('prev-day');
-    if (n > 0) {
-      var y = new Date(utc(ctx.day) - 86400000);
-      prev.href = '?d=' + iso({ y: y.getUTCFullYear(), m: y.getUTCMonth() + 1, d: y.getUTCDate() });
-    } else prev.hidden = true;
-    document.getElementById('today-link').hidden = !ctx.archive;
+    if (n > 0) prev.href = '?d=' + iso(shift(ctx.day, -1));
+    else prev.hidden = true;
+
+    var next = document.getElementById('next-day');
+    if (ctx.archive) {
+      var after = shift(ctx.day, 1);
+      next.href = utc(after) === utc(ctx.today) ? '/canon/' : '?d=' + iso(after);
+      next.hidden = false;
+    }
 
     wireSuggest();
   }

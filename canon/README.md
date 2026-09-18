@@ -4,9 +4,27 @@ Three famous paintings a day, one from each of three eras, each with a short wri
 
 - `index.html`, `style.css`, `app.js` — the page. Static; no build step.
 - `data.js` — the catalogue (32 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
-- `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura. If a file is missing the player falls back to the browser's own British voice and says so.
+- `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura.
+- `config.js` — narration settings: an optional Deepgram key and the generation caps.
 - `scripts/speak.mjs` — renders the audio. `DEEPGRAM_API_KEY=… node canon/scripts/speak.mjs`
 - `scripts/fame.mjs` — scores works (or candidate Wikipedia titles) by pageviews, language editions, and inbound links. `node canon/scripts/fame.mjs "Guernica"`
+
+## Narration
+
+The player looks in three places, in order:
+
+1. `audio/<id>.mp3`, pre-rendered by `scripts/speak.mjs` and committed.
+2. the browser's Cache Storage, holding anything Deepgram has already made on that device.
+3. Deepgram Aura live, but only if `config.js` carries a key and both caps allow it.
+
+Failing all three, the browser's own British voice reads the summary.
+
+Live generation is capped twice — `perDay` (3) and `totalLimit` (30), counted per
+browser in `localStorage` — and each recording is generated once and then cached, so
+replaying it is free. Note that `config.js` is served to every visitor: a key put
+there is public. The caps pace one reader; they do not protect the key. Pre-rendering
+with `speak.mjs` keeps the key on your own machine and gives everyone the Aura voice,
+which is the route to prefer.
 
 ## How the day is chosen
 
