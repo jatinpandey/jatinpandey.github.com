@@ -5,4 +5,4 @@ compatibility_date = "2026-09-01"
 [[d1_databases]]
 binding = "DB"
 database_name = "canon-suggestions"
-database_id = "PASTE_THE_ID_FROM_WRANGLER_D1_CREATE"
+database_id = "b8874331-4ff9-4fd6-a160-fde18de11ddc"

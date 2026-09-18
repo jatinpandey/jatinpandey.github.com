@@ -8,7 +8,6 @@
   'use strict';
 
   /* ---------- configuration ---------- */
-  var REPO = 'jatinpandey/jatinpandey.github.com';
   var LAUNCH = Date.UTC(2026, 8, 16); // day zero of the rotation (16 Sep 2026)
   var ORDER = ['old', 'nineteenth', 'modern'];
   var COMMONS = 'https://commons.wikimedia.org/wiki/Special:FilePath/';
@@ -89,13 +88,13 @@
 
   /* ---------- render ---------- */
   /* Where a reference points. scripts/references.mjs has already resolved every
-     label in the catalogue to a Wikipedia article and, for most of them, the
-     Wikimedia image file itself — so a reference to a painting opens the
-     painting. Labels the script has not seen fall back to a search. */
+     label in the catalogue to the Wikipedia article that explains it, which
+     carries the picture and the account of it both — a bare image file on
+     upload.wikimedia.org carries only the picture, and often the wrong one.
+     Labels the script has not seen fall back to a search. */
   var refs = window.REFERENCES || (typeof REFERENCES !== 'undefined' ? REFERENCES : {});
   function destination(label) {
     var ref = refs[label];
-    if (ref && ref.image) return { href: ref.image, hint: 'Open the picture for “' + ref.page + '” on Wikimedia' };
     if (ref && ref.page) return { href: WIKI_ARTICLE + encodeURIComponent(ref.page.replace(/ /g, '_')), hint: 'Read “' + ref.page + '” on Wikipedia' };
     var term = lookup(label);
     return { href: WIKI_SEARCH + encodeURIComponent(term), hint: 'Look up “' + term + '” on Wikipedia' };
@@ -457,29 +456,37 @@
       var topic = text.value.trim();
       if (!topic) return;
       var endpoint = (window.CANON_CONFIG || {}).suggestEndpoint || '';
-      var payload = {
-        topic: topic, email: email.value.trim(), page: location.href,
-        date: new Date().toISOString(), website: trap.value,
-      };
-      if (endpoint) {
-        send.disabled = true; note.textContent = 'Sending…';
-        fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
-          .then(function (r) {
-            return r.json().catch(function () { return {}; }).then(function (data) {
-              if (!r.ok) throw new Error(data.error || r.status);
-              note.textContent = 'Thank you. Noted.'; text.value = ''; email.value = '';
-              setTimeout(function () { dialog.close(); }, 900);
-            });
-          })
-          .catch(function (err) { note.textContent = String(err.message || '').slice(0, 120) || 'That didn’t go through. Try again in a moment.'; })
-          .then(function () { send.disabled = false; });
-      } else {
-        var title = 'Topic suggestion: ' + topic.slice(0, 60);
-        var body = topic + (payload.email ? '\n\nContact: ' + payload.email : '') + '\n\nSent from ' + payload.page;
-        var url = 'https://github.com/' + REPO + '/issues/new?title=' + encodeURIComponent(title) + '&body=' + encodeURIComponent(body) + '&labels=topic-suggestion';
-        window.open(url, '_blank', 'noopener');
-        note.textContent = 'Opened a GitHub issue with your suggestion — press Submit there to send it.';
-      }
+      if (!endpoint) { note.textContent = 'The suggestion box is not connected yet.'; return; }
+      send.disabled = true; note.textContent = 'Sending…';
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          topic: topic, email: email.value.trim(), page: location.href,
+          date: new Date().toISOString(), website: trap.value,
+        }),
+      })
+        .then(function (r) {
+          return r.json().catch(function () { return {}; }).then(function (data) {
+            if (!r.ok) throw new Error(data.error || r.status);
+            note.textContent = 'Thank you. Noted.'; text.value = ''; email.value = '';
+            setTimeout(function () { dialog.close(); }, 900);
+          });
+        })
+        .catch(function (err) { note.textContent = String(err.message || '').slice(0, 120) || 'That didn’t go through. Try again in a moment.'; })
+        .then(function () { send.disabled = false; });
+    });
+
+    /* Anywhere outside the sheet closes it. The backdrop is the dialog's own
+       pseudo-element, so a click on it still reports the dialog as the target —
+       the box has to be measured. A keyboard-triggered click reports no
+       coordinates at all, and must not count as being outside. */
+    dialog.addEventListener('click', function (ev) {
+      if (!ev.detail) return;
+      var box = dialog.getBoundingClientRect();
+      var inside = ev.clientX >= box.left && ev.clientX <= box.right
+        && ev.clientY >= box.top && ev.clientY <= box.bottom;
+      if (!inside) dialog.close();
     });
   }
 

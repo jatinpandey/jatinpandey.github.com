@@ -298,8 +298,12 @@
 .suggest-btn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
 
 /* ---------- suggest dialog ---------- */
+/* The site's reset zeroes every margin, which includes the one a <dialog> uses
+   to centre itself — hence `margin: auto` here, or it sits in the top corner. */
 .suggest-dialog {
+  margin: auto;
   width: min(92vw, 520px);
+  max-width: none;
   padding: 30px 30px 24px;
   border: 1px solid var(--card-line);
   border-radius: 10px;
@@ -307,6 +311,8 @@
   color: var(--ink);
   box-shadow: var(--lift-hover);
 }
+.suggest-dialog[open] { animation: suggest-in 220ms var(--ease); }
+@keyframes suggest-in { from { opacity: 0; transform: translateY(6px) scale(0.99); } }
 .suggest-dialog::backdrop { background: rgba(17, 17, 17, 0.35); backdrop-filter: blur(2px); }
 .suggest-dialog h2 { font-family: var(--serif); font-weight: 400; font-size: 1.7rem; line-height: 1.15; margin: 0 0 8px; }
 .suggest-dialog p { color: var(--graphite); font-size: 0.92rem; margin: 0 0 16px; }
@@ -344,6 +350,17 @@
 
 /* ---------- responsive ---------- */
 @media (max-width: 720px) {
+  /* on a phone it rises from the bottom edge, within reach of a thumb */
+  .suggest-dialog {
+    margin: auto auto 0;
+    width: 100%;
+    border-radius: 16px 16px 0 0;
+    border-bottom: 0;
+    padding: 26px 22px calc(22px + env(safe-area-inset-bottom));
+  }
+  .suggest-dialog[open] { animation: suggest-up 260ms var(--ease); }
+  @keyframes suggest-up { from { transform: translateY(100%); } }
+
   .canon-shell { padding-inline: 18px; }
   .prose { grid-template-columns: 1fr; gap: 26px; }
   .player { gap: 0 16px; padding: 16px 18px; }
@@ -352,5 +369,6 @@
 }
 @media (prefers-reduced-motion: reduce) {
   .frame, .play, .track-knob { transition: none; }
+  .suggest-dialog[open] { animation: none; }
   .player[data-state="loading"] .icon-wait { animation: none; }
 }

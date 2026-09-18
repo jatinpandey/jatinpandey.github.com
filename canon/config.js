@@ -20,7 +20,7 @@ window.CANON_CONFIG = {
   /* Where the "what else should we add?" form posts. Deploy suggestions/ and
      paste the Worker's URL here; empty means the form falls back to opening a
      prefilled GitHub issue instead. */
-  suggestEndpoint: '',
+  suggestEndpoint: 'https://canon-suggestions.jatinpandey5.workers.dev',
 
   deepgramKey: '',            // e.g. 'dg_…' — see the warning above
   voice: 'aura-2-draco-en',   // British baritone; aura-2-pandora-en is the female equivalent

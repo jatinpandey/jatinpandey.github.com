@@ -1,10 +1,10 @@
 # Canon
 
-Three famous paintings a day, one from each of three eras, each with a short written history and a two-minute narration in a solemn British voice.
+Three famous paintings a day, each from a different era, with a short written history and a two-minute narration in a solemn British voice.
 
 - `index.html`, `style.css`, `app.js` — the page. Static; no build step.
 - `data.js` — the catalogue (32 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
-- `references.js` — generated. Each reference label resolved to its Wikipedia article and, where there is one, the Wikimedia image file, so a reference to a painting opens the painting.
+- `references.js` — generated. Each reference label resolved to the Wikipedia article that explains it, which carries both the picture and the account of it.
 - `frame.png` — generated. The gilt moulding the plates are framed in.
 - `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura. All 32 are committed, so every visitor hears the Aura voice and no key goes near the browser.
 - `audio/manifest.json` — what each recording is and how long it runs.
@@ -13,7 +13,7 @@ Three famous paintings a day, one from each of three eras, each with a short wri
 - `scripts/durations.mjs` — times the mp3s into the manifest. `node canon/scripts/durations.mjs`
 - `scripts/mp3.mjs` — counts MP3 frames; used by the two above.
 - `scripts/frame.mjs` — draws the frame. `node canon/scripts/frame.mjs > canon/frame.png`
-- `scripts/references.mjs` — resolves the references against Wikipedia. `node canon/scripts/references.mjs > canon/references.js`
+- `scripts/references.mjs` — resolves the references against Wikipedia. Takes a couple of minutes; it searches one label at a time so as not to hammer the API. `node canon/scripts/references.mjs > canon/references.js`
 - `suggestions/` — a Cloudflare Worker and D1 database for the suggestion form. See its README.
 - `scripts/fame.mjs` — scores works (or candidate Wikipedia titles) by pageviews, language editions, and inbound links. `node canon/scripts/fame.mjs "Guernica"`
 
@@ -73,9 +73,8 @@ profile; nothing else reads it.
 
 ## Suggestions
 
-The "What other topics should we add?" button opens a small form. With
-`suggestEndpoint` set in `config.js` it posts to the Worker in `suggestions/`,
-which stores them in a D1 database — see `suggestions/README.md` for the four
-commands that deploy it. With no endpoint set it falls back to opening a
-prefilled GitHub issue on this repo, which stores nothing unless the visitor
-presses Submit there.
+The "Want more than just art?" button opens a form — centred on a desktop, a
+sheet rising from the bottom edge on a phone, dismissed by clicking outside it.
+It posts to the Cloudflare Worker in `suggestions/`, which keeps them in a D1
+database; `suggestEndpoint` in `config.js` says where. That is already deployed
+and wired up — see `suggestions/README.md` for how to read what comes in.
