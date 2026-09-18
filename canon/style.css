@@ -5,6 +5,8 @@
   --mono: "Courier New", Courier, monospace;
   --card: #f8f5ee;
   --card-line: #ddd8cb;
+  --frame-w: clamp(22px, 3.4vw, 40px);
+  --plate-max-h: min(78vh, 820px);
   min-height: 100dvh;
   display: flex;
   flex-direction: column;
@@ -84,28 +86,60 @@
   color: var(--graphite);
   margin-bottom: 18px;
 }
+.eyebrow .ordinal { color: var(--ink); letter-spacing: 0.2em; }
 .eyebrow .category { color: var(--ink); }
+.eyebrow .category::before,
 .eyebrow .span::before { content: "·"; margin-right: 10px; color: var(--line); }
 
-.plate { margin: 0 0 22px; text-align: center; }
-.plate-link { display: inline-block; max-width: 100%; line-height: 0; }
+.plate { margin: 0 0 26px; }
+
+/* The box is computed from the work's own dimensions, so it is correct before
+   the image exists — no square of frame that later grows into a painting. The
+   width is bounded by the column and by what the height cap allows, and the
+   ratio does the rest. */
+.plate-link {
+  display: block;
+  width: min(100%, calc(var(--plate-max-h) * var(--w, 4) / var(--h, 3) + 2 * var(--frame-w)));
+  margin-inline: auto;
+  line-height: 0;
+  background:
+    radial-gradient(120% 92% at 50% 38%,
+      rgba(17, 17, 17, 0.05) 0%, rgba(17, 17, 17, 0.025) 58%, rgba(17, 17, 17, 0.06) 100%),
+    var(--soft);
+  box-shadow: inset 0 0 0 1px rgba(17, 17, 17, 0.07);
+}
+/* a slow breath, so the silhouette reads as waiting rather than broken */
+.plate[data-state="loading"] .plate-link { animation: plate-wait 2.6s ease-in-out infinite; }
+@keyframes plate-wait { 50% { opacity: 0.62; } }
 
 /* The frame is drawn by scripts/frame.mjs into frame.png — one carved moulding
    section, lit per pixel, mitred at the corners by border-image. The section
    never varies along an edge, so stretching one to any length is lossless. */
 .frame {
-  display: inline-block;
-  max-width: 100%;
-  border: clamp(22px, 3.4vw, 40px) solid transparent;
-  border-image: url(/canon/frame.png) 80 stretch;
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  border: var(--frame-w) solid transparent;
+  border-image-source: none;
+  border-image-slice: 80;
+  border-image-repeat: stretch;
+  opacity: 0;
   box-shadow:
     0 2px 3px rgba(17, 17, 17, 0.13),
     0 22px 44px -24px rgba(17, 17, 17, 0.5),
     0 70px 112px -58px rgba(17, 17, 17, 0.45);
-  transition: transform 500ms var(--ease), box-shadow 500ms var(--ease);
+  transition: opacity 520ms var(--ease), transform 500ms var(--ease);
+}
+.plate[data-state="ready"] .frame {
+  border-image-source: url(/canon/frame.png);
+  opacity: 1;
 }
 /* the rebate: the frame's lip throws a shadow across the canvas edge */
-.frame-lip { position: relative; display: block; }
+.frame-lip {
+  position: relative;
+  display: block;
+  aspect-ratio: var(--w, 4) / var(--h, 3);
+}
 .frame-lip::after {
   content: "";
   position: absolute;
@@ -117,13 +151,12 @@
 }
 .plate-img {
   display: block;
-  max-width: 100%;
-  max-height: min(78vh, 820px);
-  width: auto;
-  height: auto;
-  margin: 0 auto;
-  background: var(--soft);
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 760ms var(--ease) 90ms;
 }
+.plate[data-state="ready"] .plate-img { opacity: 1; }
 .plate-link:hover .frame { transform: translateY(-2px); }
 .plate-link:focus-visible { outline: 2px solid var(--accent); outline-offset: 8px; }
 
@@ -236,23 +269,32 @@
 }
 
 /* ---------- prose ---------- */
+/* One column to read down, and a narrower margin beside it for what supports the
+   reading. Four sections of equal weight in a two-by-two grid gave no reading
+   order at all — you could start anywhere, and the page never said which of the
+   four was the point. */
 .prose {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 32px 48px;
-  width: min(100%, 900px);
+  grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+  align-items: start;
+  gap: 0 52px;
+  width: min(100%, 880px);
   margin: 0 auto;
 }
+.thread > .col + .col { margin-top: 34px; }
+.aside > .col + .col { margin-top: 30px; }
+.aside .col p, .aside .echoes li { font-size: 0.92rem; }
+
 .col h3 {
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   font-weight: 400;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--graphite);
-  margin: 0 0 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  margin: 0 0 12px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid rgba(17, 17, 17, 0.26);
 }
 .col p { margin: 0 0 12px; font-size: 0.98rem; line-height: 1.6; }
 .col p:last-child { margin-bottom: 0; }
@@ -366,13 +408,15 @@
   @keyframes suggest-up { from { transform: translateY(100%); } }
 
   .canon-shell { padding-inline: 18px; }
-  .prose { grid-template-columns: 1fr; gap: 26px; }
+  .prose { grid-template-columns: 1fr; }
+  .aside { margin-top: 32px; }
   .player { gap: 0 16px; padding: 16px 18px; }
   .play { width: 46px; height: 46px; }
   .time { font-size: 0.92rem; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .frame, .play, .track-knob { transition: none; }
+  .frame, .play, .track-knob, .plate-img { transition: none; }
   .suggest-dialog[open] { animation: none; }
+  .plate[data-state="loading"] .plate-link { animation: none; }
   .player[data-state="loading"] .icon-wait { animation: none; }
 }

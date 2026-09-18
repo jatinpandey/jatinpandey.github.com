@@ -16,6 +16,7 @@
   var NARRATION_NOTE = 'Details of the piece narrated in a sophisticated British voice.';
   var WIKI_ARTICLE = 'https://en.wikipedia.org/wiki/';
   var REFERENCE_LIMIT = 3;
+  var NUMERALS = ['I', 'II', 'III', 'IV', 'V'];   // three identical blocks need somewhere to stand
 
   /* How long each recording runs, measured by scripts/durations.mjs. The files
      carry no duration header, so without this the player can only guess. */
@@ -109,12 +110,23 @@
     node.querySelector('.category').textContent = cat.name;
     node.querySelector('.span').textContent = cat.span;
 
+    /* The plate's box is reserved from the catalogue's own dimensions before a
+       byte of the image arrives, so the frame never draws at the wrong size and
+       then jumps. Until the picture is here the gilt is held back and a plain
+       silhouette stands in its place, which the painting then resolves into. */
+    var plate = node.querySelector('.plate');
+    plate.style.setProperty('--w', a.w);
+    plate.style.setProperty('--h', a.h);
+
     var image = node.querySelector('.plate-img');
-    image.src = img(a.file, 1800);
-    image.srcset = srcset(a);
     image.sizes = '(min-width: 1130px) 1032px, calc(100vw - 48px)';
     image.width = a.w; image.height = a.h;
     image.alt = a.title + ' by ' + a.artist + ', ' + a.year;
+    image.addEventListener('load', function () { plate.dataset.state = 'ready'; });
+    image.addEventListener('error', function () { plate.dataset.state = 'missing'; });
+    image.srcset = srcset(a);
+    image.src = img(a.file, 1800);
+    if (image.complete && image.naturalWidth) plate.dataset.state = 'ready';
     node.querySelector('.plate-link').href = 'https://commons.wikimedia.org/wiki/File:' + encodeURIComponent(a.file);
     node.querySelector('.caption-venue').textContent = a.museum + ', ' + a.city;
     node.querySelector('.caption-spec').textContent = [a.medium, a.dims].join('  ·  ');
@@ -482,7 +494,11 @@
     var tpl = document.getElementById('work-template');
     var mount = document.getElementById('works');
     var picks = ORDER.map(function (c) { return pickFor(c, n); }).filter(Boolean);
-    picks.forEach(function (a) { mount.appendChild(render(a, tpl)); });
+    picks.forEach(function (a, i) {
+      var node = render(a, tpl);
+      node.querySelector('.ordinal').textContent = NUMERALS[i] || String(i + 1);
+      mount.appendChild(node);
+    });
 
     document.getElementById('dateline').textContent = longDate(ctx.day);
     document.title = picks.map(function (a) { return a.title; }).join(' · ') + ' · Canon';

@@ -59,8 +59,8 @@
 
   <template id="work-template">
     <article class="work">
-      <p class="eyebrow"><span class="category"></span><span class="span"></span></p>
-      <figure class="plate">
+      <p class="eyebrow"><span class="ordinal"></span><span class="category"></span><span class="span"></span></p>
+      <figure class="plate" data-state="loading">
         <a class="plate-link" target="_blank" rel="noopener" title="Open the full-resolution file on Wikimedia Commons">
           <span class="frame">
             <span class="frame-lip">
@@ -92,10 +92,14 @@
       </div>
 
       <div class="prose">
-        <section class="col"><h3>History</h3><div class="history"></div></section>
-        <section class="col"><h3>What it depicts</h3><div class="depicts"></div></section>
-        <section class="col"><h3>The artist</h3><div class="about"></div></section>
-        <section class="col"><h3>References to this piece</h3><ul class="echoes"></ul></section>
+        <div class="thread">
+          <section class="col"><h3>What it depicts</h3><div class="depicts"></div></section>
+          <section class="col"><h3>History</h3><div class="history"></div></section>
+        </div>
+        <aside class="aside">
+          <section class="col"><h3>The artist</h3><div class="about"></div></section>
+          <section class="col"><h3>References to this piece</h3><ul class="echoes"></ul></section>
+        </aside>
       </div>
     </article>
   </template>

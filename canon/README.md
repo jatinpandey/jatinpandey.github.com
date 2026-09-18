@@ -69,6 +69,16 @@ Categories are date ranges, so they cannot overlap:
 
 Subjects (myth, portrait, landscape) cut across periods, so they are better as tags than categories. Nothing after 1950 is included because those works are still in copyright and Commons cannot host them.
 
+## The plate
+
+Each plate's box is computed from the catalogue's own `w` and `h` before the
+image is fetched, so the frame is never drawn at the wrong size and then jumped
+to the right one. An unloaded `<img>` with `width: auto; height: auto` has no
+size at all — the attributes do not help — so the width is set from the ratio and
+the height cap, and `aspect-ratio` supplies the rest. Until the picture arrives
+the gilt is held back entirely and a plain silhouette stands in the same box,
+breathing slowly; the frame and the painting then fade in together.
+
 ## The frame
 
 `scripts/frame.mjs` draws one carved moulding section and lights it per pixel —
