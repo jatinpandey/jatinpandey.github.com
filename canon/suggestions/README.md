@@ -59,8 +59,13 @@ opened, work reached, spotlight lit, narration played, narration finished.
 
 No address is stored. The Worker keeps a salted hash of it, as it does for
 suggestions, purely to throttle a flood, and a country code from Cloudflare.
-A browser sending Do Not Track is not recorded at all — one line in
-`canon/events.js` if you would rather it were.
+
+Do Not Track is deliberately not consulted. It exists to stop third parties
+following people between sites, and nothing here does that: the events are
+first-party, reach only this site's own Worker, hold no personal data and no
+address, and are never shared or sold. Honouring it would drop readers from the
+count for no privacy gain. Global Privacy Control is its successor and does
+carry legal weight in places — worth revisiting if a third party is ever added.
 
 ### Reading them
 

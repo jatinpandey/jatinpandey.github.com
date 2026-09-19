@@ -162,8 +162,9 @@ between the two —
 and posts them in batches to the Worker in `suggestions/`, with `sendBeacon` on
 the way out so the last few are not lost when the tab closes. Two random ids go
 with them, one per browser and one per page load, which between them answer
-return visits and funnels. Nothing identifies a person, and a browser sending Do
-Not Track is not recorded. `npm run stats` in `suggestions/` reads it back.
+return visits and funnels. Nothing identifies a person. Do Not Track is not
+consulted, because it governs third parties following people between sites and
+this does neither. `npm run stats` in `suggestions/` reads it back.
 
 ## The frame
 

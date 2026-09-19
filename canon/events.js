@@ -42,8 +42,15 @@
     }
   }
 
-  /* A browser asking not to be followed is not followed. One line to drop. */
-  var refused = navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1';
+  /* Do Not Track is deliberately not consulted. It was built to stop third
+     parties following people between sites, and nothing here does that: the
+     events are first-party, go only to this site's own Worker, hold no personal
+     data and no address, and are never shared or sold. Honouring it here would
+     drop readers from the count in exchange for a privacy gain of zero. Global
+     Privacy Control is the successor and does carry legal weight in some places
+     — worth revisiting if this ever grows a third party.
+
+     To go back to honouring it, refuse when navigator.doNotTrack is '1'. */
 
   /* Development is not readership. Anything served from a local address is
      building or testing the page, and counting it puts phantom visitors,
@@ -76,7 +83,7 @@
   }
 
   function record(name, props) {
-    if (refused || !endpoint()) return;
+    if (!endpoint()) return;
     if (local && !config().recordLocally) return;
     var e = props ? JSON.parse(JSON.stringify(props)) : {};
     e.name = name;
@@ -97,6 +104,6 @@
   window.CanonEvents = {
     record: record,
     flush: flush,
-    enabled: !refused && !(local && !config().recordLocally),
+    enabled: !(local && !config().recordLocally),
   };
 })();
