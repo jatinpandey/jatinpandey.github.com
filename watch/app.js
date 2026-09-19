@@ -1,5 +1,5 @@
 import {parts,findParts} from './components.js';
-import {createWatch} from './model.js';
+import {createWatch} from './model.js?v=20260918-6';
 import {flow,phases,displayBranch} from './flow.js';
 const $=s=>document.querySelector(s);let model,selected=null;
 function select(id,options){const p=parts.find(p=>p.id===id);if(!p)return false;stopFlow(true);selected=id;model?.select(id,options);$('#detail').hidden=false;document.body.classList.add('detail-open');$('#detail-category').textContent=p.category;$('#detail-title').textContent=p.name;$('#detail-summary').textContent=p.summary;$('#detail-what').textContent=p.what;$('#detail-role').textContent=p.role;$('#detail-how').textContent=p.how;$('#connection-list').hidden=true;$('#connections').textContent='Show connected parts';$('#connection-list').replaceChildren();for(const link of p.links){const connected=parts.find(x=>x.id===link);const b=document.createElement('button');b.textContent=connected.name;b.onclick=()=>select(link);$('#connection-list').append(b)}$('#search-results').hidden=true;return true}
