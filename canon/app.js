@@ -15,6 +15,17 @@
   var WORDS_PER_SECOND = 2.35; // Draco's pace, used only for the spoken fallback estimate
   var NARRATION_NOTE = 'Details of the piece narrated in a sophisticated British voice.';
   var REFERENCE_LIMIT = 3;
+
+  /* What readers did. A no-op when events.js is absent or the browser has
+     asked not to be followed, so nothing below needs to check. */
+  function note(name, props) {
+    if (window.CanonEvents) window.CanonEvents.record(name, props);
+  }
+  function of(a, extra) {
+    var e = { work: a.id, artist: a.artist, era: a.category };
+    if (extra) for (var k in extra) if (Object.prototype.hasOwnProperty.call(extra, k)) e[k] = extra[k];
+    return e;
+  }
   var NUMERALS = ['I', 'II', 'III', 'IV', 'V'];   // three identical blocks need somewhere to stand
 
   /* How long each recording runs, measured by scripts/durations.mjs. The files
@@ -144,10 +155,10 @@
        painting is what anyone expects, and the file on Commons is the same
        picture again. Its page is still one click away, from inside the room. */
     var toggle = node.querySelector('.spotlight-btn');
-    toggle.addEventListener('click', function () { spotlight(a, toggle); });
+    toggle.addEventListener('click', function () { note('spotlight_open', of(a, { source: 'switch' })); spotlight(a, toggle); });
     var plate_link = node.querySelector('.plate-link');
     plate_link.setAttribute('aria-label', 'Light ' + a.title + ' in the spotlight');
-    plate_link.addEventListener('click', function () { spotlight(a, toggle); });
+    plate_link.addEventListener('click', function () { note('spotlight_open', of(a, { source: 'plate' })); spotlight(a, toggle); });
 
     new Player(node.querySelector('.player'), a);
     return node;
@@ -329,6 +340,7 @@
     this.duration = 0;
     this.position = 0;
     this.missing = false;  // the pre-rendered file is not there
+    this.usingBlob = false;   // the audio was fetched from Deepgram this visit
     this.asked = false;    // we have already been round to Deepgram for this one
 
     this.note.textContent = NARRATION_NOTE;
@@ -359,7 +371,10 @@
       self.paint();
     });
     this.audio.addEventListener('timeupdate', function () { self.position = self.audio.currentTime; self.paint(); });
-    this.audio.addEventListener('ended', function () { self.setState('idle'); self.position = 0; self.paint(); });
+    this.audio.addEventListener('ended', function () {
+      note('audio_complete', of(work, { source: self.usingBlob ? 'deepgram' : 'file', value: Math.round(self.duration) }));
+      self.setState('idle'); self.position = 0; self.paint();
+    });
     /* A missing file is only worth acting on once someone presses play —
        resolving it on page load would spend the day's generations unheard. */
     this.audio.addEventListener('error', function () {
@@ -409,6 +424,9 @@
   };
   Player.prototype.play = function () {
     this.claim();
+    if (this.state !== 'paused') {
+      note('audio_play', of(this.work, { source: this.mode === 'speech' ? 'speech' : (this.missing ? 'deepgram' : 'file') }));
+    }
     if (this.mode !== 'audio') { this.speakFrom(this.sentenceIndex || 0); return; }
     this.setState('loading');
     if (this.missing && !this.asked) { this.resolve(); return; }
@@ -424,6 +442,7 @@
     TTS.obtain(this.work).then(function (blob) {
       if (!blob) { self.useSpeech(); if (self.state === 'loading') self.speakFrom(0); return; }
       self.missing = false;
+      self.usingBlob = true;   // it came from Deepgram just now, not from the repo
       self.audio.src = URL.createObjectURL(blob);
       self.audio.load();
       var p = self.audio.play();
@@ -492,7 +511,10 @@
     var token = this.token = {};
     function next(i) {
       if (self.token !== token) return;
-      if (i >= self.sentences.length) { self.setState('idle'); self.sentenceIndex = 0; self.position = 0; self.paint(); return; }
+      if (i >= self.sentences.length) {
+        note('audio_complete', of(self.work, { source: 'speech', value: Math.round(self.duration) }));
+        self.setState('idle'); self.sentenceIndex = 0; self.position = 0; self.paint(); return;
+      }
       self.sentenceIndex = i;
       var u = new SpeechSynthesisUtterance(self.sentences[i].trim());
       if (voice) u.voice = voice;
@@ -544,6 +566,7 @@
         .then(function (r) {
           return r.json().catch(function () { return {}; }).then(function (data) {
             if (!r.ok) throw new Error(data.error || r.status);
+            window.CanonEvents && window.CanonEvents.record('suggestion_sent', {});
             note.textContent = 'Thank you. Noted.'; text.value = ''; email.value = '';
             setTimeout(function () { dialog.close(); }, 900);
           });
@@ -577,6 +600,13 @@
       node.querySelector('.ordinal').textContent = NUMERALS[i] || String(i + 1);
       mount.appendChild(node);
     });
+
+    note('day_view', {
+      day: iso(ctx.day),
+      archive: ctx.archive,
+      value: picks.length,
+    });
+    watchReach(picks);
 
     document.getElementById('dateline').textContent = longDate(ctx.day);
     document.title = picks.map(function (a) { return a.title; }).join(' · ') + ' · Canon';
@@ -616,6 +646,27 @@
         try { window.scrollTo({ top: to, behavior: 'instant' }); } catch (e) { window.scrollTo(0, to); }
       }
     }, 240);
+  }
+
+  /* A work counts as reached when a good part of it has been on screen. Fired
+     once each: the question is which of the three a reader gets to, not how
+     often a section crossed the fold while they scrolled. */
+  function watchReach(picks) {
+    if (!window.IntersectionObserver) return;
+    var seen = {};
+    var watch = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting || seen[entry.target.id]) return;
+        seen[entry.target.id] = true;
+        watch.unobserve(entry.target);
+        var a = picks.filter(function (w) { return w.id === entry.target.id; })[0];
+        if (a) note('work_view', of(a));
+      });
+    }, { threshold: 0.35 });
+    picks.forEach(function (a) {
+      var node = document.getElementById(a.id);
+      if (node) watch.observe(node);
+    });
   }
 
   /* ---------- the rail ----------

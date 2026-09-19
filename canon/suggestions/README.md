@@ -1,6 +1,7 @@
-# Collecting suggestions
+# Suggestions and events
 
-A Cloudflare Worker in front of a D1 database. Chosen because it is one service
+A Cloudflare Worker in front of a D1 database, holding two things: the topic
+suggestions people send, and a record of what readers did on the page. Chosen because it is one service
 rather than two: D1 is Cloudflare's own SQLite, so there is no connection string
 to keep alive, no build step, nothing that sleeps, and the free tier is far
 beyond what this will ever use. (Neon would work too, but then you are running a
@@ -14,7 +15,54 @@ Deployed to the account for jatinpandey5@gmail.com, database `canon-suggestions`
 (`b8874331-4ff9-4fd6-a160-fde18de11ddc`, region APAC). `canon/config.js` already
 points at it, so the form on the site posts here.
 
-## Reading what comes in
+## Events
+
+| route | |
+| --- | --- |
+| `POST /events` | a batch from the page; no token, CORS-limited to the site |
+| `GET /events` | the raw log (admin token) |
+| `GET /stats` | counts and funnels (admin token), `?days=30` |
+
+Six events are recorded, and only six — an unrecognised name is refused rather
+than stored, so a typo in the page cannot quietly invent a column of nonsense.
+
+| event | carries |
+| --- | --- |
+| `day_view` | the catalogue day, and whether a past day was asked for by name |
+| `work_view` | which work, once it has been a third on screen |
+| `spotlight_open` | which work, and `plate` or `switch` |
+| `audio_play` | which work, and `file`, `deepgram` or `speech` |
+| `audio_complete` | which work, and how long the recording ran |
+| `suggestion_sent` | nothing but the fact of it |
+
+### What identifies anybody
+
+Nothing does. Two random ids are kept. `visitor` lives in the reader's own
+localStorage, which is what makes a second visit countable as a return; clearing
+site data makes them a new person, and a private window is always new. `session`
+is fresh on every page load, and is what lets a funnel be reconstructed — day
+opened, work reached, spotlight lit, narration played, narration finished.
+
+No address is stored. The Worker keeps a salted hash of it, as it does for
+suggestions, purely to throttle a flood, and a country code from Cloudflare.
+A browser sending Do Not Track is not recorded at all — one line in
+`canon/events.js` if you would rather it were.
+
+### Reading them
+
+```bash
+npm run stats     # totals, the funnel, per-work counts, by day
+npm run funnel    # the per-work funnel, straight from the database
+npm run events    # the raw log, most recent first
+```
+
+`stats` answers the usual questions in one call: how many visitors and sessions,
+how many of them had been before, which day each session was reading, and for
+every work how many sessions reached it, lit it, played it and finished it —
+along with whether the spotlight was opened by tapping the painting or the
+switch, and narrow versus wide screens.
+
+## Reading the suggestions
 
 ```bash
 npm install     # once

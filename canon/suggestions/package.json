@@ -12,7 +12,10 @@
     "token:set": "security add-generic-password -a \"$USER\" -s canon-admin-token -U -w",
     "token:push": "security find-generic-password -a \"$USER\" -s canon-admin-token -w | wrangler secret put ADMIN_TOKEN",
     "token:show": "security find-generic-password -a \"$USER\" -s canon-admin-token -w",
-    "read": "curl -sS -H \"Authorization: Bearer $(security find-generic-password -a \"$USER\" -s canon-admin-token -w)\" https://canon-suggestions.jatinpandey5.workers.dev"
+    "read": "curl -sS -H \"Authorization: Bearer $(security find-generic-password -a \"$USER\" -s canon-admin-token -w)\" https://canon-suggestions.jatinpandey5.workers.dev",
+    "stats": "curl -sS -H \"Authorization: Bearer $(security find-generic-password -a \"$USER\" -s canon-admin-token -w)\" 'https://canon-suggestions.jatinpandey5.workers.dev/stats?days=30' | python3 -m json.tool",
+    "events": "curl -sS -H \"Authorization: Bearer $(security find-generic-password -a \"$USER\" -s canon-admin-token -w)\" 'https://canon-suggestions.jatinpandey5.workers.dev/events?limit=100' | python3 -m json.tool",
+    "funnel": "wrangler d1 execute canon-suggestions --remote --command \"SELECT work, COUNT(DISTINCT CASE WHEN name='work_view' THEN session END) AS reached, COUNT(DISTINCT CASE WHEN name='spotlight_open' THEN session END) AS spotlit, COUNT(DISTINCT CASE WHEN name='audio_play' THEN session END) AS played, COUNT(DISTINCT CASE WHEN name='audio_complete' THEN session END) AS finished FROM events WHERE work IS NOT NULL GROUP BY work ORDER BY reached DESC\""
   },
   "devDependencies": {
     "wrangler": "^4.135.0"

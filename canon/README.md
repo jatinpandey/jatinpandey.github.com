@@ -25,7 +25,8 @@ person is not a reference to their work — Keith Haring's page does not show hi
 dancing figures, and Michelangelo's does not show the Last Judgement — so those
 render as plain text instead, along with movements and institutions. 58 of the
 96 currently link; the rest say their piece and leave the reader to it.
-- `suggestions/` — a Cloudflare Worker and D1 database for the suggestion form. See its README.
+- `events.js` — records what readers did, and sends it to the Worker in batches.
+- `suggestions/` — the Cloudflare Worker and D1 database behind the suggestion form and the events. See its README.
 - `scripts/fame.mjs` — scores works (or candidate Wikipedia titles) by pageviews, language editions, and inbound links. `node canon/scripts/fame.mjs "Guernica"`
 
 ## Narration
@@ -121,6 +122,16 @@ each throw is answered by a short synthesised click — a burst of noise through
 bandpass, decaying fast, pitched higher going on than coming off — and a brief
 haptic where the device has one. Both follow a press, so nothing makes a noise
 the reader did not ask for.
+
+## What readers did
+
+`events.js` records six things — the day opened, each work reached, each
+spotlight lit, each narration played and finished, and each suggestion sent —
+and posts them in batches to the Worker in `suggestions/`, with `sendBeacon` on
+the way out so the last few are not lost when the tab closes. Two random ids go
+with them, one per browser and one per page load, which between them answer
+return visits and funnels. Nothing identifies a person, and a browser sending Do
+Not Track is not recorded. `npm run stats` in `suggestions/` reads it back.
 
 ## The frame
 

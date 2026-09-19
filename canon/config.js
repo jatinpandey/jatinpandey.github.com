@@ -22,6 +22,10 @@ window.CANON_CONFIG = {
      prefilled GitHub issue instead. */
   suggestEndpoint: 'https://canon-suggestions.jatinpandey5.workers.dev',
 
+  /* Where events go. Defaults to suggestEndpoint + /events; set it explicitly
+     to send them somewhere else, or to '' to record nothing at all. */
+  eventsEndpoint: '',
+
   deepgramKey: '',            // e.g. 'dg_…' — see the warning above
   voice: 'aura-2-draco-en',   // British baritone; aura-2-pandora-en is the female equivalent
   perDay: 3,                  // most recordings Deepgram may generate per day, per browser
