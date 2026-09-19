@@ -14,7 +14,6 @@
   var AUDIO_DIR = '/canon/audio/';
   var WORDS_PER_SECOND = 2.35; // Draco's pace, used only for the spoken fallback estimate
   var NARRATION_NOTE = 'Details of the piece narrated in a sophisticated British voice.';
-  var WIKI_ARTICLE = 'https://en.wikipedia.org/wiki/';
   var REFERENCE_LIMIT = 3;
   var NUMERALS = ['I', 'II', 'III', 'IV', 'V'];   // three identical blocks need somewhere to stand
 
@@ -88,17 +87,11 @@
   }
 
   /* ---------- render ---------- */
-  /* Where a reference points, when it points anywhere. scripts/references.mjs
-     keeps only the labels that resolve to an article about an actual work — a
-     painting, a film, a book. A reference that would land on a person's page
-     instead is left as plain text, because an article about Keith Haring is not
-     a reference to Keith Haring's dancing figures and does not even show them.
-     Better no link than one that does not repay the click. */
-  var refs = window.REFERENCES || (typeof REFERENCES !== 'undefined' ? REFERENCES : {});
-  function article(label) {
-    var ref = refs[label];
-    return ref && ref.page ? ref.page : null;
-  }
+  /* References are not linked. Too many of them landed on an artist's page
+     rather than the work being referred to — an article about Keith Haring is
+     not his dancing figures — and a link that does not repay the click is worse
+     than none. scripts/references.mjs and references.js are still here for when
+     the resolution is good enough to trust. */
 
   function el(tag, cls, text) { var e = document.createElement(tag); if (cls) e.className = cls; if (text != null) e.textContent = text; return e; }
   function paras(container, list) { (list || []).forEach(function (p) { container.appendChild(el('p', null, p)); }); }
@@ -142,17 +135,7 @@
     var ul = node.querySelector('.echoes');
     (a.echoes || []).slice(0, REFERENCE_LIMIT).forEach(function (e) {
       var li = el('li');
-      var page = article(e.label);
-      if (page) {
-        var link = el('a', 'echo-link', e.label);
-        link.href = WIKI_ARTICLE + encodeURIComponent(page.replace(/ /g, '_'));
-        link.target = '_blank';
-        link.rel = 'noopener';
-        link.title = 'Read “' + page + '” on Wikipedia';
-        li.appendChild(link);
-      } else {
-        li.appendChild(el('b', 'echo-name', e.label));
-      }
+      li.appendChild(el('b', 'echo-name', e.label));
       li.appendChild(el('span', null, e.note));
       ul.appendChild(li);
     });
@@ -611,6 +594,93 @@
     }
 
     wireSuggest();
+    wireRail(picks);
+  }
+
+  var MASTHEAD = 78;   // the sticky masthead, which nothing should hide behind
+
+  /* Scroll the work to the top of the reading area. The position is worked out
+     here rather than left to the fragment, which fires before the plates have
+     their height and lands short. Some environments ignore a smooth scroll
+     altogether, so if nothing has moved a moment later, go straight there —
+     better an abrupt arrival than a control that appears to do nothing. */
+  function jumpTo(id) {
+    var target = document.getElementById(id);
+    if (!target) return;
+    var to = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - MASTHEAD);
+    var from = window.pageYOffset;
+    try { window.scrollTo({ top: to, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, to); }
+    if (history.replaceState) history.replaceState(null, '', '#' + id);
+    setTimeout(function () {
+      if (Math.abs(window.pageYOffset - from) < 2 && Math.abs(from - to) > 4) {
+        try { window.scrollTo({ top: to, behavior: 'instant' }); } catch (e) { window.scrollTo(0, to); }
+      }
+    }, 240);
+  }
+
+  /* ---------- the rail ----------
+     Three works look alike at a glance and the page is long, so the rail says
+     which one you are in and lets you jump between them. It is a list of links
+     to the sections, which is what it behaves like. */
+  function wireRail(picks) {
+    var rail = document.getElementById('rail');
+    if (!rail || picks.length < 2) return;
+    var list = rail.querySelector('ol');
+    var marks = picks.map(function (a, i) {
+      var item = el('li');
+      var link = el('a', 'rail-link');
+      link.href = '#' + a.id;
+      link.appendChild(el('span', 'rail-num', NUMERALS[i] || String(i + 1)));
+      link.appendChild(el('span', 'rail-title', a.title));
+      link.addEventListener('click', function (ev) {
+        if (ev.detail === 0) return;   // let the keyboard use the plain anchor
+        ev.preventDefault();
+        jumpTo(a.id);
+      });
+      item.appendChild(link);
+      list.appendChild(item);
+      return { link: link, id: a.id };
+    });
+    rail.hidden = false;
+
+    function show(at) {
+      for (var k = 0; k < marks.length; k++) {
+        marks[k].link.classList.toggle('is-here', k === at);
+        if (k === at) marks[k].link.setAttribute('aria-current', 'true');
+        else marks[k].link.removeAttribute('aria-current');
+      }
+    }
+    function nearest() {
+      var line = window.innerHeight * 0.34;
+      var at = 0;
+      for (var i = 0; i < marks.length; i++) {
+        var node = document.getElementById(marks[i].id);
+        if (node && node.getBoundingClientRect().top <= line) at = i;
+      }
+      return at;
+    }
+    function update() { show(nearest()); }
+
+    /* Which work is being read. This watches the sections themselves rather
+       than waiting for scroll events, because those are not dependable — after
+       a programmatic smooth scroll some engines stop sending them altogether,
+       which leaves the rail pointing at wherever it happened to be. An observer
+       is told about the page directly and cannot fall out of step that way.
+       The scroll listener stays as well; between them something always fires. */
+    if (window.IntersectionObserver) {
+      var watch = new IntersectionObserver(update, {
+        threshold: [0, 0.25, 0.5, 0.75, 1],
+        rootMargin: '-18% 0px -18% 0px',
+      });
+      marks.forEach(function (m) {
+        var node = document.getElementById(m.id);
+        if (node) watch.observe(node);
+      });
+    }
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    rail.addEventListener('click', function () { setTimeout(update, 420); });
+    update();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
