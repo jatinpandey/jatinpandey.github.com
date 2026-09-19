@@ -546,7 +546,12 @@
     var trap = document.getElementById('suggest-website');
     var send = document.getElementById('suggest-send');
     if (!dialog || !dialog.showModal) return;
-    document.getElementById('suggest-open').addEventListener('click', function () { note.textContent = ''; dialog.showModal(); text.focus(); });
+    /* `note` is the dialog's own message line in this scope, so the recorder is
+       reached through the global rather than the shorthand used elsewhere. */
+    document.getElementById('suggest-open').addEventListener('click', function () {
+      window.CanonEvents && window.CanonEvents.record('suggestion_open', {});
+      note.textContent = ''; dialog.showModal(); text.focus();
+    });
     document.getElementById('suggest-cancel').addEventListener('click', function () { dialog.close(); });
     form.addEventListener('submit', function (ev) {
       ev.preventDefault();

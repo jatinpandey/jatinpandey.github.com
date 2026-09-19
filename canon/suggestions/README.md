@@ -23,8 +23,9 @@ points at it, so the form on the site posts here.
 | `GET /events` | the raw log (admin token) |
 | `GET /stats` | counts and funnels (admin token), `?days=30` |
 
-Six events are recorded, and only six — an unrecognised name is refused rather
-than stored, so a typo in the page cannot quietly invent a column of nonsense.
+Seven events are recorded, and only seven — an unrecognised name is refused
+rather than stored, so a typo in the page cannot quietly invent a column of
+nonsense.
 
 | event | carries |
 | --- | --- |
@@ -33,7 +34,11 @@ than stored, so a typo in the page cannot quietly invent a column of nonsense.
 | `spotlight_open` | which work, and `plate` or `switch` |
 | `audio_play` | which work, and `file`, `deepgram` or `speech` |
 | `audio_complete` | which work, and how long the recording ran |
-| `suggestion_sent` | nothing but the fact of it |
+| `suggestion_open` | nothing; the fact that the form was opened |
+| `suggestion_sent` | nothing; the fact that one was sent |
+
+`suggestion_open` and `suggestion_sent` together give the drop-off between being
+asked and answering, reported as `suggestion_funnel` in `stats`.
 
 ### What identifies anybody
 

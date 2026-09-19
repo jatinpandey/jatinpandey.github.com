@@ -24,7 +24,8 @@ const EVENTS_PER_MINUTE = 120;
 /* Only these are recorded. An unknown name is dropped rather than stored, so a
    typo in the page cannot quietly create a new column of meaningless data. */
 const EVENT_NAMES = new Set([
-  'day_view', 'work_view', 'spotlight_open', 'audio_play', 'audio_complete', 'suggestion_sent',
+  'day_view', 'work_view', 'spotlight_open', 'audio_play', 'audio_complete',
+  'suggestion_open', 'suggestion_sent',
 ]);
 
 export default {
@@ -219,11 +220,22 @@ async function stats(request, env, headers) {
        COUNT(DISTINCT CASE WHEN name = 'work_view'      THEN session END) AS reached_a_work,
        COUNT(DISTINCT CASE WHEN name = 'spotlight_open' THEN session END) AS lit_one,
        COUNT(DISTINCT CASE WHEN name = 'audio_play'     THEN session END) AS played_one,
-       COUNT(DISTINCT CASE WHEN name = 'audio_complete' THEN session END) AS finished_one
+       COUNT(DISTINCT CASE WHEN name = 'audio_complete' THEN session END) AS finished_one,
+       COUNT(DISTINCT CASE WHEN name = 'suggestion_open' THEN session END) AS opened_suggestions,
+       COUNT(DISTINCT CASE WHEN name = 'suggestion_sent' THEN session END) AS sent_a_suggestion
+     FROM events WHERE created_at > datetime('now', ?)`, since);
+
+  /* How many who opened the form went on to send one. */
+  const suggesting = await one(
+    `SELECT
+       COUNT(DISTINCT CASE WHEN name = 'suggestion_open' THEN session END) AS opened,
+       COUNT(DISTINCT CASE WHEN name = 'suggestion_sent' THEN session END) AS sent,
+       COUNT(DISTINCT CASE WHEN name = 'suggestion_open' THEN visitor END) AS visitors_who_asked
      FROM events WHERE created_at > datetime('now', ?)`, since);
 
   return json({
     window_days: days,
+    suggestion_funnel: suggesting,
     totals: { ...totals, returning_visitors: returning.n || 0 },
     funnel_by_session: funnel,
     by_day: byDay,
