@@ -86,9 +86,14 @@ Categories are date ranges, so they cannot overlap:
 
 | key | name | span |
 | --- | --- | --- |
-| `old` | Old Masters | 1400 – 1780 |
-| `nineteenth` | Nineteenth Century | 1780 – 1886 |
+| `old` | Renaissance to Rococo | 1400 – 1780 |
+| `nineteenth` | Revolution to Impressionism | 1780 – 1886 |
 | `modern` | Modern | 1886 – 1950 |
+
+The keys are internal and must stay as they are: the daily shuffle is seeded on
+`(category, cycle)`, so renaming one deals a different hand for that era from
+then on, and every day already shown would show something else. The labels are
+free to change — only the page reads them.
 
 Subjects (myth, portrait, landscape) cut across periods, so they are better as tags than categories. Nothing after 1950 is included because those works are still in copyright and Commons cannot host them.
 

@@ -6,10 +6,13 @@
      nineteenth 1780–1886  Neoclassicism, Romanticism, Realism, Impressionism, ukiyo-e
      modern     1886–1950  Post-Impressionism to abstraction and American realism        */
 
+/* The keys are not the labels, and must not be renamed: the daily shuffle is
+   seeded on them, so changing one deals a different hand for that era from then
+   on. Rename the label instead; nothing but the page reads it. */
 const CATEGORIES = {
-  old:        { name: 'Old Masters',        span: '1400 – 1780', blurb: 'Renaissance, Baroque, the Dutch Golden Age.' },
-  nineteenth: { name: 'Nineteenth Century', span: '1780 – 1886', blurb: 'Revolution, Romanticism, and the birth of Impressionism.' },
-  modern:     { name: 'Modern',             span: '1886 – 1950', blurb: 'From Post-Impressionism to pure abstraction.' },
+  old:        { name: 'Renaissance to Rococo',      span: '1400 – 1780', blurb: 'Renaissance, Mannerism, Baroque and Rococo — the age of the Old Masters.' },
+  nineteenth: { name: 'Revolution to Impressionism', span: '1780 – 1886', blurb: 'Neoclassicism, Romanticism, Realism, ukiyo-e, and the Impressionists.' },
+  modern:     { name: 'Modern',                     span: '1886 – 1950', blurb: 'From Post-Impressionism to pure abstraction.' },
 };
 
 const ARTWORKS = [
