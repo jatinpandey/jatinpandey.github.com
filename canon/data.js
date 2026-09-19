@@ -15,6 +15,13 @@ const CATEGORIES = {
   modern:     { name: 'Modern',                     span: '1886 – 1950', blurb: 'From Post-Impressionism to pure abstraction.' },
 };
 
+/* Days that have been chosen by hand rather than dealt. The rotation is left
+   alone; these simply take precedence for the date they name. Keep it short —
+   every pinned day is a day the shuffle is not deciding. */
+const PINNED_DAYS = {
+  '2026-09-19': ['mona-lisa', 'liberty-leading-the-people', 'nighthawks'],
+};
+
 const ARTWORKS = [
 /* ───────────────────────────── OLD MASTERS ───────────────────────────── */
 {
@@ -1550,4 +1557,4 @@ const ARTWORKS = [
 },
 ];
 
-if (typeof module !== 'undefined') module.exports = { CATEGORIES, ARTWORKS };
+if (typeof module !== 'undefined') module.exports = { CATEGORIES, ARTWORKS, PINNED_DAYS };

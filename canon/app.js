@@ -36,6 +36,8 @@
 
   var works = window.ARTWORKS || (typeof ARTWORKS !== 'undefined' ? ARTWORKS : []);
   var cats = window.CATEGORIES || (typeof CATEGORIES !== 'undefined' ? CATEGORIES : {});
+  var pinned = window.PINNED_DAYS || (typeof PINNED_DAYS !== 'undefined' ? PINNED_DAYS : {});
+  var narrated = window.NARRATED || (typeof NARRATED !== 'undefined' ? NARRATED : []);
 
   /* ---------- the day ---------- */
   function parseDay() {
@@ -79,6 +81,14 @@
   }
   function pickFor(category, n) {
     var list = works.filter(function (w) { return w.category === category; });
+    /* While part of the catalogue is unrecorded, deal only from what can be
+       heard — otherwise a reader's day turns on whether the shuffle happened to
+       land on a work with a narration, and the browser voice is not what the
+       page promises. Once everything is rendered this filter does nothing. */
+    if (narrated.length) {
+      var recorded = list.filter(function (w) { return narrated.indexOf(w.id) !== -1; });
+      if (recorded.length) list = recorded;
+    }
     if (!list.length) return null;
     var len = list.length;
     var cycle = Math.floor(n / len);
@@ -599,7 +609,10 @@
     var n = dayNumber(ctx.day);
     var tpl = document.getElementById('work-template');
     var mount = document.getElementById('works');
-    var picks = ORDER.map(function (c) { return pickFor(c, n); }).filter(Boolean);
+    var chosen = pinned[iso(ctx.day)];
+    var picks = chosen
+      ? chosen.map(function (id) { return works.filter(function (w) { return w.id === id; })[0]; }).filter(Boolean)
+      : ORDER.map(function (c) { return pickFor(c, n); }).filter(Boolean);
     picks.forEach(function (a, i) {
       var node = render(a, tpl);
       node.querySelector('.ordinal').textContent = NUMERALS[i] || String(i + 1);

@@ -4,6 +4,7 @@ Three famous paintings a day, each from a different era, with a short written hi
 
 - `index.html`, `style.css`, `app.js` — the page. Static; no build step.
 - `data.js` — the catalogue (62 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
+- `narrated.js` — generated. The works that have a rendered narration; the rotation draws only from these while any are unrecorded.
 - `references.js` — generated. The reference labels that resolve to an article about an actual work. Labels absent from it render as plain text.
 - `frame.png` — generated. The gilt moulding the plates are framed in.
 - `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura. All 32 are committed, so every visitor hears the Aura voice and no key goes near the browser.
@@ -77,6 +78,17 @@ Four tests, all of which a work has to pass:
    places, so that a cycle is not three Van Goghs.
 
 ## How the day is chosen
+
+While part of the catalogue is unrecorded, the rotation deals only from the
+works in `narrated.js`, so a reader's day never turns on whether the shuffle
+landed on a silent one — the browser voice is a fallback, not something to hand
+anybody on purpose. Render the rest, re-run `scripts/durations.mjs`, and the
+list grows until it covers everything and the filter stops doing anything.
+
+`PINNED_DAYS` in `data.js` fixes a particular date by hand, which takes
+precedence over the shuffle for that date and leaves every other day alone. Keep
+it short: each pinned day is a day the rotation is not deciding.
+
 
 Day zero is 16 September 2026. Each category is shuffled with a seed of (category, cycle), and the day's index walks through the shuffle, so within one cycle no work repeats and the order changes on each pass. `?d=2026-09-20` shows a past day; future days are not shown.
 
