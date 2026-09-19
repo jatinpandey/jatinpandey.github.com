@@ -155,9 +155,10 @@ the reader did not ask for.
 
 ## What readers did
 
-`events.js` records seven things — the day opened, each work reached, each
-spotlight lit, each narration played and finished, and the suggestion form both
-opened and sent, which gives the drop-off between the two —
+`events.js` records eight things — the day opened, each step to the previous or
+next day, each work reached, each spotlight lit, each narration played and
+finished, and the suggestion form both opened and sent, which gives the drop-off
+between the two —
 and posts them in batches to the Worker in `suggestions/`, with `sendBeacon` on
 the way out so the last few are not lost when the tab closes. Two random ids go
 with them, one per browser and one per page load, which between them answer

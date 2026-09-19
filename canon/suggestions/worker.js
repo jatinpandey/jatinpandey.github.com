@@ -24,7 +24,7 @@ const EVENTS_PER_MINUTE = 120;
 /* Only these are recorded. An unknown name is dropped rather than stored, so a
    typo in the page cannot quietly create a new column of meaningless data. */
 const EVENT_NAMES = new Set([
-  'day_view', 'work_view', 'spotlight_open', 'audio_play', 'audio_complete',
+  'day_view', 'day_step', 'work_view', 'spotlight_open', 'audio_play', 'audio_complete',
   'suggestion_open', 'suggestion_sent',
 ]);
 
@@ -206,6 +206,11 @@ async function stats(request, env, headers) {
     `SELECT source, COUNT(*) AS n FROM events
      WHERE name = 'audio_play' AND created_at > datetime('now', ?) GROUP BY source`, since);
 
+  /* Which way readers move through the archive, and how many bother at all. */
+  const paging = await many(
+    `SELECT source, COUNT(*) AS n, COUNT(DISTINCT session) AS sessions FROM events
+     WHERE name = 'day_step' AND created_at > datetime('now', ?) GROUP BY source`, since);
+
   const screens = await many(
     `SELECT screen, COUNT(DISTINCT session) AS sessions FROM events
      WHERE created_at > datetime('now', ?) GROUP BY screen`, since);
@@ -240,6 +245,7 @@ async function stats(request, env, headers) {
     funnel_by_session: funnel,
     by_day: byDay,
     by_work: byWork,
+    day_steps: paging,
     spotlight_source: spotlightSource,
     audio_source: audioSource,
     screens,

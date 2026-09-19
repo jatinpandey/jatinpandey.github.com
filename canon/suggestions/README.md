@@ -23,13 +23,14 @@ points at it, so the form on the site posts here.
 | `GET /events` | the raw log (admin token) |
 | `GET /stats` | counts and funnels (admin token), `?days=30` |
 
-Seven events are recorded, and only seven — an unrecognised name is refused
+Eight events are recorded, and only eight — an unrecognised name is refused
 rather than stored, so a typo in the page cannot quietly invent a column of
 nonsense.
 
 | event | carries |
 | --- | --- |
 | `day_view` | the catalogue day, and whether a past day was asked for by name |
+| `day_step` | a move to the previous or next day, and which day it was made from |
 | `work_view` | which work, once it has been a third on screen |
 | `spotlight_open` | which work, and `plate` or `switch` |
 | `audio_play` | which work, and `file`, `deepgram` or `speech` |

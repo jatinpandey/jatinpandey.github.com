@@ -409,6 +409,15 @@
     });
     this.setState('idle');
   }
+  /* Where the narration about to play will actually come from. A missing file
+     does not imply Deepgram — without a key there is nothing to call, and it is
+     the browser voice that speaks. Reporting the guess made the log say
+     Deepgram for readings Deepgram never produced. */
+  Player.prototype.origin = function () {
+    if (this.mode === 'speech') return 'speech';
+    if (!this.missing) return 'file';
+    return (window.CANON_CONFIG || {}).deepgramKey ? 'deepgram' : 'speech';
+  };
   Player.prototype.estimate = function () {
     return (this.work.summary || '').split(/\s+/).length / WORDS_PER_SECOND;
   };
@@ -435,7 +444,7 @@
   Player.prototype.play = function () {
     this.claim();
     if (this.state !== 'paused') {
-      note('audio_play', of(this.work, { source: this.mode === 'speech' ? 'speech' : (this.missing ? 'deepgram' : 'file') }));
+      note('audio_play', of(this.work, { source: this.origin() }));
     }
     if (this.mode !== 'audio') { this.speakFrom(this.sentenceIndex || 0); return; }
     this.setState('loading');
@@ -630,8 +639,13 @@
     document.title = picks.map(function (a) { return a.title; }).join(' · ') + ' · Canon';
 
     /* The first day has nothing before it; today has nothing after it. */
+    var here = iso(ctx.day);
+    function step(link, direction) {
+      link.addEventListener('click', function () { note('day_step', { day: here, source: direction }); });
+    }
+
     var prev = document.getElementById('prev-day');
-    if (n > 0) prev.href = '?d=' + iso(shift(ctx.day, -1));
+    if (n > 0) { prev.href = '?d=' + iso(shift(ctx.day, -1)); step(prev, 'previous'); }
     else prev.hidden = true;
 
     var next = document.getElementById('next-day');
@@ -639,6 +653,7 @@
       var after = shift(ctx.day, 1);
       next.href = utc(after) === utc(ctx.today) ? '/canon/' : '?d=' + iso(after);
       next.hidden = false;
+      step(next, 'next');
     }
 
     wireSuggest();
