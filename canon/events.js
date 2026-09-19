@@ -45,6 +45,15 @@
   /* A browser asking not to be followed is not followed. One line to drop. */
   var refused = navigator.doNotTrack === '1' || window.doNotTrack === '1' || navigator.msDoNotTrack === '1';
 
+  /* Development is not readership. Anything served from a local address is
+     building or testing the page, and counting it puts phantom visitors,
+     sessions and plays into the figures that are supposed to describe real
+     people. Set `recordLocally` in config.js to record anyway, which is only
+     ever useful for checking that the events themselves still work. */
+  var local = /^(localhost|127\.0\.0\.1|\[::1\]|0\.0\.0\.0)$/.test(location.hostname)
+    || /\.local$/.test(location.hostname)
+    || location.protocol === 'file:';
+
   var queue = [];
   var timer = null;
   var who = null;
@@ -68,6 +77,7 @@
 
   function record(name, props) {
     if (refused || !endpoint()) return;
+    if (local && !config().recordLocally) return;
     var e = props ? JSON.parse(JSON.stringify(props)) : {};
     e.name = name;
     e.screen = window.innerWidth < 720 ? 'narrow' : 'wide';
@@ -84,5 +94,9 @@
     if (document.visibilityState === 'hidden') flush(true);
   });
 
-  window.CanonEvents = { record: record, flush: flush, enabled: !refused };
+  window.CanonEvents = {
+    record: record,
+    flush: flush,
+    enabled: !refused && !(local && !config().recordLocally),
+  };
 })();

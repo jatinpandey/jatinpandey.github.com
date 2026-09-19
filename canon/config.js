@@ -26,6 +26,11 @@ window.CANON_CONFIG = {
      to send them somewhere else, or to '' to record nothing at all. */
   eventsEndpoint: '',
 
+  /* Events are not recorded from localhost, because building the page is not
+     reading it. Turn this on only to check that the events still work, and turn
+     it off again — anything recorded while it is on is counted as a reader. */
+  recordLocally: false,
+
   deepgramKey: '',            // e.g. 'dg_…' — see the warning above
   voice: 'aura-2-draco-en',   // British baritone; aura-2-pandora-en is the female equivalent
   perDay: 3,                  // most recordings Deepgram may generate per day, per browser

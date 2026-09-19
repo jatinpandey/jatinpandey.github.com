@@ -41,6 +41,14 @@ nonsense.
 `suggestion_open` and `suggestion_sent` together give the drop-off between being
 asked and answering, reported as `suggestion_funnel` in `stats`.
 
+### What is not recorded
+
+Anything served from a local address — localhost, a loopback IP, a `.local`
+name, or a `file:` URL — records nothing at all. Building the page is not
+reading it, and counting it puts phantom visitors, sessions and plays into
+figures meant to describe real people. `recordLocally` in `canon/config.js`
+overrides that, and is only worth turning on to check the events still fire.
+
 ### What identifies anybody
 
 Nothing does. Two random ids are kept. `visitor` lives in the reader's own
