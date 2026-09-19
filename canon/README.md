@@ -3,7 +3,7 @@
 Three famous paintings a day, each from a different era, with a short written history and a two-minute narration in a solemn British voice.
 
 - `index.html`, `style.css`, `app.js` — the page. Static; no build step.
-- `data.js` — the catalogue (32 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
+- `data.js` — the catalogue (62 works). Every image is public domain and hot-linked from Wikimedia Commons at up to 3200px wide.
 - `references.js` — generated. The reference labels that resolve to an article about an actual work. Labels absent from it render as plain text.
 - `frame.png` — generated. The gilt moulding the plates are framed in.
 - `audio/<id>.mp3` — narration, pre-rendered with Deepgram Aura. All 32 are committed, so every visitor hears the Aura voice and no key goes near the browser.
@@ -52,6 +52,28 @@ replaying it is free. Note that `config.js` is served to every visitor: a key pu
 there is public. The caps pace one reader; they do not protect the key. Pre-rendering
 with `speak.mjs` keeps the key on your own machine and gives everyone the Aura voice,
 which is the route to prefer.
+
+## What gets in
+
+Four tests, all of which a work has to pass:
+
+1. **Public domain, and on Wikimedia Commons.** Not a fair-use upload held
+   locally by Wikipedia — those exist for works still in copyright and cannot be
+   hot-linked. This is what keeps most of the twentieth century out: Picasso,
+   Dalí, Magritte, Chagall, O'Keeffe and Kahlo are all unavailable, which is why
+   the Modern shelf leans on artists who died before about 1945.
+2. **A scan of at least 2.8 megapixels**, which is the floor the original
+   thirty-two set. The plates are served up to 3200px wide, and anything smaller
+   goes soft on a large screen. Where the article's own image was too small, a
+   better scan was found on Commons — Klee's Twittering Machine went from 1.3MP
+   to 28MP that way. Two candidates were dropped for having no good scan at all.
+3. **Inside one of the three date ranges**, by the date of the work, so the
+   categories cannot overlap and a painter can appear in two of them.
+4. **Famous enough to be worth a day.** The working test is whether a reasonably
+   curious person would recognise it or be glad to have met it —
+   `scripts/fame.mjs` scores candidates by pageviews, language editions and
+   inbound links if a second opinion is wanted. No artist holds more than two
+   places, so that a cycle is not three Van Goghs.
 
 ## How the day is chosen
 

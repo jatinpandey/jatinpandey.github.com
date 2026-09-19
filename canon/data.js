@@ -810,6 +810,741 @@ const ARTWORKS = [
   ],
   summary: 'It was painted in the weeks after Pearl Harbor, when New York was rehearsing blackouts and the night felt newly dangerous. Edward Hopper, a tall, silent man who had spent twenty years as a commercial illustrator before anyone bought his paintings, made a diner on an empty corner. Inside, under a fluorescent light that was still a novelty, sit three customers and a counterman in white. A man and a red-haired woman side by side, not quite touching. Another man with his back to us. Nobody speaks. There is no door. Look for one: there is no way in from the street, and no way out. Hopper said the picture was suggested by a restaurant where two streets meet in Greenwich Village. People have searched for it for eighty years and never found it. His wife Jo, who posed for the woman, wrote the entry in his ledger: night, and the brilliant interior of a cheap restaurant. Chicago bought it within months. Ridley Scott kept a print on the set of Blade Runner to show what he wanted. Tom Waits named an album after it. It has been redrawn with Marilyn and Elvis in the booths, with the Simpsons, with cartoon characters, and with nobody at all. Hopper once said that perhaps he was not very human, and that all he had wanted was to paint sunlight on the side of a house. This is what he painted instead.',
 },
+/* ─────────────────── OLD MASTERS, ADDED SEPTEMBER 2026 ─────────────────── */
+{
+  id: 'primavera', category: 'old',
+  title: 'Primavera', artist: 'Sandro Botticelli', artistDates: 'c. 1445 – 1510',
+  year: 'c. 1480', sort: 1480, medium: 'Tempera on panel', dims: '202 × 314 cm',
+  museum: 'Uffizi Gallery', city: 'Florence',
+  file: 'Botticelli-primavera.jpg', w: 4926, h: 3236, wiki: 'Primavera_(Botticelli)',
+  tags: ['myth'],
+  history: [
+    'Painted for a Medici household and hung for centuries at the villa of Castello beside the Birth of Venus, with which it has been paired ever since. It is a panel, not a canvas, and it is enormous for one: six of them joined, carrying some five hundred identified species of plant, of which around two hundred are in flower.',
+    'Nobody has ever agreed on what it means. It has been read as a Neoplatonic allegory of love ascending from the physical to the divine, as a wedding picture, as a calendar of spring months, and as a straightforward pastoral. Vasari, writing sixty years later, called it simply “Spring”, and the name stuck.',
+  ],
+  depicts: [
+    'Nine figures in an orange grove. At the right, the blue wind Zephyr seizes the nymph Chloris, who transforms into Flora, the flowered figure stepping forward and scattering blooms. At the centre stands Venus; above her, a blindfolded Cupid aims. At the left the three Graces dance, and Mercury, in the corner, reaches up to disperse a cloud with his staff.',
+    'The action runs right to left, against the way a European eye reads, which is part of why the picture feels like a procession that has stopped rather than a story. Nobody looks at anybody else.',
+  ],
+  about: [
+    'Botticelli spent his whole life in Florence, trained under Fra Filippo Lippi, and painted for the circle of poets and philosophers around Lorenzo de’ Medici. In old age he fell under the sway of Savonarola, who preached against exactly this kind of pagan beauty. He died poor and out of fashion, and was forgotten for three hundred years until the Pre-Raphaelites found him again.',
+  ],
+  echoes: [
+    { label: 'Botticelli, The Birth of Venus (c. 1485)', note: 'Its companion at Castello, and its opposite: one a procession, one an arrival.' },
+    { label: 'Angelo Poliziano, Rusticus and the Stanze', note: 'The Medici poet’s verses on Zephyr and Flora are the closest thing to a source.' },
+    { label: 'Lady Gaga, ARTPOP (2013)', note: 'Botticelli’s Venus on the sleeve; the Primavera Graces in the tour staging.' },
+  ],
+  summary: 'In a Florentine orange grove, nine figures stand in an arrangement that nobody has ever fully explained. We call it Primavera, Spring, because Vasari called it that sixty years after it was painted, and because the ground is carpeted with flowers — five hundred species of plant, two hundred of them in bloom, painted with the attention of a botanist. At the right, the blue-green wind Zephyr bursts through the trees and seizes a nymph. Flowers spill from her mouth. She becomes Flora, who steps forward in a dress embroidered with the spring itself, scattering roses. At the centre, Venus, not the naked goddess of the sea but a clothed and slightly weary woman, raises one hand. Blindfolded above her, Cupid aims an arrow at the dancing Graces. And at the far edge, Mercury turns his back on the whole scene and pokes at a cloud with his staff. Nobody in this picture looks at anybody else. The action runs from right to left, against the grain of a reading eye, which is why it feels less like a story than a procession that has halted. Scholars have called it a wedding gift, a Neoplatonic ladder from earthly to divine love, a calendar of the spring months. It was painted for the Medici, hung at a villa outside the city, and forgotten for three centuries. Then the Victorians rediscovered Botticelli, and it became one of the most looked-at paintings on earth.',
+},
+{
+  id: 'hunters-in-the-snow', category: 'old',
+  title: 'The Hunters in the Snow', artist: 'Pieter Bruegel the Elder', artistDates: 'c. 1525 – 1569',
+  year: '1565', sort: 1565, medium: 'Oil on panel', dims: '117 × 162 cm',
+  museum: 'Kunsthistorisches Museum', city: 'Vienna',
+  file: 'Pieter Bruegel the Elder - Hunters in the Snow (Winter) - Google Art Project.jpg', w: 6819, h: 4853, wiki: 'The_Hunters_in_the_Snow',
+  tags: ['landscape'],
+  history: [
+    'One of a series of six panels on the months, painted in a single year for the Antwerp merchant Niclaes Jonghelinck, who hung them in his suburban house. Five survive. They are the moment European painting decided that landscape alone, with no saint or story to justify it, was enough.',
+    'The winter of 1564–65 was one of the bitterest on record, at the start of what climatologists now call the Little Ice Age. Bruegel had seen the Alps on his way back from Italy, and the jagged peaks behind a Flemish village are a memory of that crossing rather than anything you could stand in front of.',
+  ],
+  depicts: [
+    'Three hunters trudge home with a single fox between them and a straggle of thin dogs, heads down. Below them the land drops away to frozen ponds where villagers skate, play a game with sticks, and light a fire outside an inn. A magpie sits in a bare tree. Smoke goes up straight in the cold.',
+    'The hunt has failed. Everything in the picture leans downhill and to the right, following the diagonal of the trees, so the eye is walked out of the foreground and into the valley whether it wants to go or not.',
+  ],
+  about: [
+    'Bruegel was the most learned painter of his generation pretending not to be. He signed himself a peasant painter and was a friend of humanists and cartographers; he went to Italy and came back interested in weather rather than antiquity. He died at about forty-four, leaving two sons who copied him for decades.',
+  ],
+  echoes: [
+    { label: 'Andrei Tarkovsky, Solaris (1972)', note: 'The camera moves across the panel for minutes; it is the last of Earth the film shows.' },
+    { label: 'William Carlos Williams, Pictures from Brueghel (1962)', note: 'A Pulitzer-winning sequence, opening on this picture.' },
+    { label: 'Lars von Trier, Melancholia (2011)', note: 'The painting burns in the opening sequence as the world ends.' },
+  ],
+  summary: 'Three hunters come back over a hill with one fox and nothing else. Their dogs are thin and their heads are down, and the snow they are walking through is the snow of the winter of 1564, one of the coldest Europe had recorded, at the beginning of what we now call the Little Ice Age. Pieter Bruegel painted this as one of six panels on the months of the year, for a merchant in Antwerp to hang in his house outside the city. It is the picture in which European painting decided that a landscape did not need a saint in it to be worth making. Everything leans downhill. The line of trees, the slope of the ridge, the hunters themselves, all tip the eye to the right and down into the valley, where the land opens out into frozen ponds. Look there and the picture changes register entirely: villagers are skating, sliding, playing a game with sticks and a stone, and a fire is going outside the inn on the left, where a sign hangs crooked. A magpie sits in a bare tree. The smoke rises straight up, which means no wind, which means bitter cold. Behind the village are mountains that do not exist in Flanders; Bruegel had crossed the Alps coming home from Italy and brought them back with him. The result is one of the few paintings that the word masterpiece does not embarrass.',
+},
+{
+  id: 'venus-of-urbino', category: 'old',
+  title: 'Venus of Urbino', artist: 'Titian', artistDates: 'c. 1488 – 1576',
+  year: '1534', sort: 1534, medium: 'Oil on canvas', dims: '119 × 165 cm',
+  museum: 'Uffizi Gallery', city: 'Florence',
+  file: 'Tiziano - Venere di Urbino - Google Art Project.jpg', w: 3000, h: 2110, wiki: 'Venus_of_Urbino',
+  tags: ['myth', 'portrait'],
+  history: [
+    'Bought in 1538 by Guidobaldo della Rovere, later Duke of Urbino, who in his letters simply calls it “the naked woman”. The title Venus came afterwards and does a certain amount of work: there is no shell, no sea, no attribute of a goddess anywhere in the room.',
+    'It descended to the Medici and has been in Florence since. Mark Twain, visiting in 1880, called it the foulest, the vilest, the obscenest picture the world possesses, and then wrote several hundred more words about it, which is its own kind of tribute.',
+  ],
+  depicts: [
+    'A young woman lies on rumpled sheets in a Venetian bedroom, looking directly out. She holds roses in one hand. A small dog sleeps at her feet. Behind a screen, two servants bend over a chest, and beyond them a window shows a sky going dark.',
+    'The domestic detail is the argument. The dog is fidelity, the chest is a bride’s cassone, the myrtle on the sill is Venus’s plant and a marriage emblem. Whether the picture is a wedding gift instructing a young wife, or a courtesan painted for a duke, has never been settled.',
+  ],
+  about: [
+    'Titian ran the most successful workshop in Europe for sixty years and was made a count palatine by Charles V, who is said to have picked up his dropped brush. He painted altarpieces, emperors, and mythologies with equal appetite, and in old age applied paint with his fingers. He died in Venice during the plague of 1576.',
+  ],
+  echoes: [
+    { label: 'Giorgione, Sleeping Venus (c. 1510)', note: 'The pose exactly, but asleep and outdoors; Titian finished that canvas and then woke her up.' },
+    { label: 'Édouard Manet, Olympia (1863)', note: 'The same pose, the same direct look, a cat instead of a dog, and a scandal.' },
+    { label: 'Mark Twain, A Tramp Abroad (1880)', note: 'Devotes pages to calling it obscene, which kept it famous in the English-speaking world.' },
+  ],
+  summary: 'A young woman lies on crumpled sheets and looks straight out at whoever is standing in front of her. She is entirely naked, entirely awake, and entirely unbothered. Titian painted her in 1534, and the Duke of Urbino bought her, and in the letters about the purchase nobody calls her Venus. They call her the naked woman. The name Venus arrived later, and it is doing a job: there is no shell here, no sea, no cupid, nothing to make this a goddess rather than a person in a bedroom in Venice. What there is instead is domestic detail, and all of it argues. A little dog sleeps at her feet, and a dog means fidelity. Two servants rummage in a bride’s chest in the room behind. Myrtle, the plant of Venus and of marriage, sits on the windowsill. So this may be a wedding picture, painted to instruct a young wife on what was expected of her. Or it may be a portrait of a courtesan, made for a duke who wanted one. Four hundred years of scholarship have not settled it. What is not in doubt is the effect. Mark Twain, who saw it in Florence, called it the foulest and obscenest picture the world possesses, and then wrote about it at length. Manet took the pose, the look, and the servants, swapped the dog for a black cat, and caused the loudest scandal in nineteenth-century French art.',
+},
+{
+  id: 'judith-slaying-holofernes', category: 'old',
+  title: 'Judith Slaying Holofernes', artist: 'Artemisia Gentileschi', artistDates: '1593 – c. 1656',
+  year: 'c. 1620', sort: 1620, medium: 'Oil on canvas', dims: '199 × 162 cm',
+  museum: 'Uffizi Gallery', city: 'Florence',
+  file: 'Judit decapitando a Holofernes, por Artemisia Gentileschi.jpg', w: 2056, h: 2500, wiki: 'Judith_Slaying_Holofernes_(Artemisia_Gentileschi,_Florence)',
+  history: [
+    'Gentileschi painted the subject at least twice. This, the larger and later version, was made in Florence, where she was the first woman admitted to the Accademia delle Arti del Disegno. Cosimo II de’ Medici owned it; a later grand duchess is said to have had it moved to a dark corner because it was unbearable to look at.',
+    'In 1611 Gentileschi was raped by the painter Agostino Tassi, her father’s collaborator. The seven-month trial that followed is transcribed and survives; she was tortured with thumbscrews to test her testimony. Reading the picture only as revenge flattens it, but the trial is not nothing, and she painted the subject afterwards.',
+  ],
+  depicts: [
+    'The Assyrian general Holofernes, drunk, wakes as he is being killed. Judith leans in with her sleeves pushed back and both arms braced, one hand forcing his head down by the hair; her maid Abra pins his chest with her whole weight. Blood runs along the sheets and spurts in arcs.',
+    'The women are working. Most earlier versions of the scene show Judith stepping back in distaste, or already holding the head; here the difficulty of the act is the subject, and the maid, usually an old woman waiting outside with a sack, is inside the bed helping.',
+  ],
+  about: [
+    'Gentileschi trained in her father Orazio’s studio, worked in Rome, Florence, Venice, Naples and London, ran her own workshop, corresponded with Galileo about an unpaid fee, and took commissions from the Medici and Charles I. She was for centuries a footnote to her father and is now more looked at than he is.',
+  ],
+  echoes: [
+    { label: 'Caravaggio, Judith Beheading Holofernes (c. 1599)', note: 'The model she is answering; his Judith recoils, hers leans in.' },
+    { label: 'The Book of Judith', note: 'Deuterocanonical, and the reason a beheading counted as a suitable subject for a palace.' },
+    { label: 'Elizabeth Cropper and the 1970s reappraisal', note: 'Feminist art history pulled her out of her father’s catalogue and into her own.' },
+  ],
+  summary: 'This is a painting about how hard it is to cut off a head. Artemisia Gentileschi was a professional painter by her teens, the first woman admitted to Florence’s academy of drawing, and she painted this story at least twice. In it, the widow Judith has come to the tent of the Assyrian general besieging her city, let him drink himself insensible, and set about killing him. Almost every earlier painter had shown the aftermath, or shown Judith turning her face away in distaste. Gentileschi shows the work. Judith has pushed her sleeves back. Both arms are braced, one hand shoving his head down by the hair, the other driving the sword. Her maid Abra, who in most versions of the scene is an old woman waiting outside with a sack, is here in the bed with her full weight on his chest, because a large man waking up mid-murder will struggle. Blood runs along the sheets and jets in arcs, painted by someone who had looked at how liquid behaves. In 1611, aged seventeen, Gentileschi was raped by a colleague of her father’s. The trial transcript survives, including the thumbscrews applied to her fingers to test whether she was telling the truth. To read the picture only as revenge is to make it smaller than it is. But she painted it afterwards, and a Medici grand duchess later had it moved somewhere it could not be seen.',
+},
+{
+  id: 'the-ambassadors', category: 'old',
+  title: 'The Ambassadors', artist: 'Hans Holbein the Younger', artistDates: 'c. 1497 – 1543',
+  year: '1533', sort: 1533, medium: 'Oil on oak', dims: '207 × 210 cm',
+  museum: 'National Gallery', city: 'London',
+  file: 'Hans Holbein the Younger - The Ambassadors - Google Art Project.jpg', w: 30000, h: 29560, wiki: 'The_Ambassadors_(Holbein)',
+  tags: ['portrait'],
+  history: [
+    'Painted in London in the year Henry VIII married Anne Boleyn and broke with Rome. The sitters are Jean de Dinteville, the French ambassador, and his friend Georges de Selve, Bishop of Lavaur. The instruments between them are datable to within days: they read 11 April 1533, Good Friday.',
+    'It hung in Dinteville’s château in Burgundy for two centuries, came to England through the art market, and was bought by the National Gallery in 1890. It has never been off display for long since.',
+  ],
+  depicts: [
+    'Two young men in furs stand either side of a two-tiered table loaded with objects: globes celestial and terrestrial, sundials, a quadrant, a torquetum, a lute, a case of flutes, an open hymn book and an open arithmetic book. Behind them hangs a green curtain.',
+    'A grey shape floats across the floor at an angle. Step to the right of the picture and look back along its plane and it resolves into a human skull. The lute has a broken string, the arithmetic book is open at a page on division, and the hymn is Luther’s. Everything measurable is in the picture, and a reminder that the measuring stops.',
+  ],
+  about: [
+    'Holbein came from Augsburg, worked in Basel, and moved to England on a letter of introduction from Erasmus to Thomas More. He became painter to Henry VIII and made the images by which we still recognise that court. He died in London, probably of plague, at about forty-five.',
+  ],
+  echoes: [
+    { label: 'Jacques Lacan, The Four Fundamental Concepts (1964)', note: 'The skull is his standing example of the gaze that looks back at you.' },
+    { label: 'Memento mori and the vanitas tradition', note: 'This is the form’s most technically ostentatious survival.' },
+    { label: 'The anamorphosis in Star Trek and Deadpool title cards', note: 'The trick has never stopped being borrowed.' },
+  ],
+  summary: 'Two rich young men stand either side of a table, and between them is the entire measurable world. Globes of the earth and the heavens. A sundial, a quadrant, a torquetum, a shepherd’s dial. A lute, a case of flutes, an open hymn book, an open book of arithmetic. Hans Holbein painted them in London in 1533, the year Henry VIII married Anne Boleyn and broke with Rome, and the instruments are set so precisely that they can be read: they say the eleventh of April, 1533, which was Good Friday. The men are Jean de Dinteville, France’s ambassador to England, and his friend Georges de Selve, a bishop at twenty-five. Both are here on business that is going badly. And then there is the thing on the floor. A pale grey smear lies diagonally across the tiles, and it belongs to no perspective the rest of the picture uses. Walk to the right of the canvas, almost to the wall, and look back across its surface, and the smear stands up into a human skull. Everything else in the painting says: look how much we know, how finely we can divide the sky and the hour. The skull says: and yet. Look again and the small things agree with it. The lute has a string snapped. The arithmetic book lies open at a page on division. The hymnal is Luther’s, in a room where that was dangerous.',
+},
+{
+  id: 'durer-self-portrait', category: 'old',
+  title: 'Self-Portrait at Twenty-Eight', artist: 'Albrecht Dürer', artistDates: '1471 – 1528',
+  year: '1500', sort: 1500, medium: 'Oil on limewood', dims: '67 × 49 cm',
+  museum: 'Alte Pinakothek', city: 'Munich',
+  file: 'Dürer Alte Pinakothek.jpg', w: 2128, h: 3000, wiki: 'Self-Portrait_(Dürer,_Munich)',
+  tags: ['portrait'],
+  history: [
+    'Painted in Nuremberg at the turn of the century, and inscribed in gold: “I, Albrecht Dürer of Nuremberg, painted myself thus, with undying colours, at the age of twenty-eight.” Dürer kept it. It was still in the family house when the city acquired it in 1805.',
+    'It is the third and last of his painted self-portraits and the one that broke with convention entirely. The two before it are three-quarter views in the ordinary manner; this is frontal, symmetrical, and lit like an icon, a format reserved in 1500 for images of Christ.',
+  ],
+  depicts: [
+    'The painter faces directly out, hair falling in arranged ringlets to his shoulders, in a fur-trimmed coat. One hand is raised to the fur at his chest in a gesture that is half adjustment and half blessing. The background is plain dark, with his monogram and the inscription in gold either side of his head.',
+    'The claim being made is not that the painter is divine but that he is a maker, in the image of the Maker. It is among the first pictures in which a European artist asserts that painting is an intellectual act rather than a trade.',
+  ],
+  about: [
+    'Dürer was a goldsmith’s son who became the first artist north of the Alps with an international reputation in his own lifetime, largely through printmaking, which he treated as a business and distributed across Europe. He travelled twice to Italy, wrote treatises on measurement and on human proportion, and corresponded with humanists as an equal.',
+  ],
+  echoes: [
+    { label: 'The Vera Icon and Byzantine Christ Pantocrator', note: 'The frontal, symmetrical format he is deliberately borrowing.' },
+    { label: 'Rembrandt’s eighty self-portraits', note: 'The genre Dürer effectively opened, pursued for a lifetime.' },
+    { label: 'Dürer’s monogram, AD', note: 'One of the first artist’s marks used as a brand, and forged in his lifetime.' },
+  ],
+  summary: 'In 1500, a painter in Nuremberg looked out of a picture straight at us, and nobody had quite done that before. Albrecht Dürer was twenty-eight. He arranged his hair into ringlets, put on a coat trimmed with fur, and painted himself frontally, symmetrically, lit from the left against a plain dark ground, with one hand raised towards his chest. Every one of those choices was a quotation. That pose, that symmetry, that lighting belonged in 1500 to images of Christ, and to nothing else. Beside his head, in gold, he wrote: I, Albrecht Dürer of Nuremberg, painted myself thus, with undying colours, at the age of twenty-eight. The claim is not that he is divine. The claim is that a painter is a maker, and that making is a kind of thinking — which in 1500, north of the Alps, where painters belonged to guilds alongside saddlers, was an argument that needed making. Dürer made it more successfully than anyone. He was a goldsmith’s son who built an international reputation on printmaking, treated his monogram as a trademark and sued people who copied it, wrote books on proportion and perspective, and dealt with humanists as their equal. He kept this picture. It was still hanging in the family house three centuries after he died.',
+},
+{
+  id: 'burial-of-count-orgaz', category: 'old',
+  title: 'The Burial of the Count of Orgaz', artist: 'El Greco', artistDates: '1541 – 1614',
+  year: '1586 – 1588', sort: 1587, medium: 'Oil on canvas', dims: '480 × 360 cm',
+  museum: 'Church of Santo Tomé', city: 'Toledo',
+  file: 'El entierro del señor de Orgaz - El Greco.jpg', w: 6817, h: 9089, wiki: 'The_Burial_of_the_Count_of_Orgaz',
+  history: [
+    'Commissioned by the parish priest of Santo Tomé for the chapel where the count was buried, to mark a miracle said to have happened there in 1323: Saints Stephen and Augustine were reported to have descended in person to lay the body in the tomb. El Greco had to sue to be paid what the work was worth.',
+    'It has never left the wall it was painted for. The church built a separate entrance for it in the nineteenth century because the crowds were interrupting services.',
+  ],
+  depicts: [
+    'The lower half is Toledo in 1586: a row of black-clad gentlemen with white ruffs, each a recognisable citizen, watching two saints in gold vestments lower an armoured corpse into the ground. Above them the picture changes physics entirely — the clouds open, and the soul, carried by an angel, rises through a narrow passage towards Christ, the Virgin and John.',
+    'The join is the point. Below, weight, portraiture, and cold daylight; above, elongation, no ground, and light from nowhere. The boy at the lower left pointing into the scene is El Greco’s son Jorge Manuel; the handkerchief in his pocket carries the date of his birth.',
+  ],
+  about: [
+    'Doménikos Theotokópoulos was born in Crete, trained as a painter of icons, worked in Venice under Titian’s shadow and in Rome, and settled in Toledo when Spain would not give him royal commissions. He was learned, litigious, and expensive. For three centuries he was thought eccentric or astigmatic; the twentieth century decided he was modern.',
+  ],
+  echoes: [
+    { label: 'Pablo Picasso, Les Demoiselles d’Avignon (1907)', note: 'Picasso studied El Greco closely; the elongations and the shallow space carry over.' },
+    { label: 'Rainer Maria Rilke, letters from Toledo (1912)', note: 'Rilke went to see this painting and wrote about little else for weeks.' },
+    { label: 'Jackson Pollock’s student copies', note: 'Pollock drew after El Greco repeatedly in the 1930s.' },
+  ],
+  summary: 'In the church of Santo Tomé in Toledo there is a wall, and on that wall, where it has hung since 1588, is a painting of a funeral that turns halfway up into something else. The story is local. In 1323 a nobleman known as the Count of Orgaz, a great benefactor of the parish, died, and as he was being buried Saint Stephen and Saint Augustine were said to have come down in person to lower him into the tomb. El Greco was asked to paint the miracle, and what he painted in the lower half is not a miracle at all: it is a row of the men of Toledo, in black with white ruffs, each one a portrait you could pick out of a crowd, standing about at a funeral in the cold. The two saints in gold are doing the heavy lifting. Then, above their heads, the picture abandons every rule it has just obeyed. Cloud opens. Bodies lengthen and lose their weight. An angel carries the soul, which is a small grey shape like a baby, up through a narrow gap towards Christ. There is no ground up there and no single source of light. The two halves are painted by the same hand in the same year and they do not share a physics. For three hundred years people thought El Greco had something wrong with his eyes. Then the twentieth century looked again and decided he had simply arrived early.',
+},
+{
+  id: 'anatomy-lesson', category: 'old',
+  title: 'The Anatomy Lesson of Dr Nicolaes Tulp', artist: 'Rembrandt van Rijn', artistDates: '1606 – 1669',
+  year: '1632', sort: 1632, medium: 'Oil on canvas', dims: '170 × 217 cm',
+  museum: 'Mauritshuis', city: 'The Hague',
+  file: 'Rembrandt - The Anatomy Lesson of Dr Nicolaes Tulp.jpg', w: 6000, h: 4520, wiki: 'The_Anatomy_Lesson_of_Dr._Nicolaes_Tulp',
+  tags: ['portrait'],
+  history: [
+    'Rembrandt was twenty-five, newly arrived in Amsterdam, and this was his first large group commission: the Guild of Surgeons paid for a portrait of its annual public dissection. It made his name in the city within a year.',
+    'The body is Adriaen Adriaensz, a robber hanged that January; public anatomies were held on executed criminals, in winter, for a paying audience. The open book at the corpse’s feet is Vesalius, and at least one of the listed guild members was added later by another hand.',
+  ],
+  depicts: [
+    'Dr Tulp, hat on, lifts the tendons of the left forearm with forceps while his right hand mimes the motion those tendons produce. Seven colleagues lean in at varying distances, three looking at the arm, three at the book, one straight out at us.',
+    'The dissection is wrong on purpose or from a bad source: the arm is opened before the abdomen, which no anatomist would do, and the exposed musculature belongs to a right arm on a left. The demonstration is about the hand as the instrument of the soul, which is why the hand is what he chose.',
+  ],
+  about: [
+    'Rembrandt came from Leiden, the son of a miller, dropped out of university to paint, and by thirty was the most sought-after portraitist in Amsterdam. He overspent, went bankrupt in 1656, and painted his greatest work afterwards in reduced circumstances. He outlived his wife, his partner, and his son.',
+  ],
+  echoes: [
+    { label: 'Andreas Vesalius, De humani corporis fabrica (1543)', note: 'The open book at the foot of the table, and the reason the scene exists.' },
+    { label: 'Rembrandt, The Night Watch (1642)', note: 'The same problem — how to make a group portrait move — solved again, ten years on.' },
+    { label: 'W. G. Sebald, The Rings of Saturn (1995)', note: 'A long passage on this painting and the anatomy of the criminal body.' },
+  ],
+  summary: 'Amsterdam, January 1632. A man called Adriaen Adriaensz has been hanged for robbery, and because he was hanged, his body belongs to the Guild of Surgeons, who hold one public dissection a year in winter and sell tickets. Rembrandt van Rijn, twenty-five years old and three months in the city, has been hired to paint it. What he produced made him. Look at what everyone is doing. Dr Tulp, the only man wearing a hat, has opened the left forearm and lifted the tendons out with a pair of forceps. With his other hand, he is miming. He curls his own fingers to show the motion that those tendons produce, and that is the lesson: this is how the hand works, this is the instrument by which a soul acts on the world. His colleagues lean in at different depths. Three are watching the arm. Three are watching the anatomy book propped at the corpse’s feet. One has given up on both and is looking straight out at you. The dissection itself is wrong. Anatomists opened the abdomen first, because it rots first, and the musculature Rembrandt painted belongs to a right arm attached to a left. He was not there to be accurate. He was there to make eight men in black look like they were thinking, which no group portrait in Holland had managed before.',
+},
+{
+  id: 'the-milkmaid', category: 'old',
+  title: 'The Milkmaid', artist: 'Johannes Vermeer', artistDates: '1632 – 1675',
+  year: 'c. 1658', sort: 1658, medium: 'Oil on canvas', dims: '46 × 41 cm',
+  museum: 'Rijksmuseum', city: 'Amsterdam',
+  file: 'Johannes Vermeer - Het melkmeisje - Google Art Project.png', w: 9839, h: 11058, wiki: 'The_Milkmaid_(Vermeer)',
+  history: [
+    'Painted in Delft and recorded in the 1696 sale of the collection of Vermeer’s main patron, where it was described as “exceptionally good”. It has been among the most expensive Dutch pictures at every sale it has passed through since.',
+    'The Rijksmuseum bought it in 1908 with state help after a public campaign to stop it leaving the country. Infrared has since shown that Vermeer painted out a large wall map and a basket behind her, emptying the room as he went.',
+  ],
+  depicts: [
+    'A servant stands at a table by a window, pouring milk from an earthenware jug into a bowl. Bread is broken on the table. The wall behind her is bare plaster with a nail and its shadow, a patched hole, and a line of Delft tiles at the foot.',
+    'Nothing happens, at some length. The whole picture is arranged around a stream of milk perhaps a centimetre wide, which is the only moving thing in it and the only place the eye can rest. The dotted highlights on the bread are Vermeer’s and nobody else’s.',
+  ],
+  about: [
+    'Vermeer spent his whole life in Delft, ran an inn, dealt in art, converted to Catholicism to marry, had fifteen children of whom eleven survived, and painted perhaps forty-five pictures of which thirty-seven are known. He died in debt at forty-three; his widow said the war had ruined the art trade. He was forgotten for two centuries.',
+  ],
+  echoes: [
+    { label: 'Vermeer, Rijksmuseum (2023)', note: 'The largest Vermeer exhibition ever mounted; tickets sold out before it opened.' },
+    { label: 'Salvador Dalí, The Ghost of Vermeer of Delft (1934)', note: 'Dalí called him the greatest painter who ever lived and painted him as a kneeling spectre.' },
+    { label: 'Nestlé’s condensed milk trademark', note: 'One of many labels that have borrowed her outright.' },
+  ],
+  summary: 'A servant pours milk from a jug into a bowl, and that is the whole of it. The painting is small, about the size of a sheet of writing paper, and Johannes Vermeer made it in Delft around 1658, and there is almost nothing in it. Bread on a table. A window with a broken pane. A wall of bare plaster carrying a nail, the shadow of the nail, and a patched hole. Infrared photography has shown what he took out as he worked: a large map hung on that wall, and a laundry basket behind her. He painted them out. He was emptying the room. What is left is a stream of milk perhaps a centimetre across, the only thing moving in the picture, and the only place your eye will agree to settle. Around it Vermeer built the rest: the heavy forearms of someone who works, the yellow bodice and the blue apron, and the bread, whose crust he touched with dots of thick paint that catch the light like nothing else in Dutch painting. She is thinking about pouring. That is all she is thinking about. Vermeer had eleven surviving children and an inn to run and died in debt at forty-three, and the world forgot him for two hundred years. When the Rijksmuseum was in danger of losing this picture abroad in 1908, the Dutch state stepped in and bought it.',
+},
+{
+  id: 'the-swing', category: 'old',
+  title: 'The Swing', artist: 'Jean-Honoré Fragonard', artistDates: '1732 – 1806',
+  year: '1767', sort: 1767, medium: 'Oil on canvas', dims: '81 × 64 cm',
+  museum: 'Wallace Collection', city: 'London',
+  file: 'The Swing (P430).jpg', w: 1487, h: 1920, wiki: 'The_Swing_(Fragonard)',
+  history: [
+    'The commission is recorded by a contemporary: a young nobleman asked a painter to show his mistress on a swing pushed by a bishop, with himself placed where he could see up her skirts. The first painter refused. Fragonard took it, and kept the arrangement, though the pusher became an unwitting husband or servant rather than a cleric.',
+    'It passed through the Revolution, was bought by the 4th Marquess of Hertford in the nineteenth century, and came to the nation with the Wallace Collection in 1897, where it may not travel: the bequest forbids loans.',
+  ],
+  depicts: [
+    'A woman in a froth of pink silk swings forward through a dark overgrown garden, kicking off one shoe. In the bushes below and to the left, a young man lies back in the foliage and looks up. An older man in shadow at the right works the ropes. Two stone putti watch, one with a finger to his lips.',
+    'The whole picture is arranged on the arc of the swing and the line of the flying shoe. It is the last and lightest statement of a manner that, within twenty-five years, the Revolution would treat as evidence.',
+  ],
+  about: [
+    'Fragonard trained under Chardin and Boucher, won the Prix de Rome, and then abandoned the grand historical career expected of him to paint private pictures for private rooms, fast and brilliantly. The Revolution destroyed his market. He was given a post arranging the new national collections, and died in Paris largely forgotten.',
+  ],
+  echoes: [
+    { label: 'Disney, Frozen (2013)', note: 'Anna’s gallery scene restages it, shoe and all.' },
+    { label: 'Nicolas Poussin and Jacques-Louis David', note: 'Everything the Revolution’s painters set out to replace is in this picture.' },
+    { label: 'Yinka Shonibare, The Swing (after Fragonard) (2001)', note: 'The figure remade in Dutch wax fabric, headless, at Tate.' },
+  ],
+  summary: 'A young woman in a great deal of pink silk swings forward out of the shadows of an overgrown garden, and kicks off her shoe. In the bushes below, at exactly the angle you would choose, a young man lies back and looks up. Behind her, half in darkness, an older man works the ropes without any clear idea of what he is helping with. A stone cupid at the left watches, and holds a finger to his lips. A contemporary recorded how the commission came about. A nobleman approached a painter and asked for a picture of his mistress on a swing, pushed by a bishop, arranged so that the patron could be shown looking up her skirts. The first painter, a serious man, declined. Jean-Honoré Fragonard took the job. He dropped the bishop and kept everything else, and he painted it with a speed and lightness that makes the foliage look like weather. This is the high-water mark of the Rococo, the French eighteenth century at its most private, most weightless and most pleased with itself. Twenty-two years later the Revolution arrived, Fragonard’s customers went to the guillotine or into exile, and his kind of painting became evidence of what had been wrong. He ended his life on a state salary, hanging other people’s pictures in the Louvre.',
+},
+/* ───────────────── NINETEENTH CENTURY, ADDED SEPTEMBER 2026 ───────────────── */
+{
+  id: 'oath-of-the-horatii', category: 'nineteenth',
+  title: 'The Oath of the Horatii', artist: 'Jacques-Louis David', artistDates: '1748 – 1825',
+  year: '1784', sort: 1784, medium: 'Oil on canvas', dims: '330 × 425 cm',
+  museum: 'Musée du Louvre', city: 'Paris',
+  file: 'Le Serment des Horaces - Jacques-Louis David - Musée du Louvre Peintures INV 3692 ; MR 1432.jpg', w: 10051, h: 7794, wiki: 'Oath_of_the_Horatii',
+  history: [
+    'Commissioned by the crown and painted in Rome, where David rented a studio and worked on it for a year, enlarging the canvas twice. He showed it in Rome first, to crowds, before sending it to the Paris Salon of 1785, where it was hung late and badly and became the sensation of the year anyway.',
+    'Five years before the Revolution, a picture about swearing to die for the state was read as republican prophecy. David himself went on to vote for the king’s execution, run the visual propaganda of the Revolution, and end his life in exile in Brussels.',
+  ],
+  depicts: [
+    'Three brothers stretch their arms towards their father, who holds up three swords. They have agreed to fight three brothers of a rival city to settle a war. At the right, the women of the household collapse into each other, already grieving: one of the sisters is engaged to one of the enemy.',
+    'The picture is built on the contrast between the straight lines of the men and the curves of the women, under three severe arches that assign each group its space. The light is stage light. Nothing is soft, and nothing is accidental.',
+  ],
+  about: [
+    'David trained in the rococo manner, failed the Prix de Rome three times, attempted suicide by starvation, won it at the fourth attempt, and returned from Italy with a style stripped to the bone. He became the Revolution’s pageant-master, was imprisoned after Robespierre fell, and re-emerged as Napoleon’s painter.',
+  ],
+  echoes: [
+    { label: 'Livy and Corneille’s Horace (1640)', note: 'The Roman historian gives the story; the play gave David his staging.' },
+    { label: 'David, The Death of Marat (1793)', note: 'The same severity turned on an event he had witnessed himself.' },
+    { label: 'The Raised-Arm Salute', note: 'This gesture, invented here, was later read back into Rome and appropriated in the twentieth century.' },
+  ],
+  summary: 'Three young men reach out for three swords, and every line in the painting agrees with them. Jacques-Louis David painted this in Rome in 1784 and sent it to Paris, and it arrived like a door slamming. The story is from Livy. Two cities at war agree to settle the matter by combat between three brothers from each side. The Horatii are the Roman three, and here they are swearing to their father that they will come back victorious or not at all. Look at how the picture is made. Everything about the men is straight: the arms, the legs, the swords, the tension. Everything about the women on the right is curved and collapsed, because they already know what the men have not yet worked out. One of the sisters is engaged to one of the enemy brothers, and whatever happens today she loses. Three arches divide the canvas and give each group its allotted space, and the light falls like stage light on an empty floor. There is no decoration anywhere. This was the point. French painting at that moment was pink and soft and private, and David had come back from Italy with something hard. Five years later the Revolution began. David voted for the king’s death, designed its festivals and its martyrs, went to prison when Robespierre fell, and came out to paint Napoleon.',
+},
+{
+  id: 'saturn-devouring-his-son', category: 'nineteenth',
+  title: 'Saturn Devouring His Son', artist: 'Francisco Goya', artistDates: '1746 – 1828',
+  year: '1819 – 1823', sort: 1821, medium: 'Mixed media mural transferred to canvas', dims: '144 × 81 cm',
+  museum: 'Museo del Prado', city: 'Madrid',
+  file: 'Francisco de Goya, Saturno devorando a su hijo (1819-1823).jpg', w: 1661, h: 3051, wiki: 'Saturn_Devouring_His_Son',
+  tags: ['myth'],
+  history: [
+    'Painted directly onto the plaster of a wall in the Quinta del Sordo, the house outside Madrid where Goya lived alone, deaf, after a near-fatal illness. There are fourteen of these Black Paintings. He did not title them, did not exhibit them, and never mentioned them in writing.',
+    'They were transferred to canvas in the 1870s, a brutal operation that lost paint and changed them, and given to the Prado. This one had a section at the lower right removed in the transfer, which some scholars believe altered what the figure was doing.',
+  ],
+  depicts: [
+    'An enormous figure, eyes wide and white, crouches out of blackness with a headless body gripped in both fists, biting into the left arm. One arm has already been eaten to the shoulder. There is no setting, no floor, and no light source.',
+    'Saturn ate his children to prevent the prophecy that one would overthrow him. Goya’s version has none of the classical composure of earlier treatments; the god looks terrified rather than cruel, which is a reading of the myth almost nobody had offered before.',
+  ],
+  about: [
+    'Goya rose to be First Court Painter to the Spanish crown, went deaf at forty-six after an illness that nearly killed him, and lived through the Peninsular War and its reprisals. His late work turns away from the court entirely. He left Spain for Bordeaux in 1824 and died there at eighty-two.',
+  ],
+  echoes: [
+    { label: 'Peter Paul Rubens, Saturn (1636)', note: 'Hanging in the same city; Goya certainly knew it, and refused everything about it.' },
+    { label: 'Goya, The Disasters of War (1810 – 20)', note: 'The prints made in the same years, and the same argument by other means.' },
+    { label: 'Ridley Scott, Hannibal (2001)', note: 'One of many films to put the painting on the wall behind the monster.' },
+  ],
+  summary: 'This was painted on a wall, in a house, by a man who had gone deaf and did not intend anyone to see it. Around 1819, Francisco Goya bought a farmhouse outside Madrid called the Quinta del Sordo, the House of the Deaf Man, and over four years he covered its walls in fourteen paintings of a kind nobody had made before. He gave them no titles. He never exhibited them, never sold them, and never mentioned them in a letter. We call them the Black Paintings, and this is the one people remember. The myth is standard: Saturn, warned that a son would overthrow him, ate his children as they were born. Rubens had painted it, and so had others, and in their versions the god is a classical figure performing a cruelty. Goya’s Saturn is not cruel. Look at the eyes. He is terrified. He is an enormous, filthy, crouching thing emerging from a blackness that has no floor and no walls, and he is eating a body that is already missing its head and one arm, and his expression is the expression of somebody who cannot stop. The paintings were cut off the walls in the 1870s and glued to canvas, which damaged them and may have changed this one at the lower edge. Goya had, by then, been dead for fifty years.',
+},
+{
+  id: 'grande-odalisque', category: 'nineteenth',
+  title: 'La Grande Odalisque', artist: 'Jean-Auguste-Dominique Ingres', artistDates: '1780 – 1867',
+  year: '1814', sort: 1814, medium: 'Oil on canvas', dims: '91 × 162 cm',
+  museum: 'Musée du Louvre', city: 'Paris',
+  file: 'La grande odalisque - Jean-Auguste Dominique Ingres - Musée du Louvre Peintures RF 1158.jpg', w: 9311, h: 5196, wiki: 'Grande_Odalisque',
+  history: [
+    'Commissioned by Caroline Murat, Napoleon’s sister and Queen of Naples, and never paid for: the Napoleonic order collapsed before the bill was settled. Ingres was in Rome and remained there for years afterwards.',
+    'Shown in Paris in 1819, it was attacked for its anatomy. One critic complained the figure had three vertebrae too many. He was not far wrong: analysis in the 1970s put the excess at about five, along with an arm and a pelvis that do not connect to anything.',
+  ],
+  depicts: [
+    'A reclining woman looks back over her shoulder at the viewer, holding a peacock-feather fan. The setting is an imagined Ottoman interior — a hookah, a turban of silk, heavy blue drapery — of a kind Ingres had never seen.',
+    'The back is impossibly long, the right arm is shorter than the left, the left leg emerges from nowhere. Ingres was not a careless draughtsman; he was among the most exacting in Europe. The distortions are deliberate, and they are why the pose flows the way it does.',
+  ],
+  about: [
+    'Ingres wanted to be remembered as a painter of history and was continually praised for portraits he considered a distraction. He led the line-drawing party against Delacroix’s colour for decades, ran a hugely influential studio, and played the violin well enough that the French phrase for a serious hobby is still “violon d’Ingres”.',
+  ],
+  echoes: [
+    { label: 'Titian, Venus of Urbino (1534)', note: 'The reclining nude tradition Ingres is joining, and orientalising.' },
+    { label: 'Guerrilla Girls, Do women have to be naked to get into the Met? (1989)', note: 'The poster puts a gorilla mask on this figure; it is the group’s best-known work.' },
+    { label: 'Man Ray, Le Violon d’Ingres (1924)', note: 'A photographed back with f-holes painted on, punning on Ingres’s violin.' },
+  ],
+  summary: 'She has too many vertebrae. When this was shown in Paris in 1819, a critic complained that the figure had three more than a human being, and when anatomists looked properly in the twentieth century they found it was closer to five, plus a right arm shorter than the left and a left leg that does not attach to anything. Jean-Auguste-Dominique Ingres was not a sloppy draughtsman. He was arguably the finest in Europe, a man who spent his life arguing that line was everything and colour a distraction, and he lengthened that back on purpose, because a correct spine would not have made that curve. The picture was ordered by Napoleon’s sister, the Queen of Naples, and never paid for, because the empire fell over before the invoice did. The setting is an Ottoman harem, a place Ingres had never been and never would go: the hookah, the turban, the peacock fan and the heavy blue curtain are all assembled from prints and hearsay, which is what makes it an orientalist fantasy rather than a record of anything. What survives all of this is the look. She has turned her head back over her shoulder to find you standing there, and her expression gives away nothing at all. In 1989 the Guerrilla Girls put a gorilla mask on that head and asked whether women had to be naked to get into the Met.',
+},
+{
+  id: 'the-hay-wain', category: 'nineteenth',
+  title: 'The Hay Wain', artist: 'John Constable', artistDates: '1776 – 1837',
+  year: '1821', sort: 1821, medium: 'Oil on canvas', dims: '130 × 185 cm',
+  museum: 'National Gallery', city: 'London',
+  file: 'John Constable - The Hay Wain (1821).jpg', w: 6128, h: 4226, wiki: 'The_Hay_Wain',
+  tags: ['landscape'],
+  history: [
+    'Shown at the Royal Academy in 1821 under the title Landscape: Noon, and did not sell. Three years later it was exhibited in Paris, won a gold medal from Charles X, and reportedly sent Delacroix back to repaint the background of his own Salon entry.',
+    'It came to the National Gallery in 1886 and has been voted the nation’s favourite painting more than once. In 2013 two protesters glued a photograph over it; the varnish took the damage and the picture did not.',
+  ],
+  depicts: [
+    'A wagon stands in the shallow water of the River Stour with two horses and two men aboard. Willy Lott’s cottage sits at the left, a dog watches from the bank, and beyond the trees a meadow opens where haymakers are working in the sun. Most of the canvas is sky.',
+    'The subject is weather. Constable painted hundreds of cloud studies on Hampstead Heath, dated and annotated with wind direction, and the sky here is doing something specific rather than being a backdrop. The flecks of white on the water were mocked at the time as Constable’s snow.',
+  ],
+  about: [
+    'Constable was a Suffolk miller’s son who painted the same few square miles of the Stour valley all his life and sold barely twenty pictures in England. He was elected to the Royal Academy at fifty-two, late and grudgingly, the year after his wife died. He said he had never seen an ugly thing in his life.',
+  ],
+  echoes: [
+    { label: 'Eugène Delacroix and the Salon of 1824', note: 'Delacroix saw it in Paris and is said to have gone home and reworked his own picture.' },
+    { label: 'Peter Kennard, Haywain with Cruise Missiles (1980)', note: 'Missiles photomontaged onto the cart; a defining image of British protest art.' },
+    { label: 'Willy Lott’s cottage, Flatford', note: 'Still standing, and still photographed from the exact spot.' },
+  ],
+  summary: 'A cart has stopped in a river. Two men are on it, two horses are in the water, a dog is watching from the bank, and the day is going nowhere in particular. John Constable called it Landscape: Noon when he showed it in London in 1821, and nobody bought it. He was a miller’s son from Suffolk who painted the same few square miles of the Stour valley for his entire life, and England was not much interested. Then in 1824 it was sent to Paris, won a gold medal from the king, and — the story goes — sent Delacroix home to repaint the background of his own Salon picture. The real subject is the sky, which takes up more than half the canvas. Constable spent years on Hampstead Heath painting clouds, dating each study and noting the wind direction on the back, and the weather here is a particular weather on a particular afternoon rather than scenery. The white flecks he scattered on the water and foliage to catch the light were ridiculed at the time as Constable’s snow. Everything else is ordinary on purpose: a cottage belonging to a farmer called Willy Lott, who is said to have spent all but four days of his eighty-odd years in it. The building is still there. So is the spot you would stand in to take the photograph.',
+},
+{
+  id: 'ophelia', category: 'nineteenth',
+  title: 'Ophelia', artist: 'John Everett Millais', artistDates: '1829 – 1896',
+  year: '1851 – 1852', sort: 1852, medium: 'Oil on canvas', dims: '76 × 112 cm',
+  museum: 'Tate Britain', city: 'London',
+  file: 'John Everett Millais - Ophelia - Google Art Project.jpg', w: 7087, h: 4820, wiki: 'Ophelia_(painting)',
+  history: [
+    'Painted in two stages over eleven months: the river first, outdoors on the Hogsmill in Surrey, eleven hours a day for five months, and the figure afterwards in a London studio.',
+    'Elizabeth Siddal posed in a full bath kept warm by oil lamps beneath it. The lamps went out, Millais painted on without noticing, and she caught a severe cold; her father sent him a bill for the doctor. She later married Rossetti and died of laudanum at thirty-two.',
+  ],
+  depicts: [
+    'Ophelia floats on her back in a stream, palms open, singing as she goes under, surrounded by the flowers Shakespeare names and several he does not. The bank is a dense tangle of willow, nettle, meadowsweet and forget-me-not, painted leaf by leaf.',
+    'The flowers are a second text: poppy for death, pansy for thought, violet for faithfulness, daisy for innocence, and a robin in the willow that answers a line in her song. The botany is accurate enough to identify species, and some of it does not flower at the same time of year.',
+  ],
+  about: [
+    'Millais was the youngest student ever admitted to the Royal Academy schools, founded the Pre-Raphaelite Brotherhood at nineteen with Rossetti and Hunt, and was savaged by Dickens for his early work. He later married John Ruskin’s former wife, became enormously successful and popular, and died President of the Academy.',
+  ],
+  echoes: [
+    { label: 'Shakespeare, Hamlet, Act IV Scene vii', note: 'Gertrude’s speech describing the drowning, which is all the play gives.' },
+    { label: 'Lars von Trier, Melancholia (2011)', note: 'Kirsten Dunst floating with her bouquet is this painting shot for shot.' },
+    { label: 'Nick Cave, Where the Wild Roses Grow (1995)', note: 'The video restages it; so have a long line of album sleeves and fashion shoots.' },
+  ],
+  summary: 'She is still singing. In Hamlet, Ophelia’s drowning happens offstage and is reported by the queen in a speech of about fifteen lines, and John Everett Millais took those lines and spent eleven months on them. He painted the river first, sitting on the bank of the Hogsmill in Surrey for eleven hours a day, five months, through a summer and into winter, complaining in letters about flies, wind and a farmer who threatened him for trespass. Every plant is identifiable. Willow, nettle, meadowsweet, forget-me-not, poppy, pansy, violet, daisy — and each was chosen for what it means, so the bank is a second version of the same story told in flowers. Some of them do not bloom in the same month. The figure came afterwards, in a studio in London, where Elizabeth Siddal lay in a full bath warmed by oil lamps underneath it. One day the lamps went out. Millais was absorbed and did not notice, Siddal said nothing and stayed in the cooling water, and she became seriously ill; her father sent the painter the doctor’s bill. She married Rossetti, struggled with laudanum, and died at thirty-two. The painting has since become the template for every drowned woman in art, film and photography, which is a strange fate for fifteen lines of reported speech.',
+},
+{
+  id: 'burial-at-ornans', category: 'nineteenth',
+  title: 'A Burial at Ornans', artist: 'Gustave Courbet', artistDates: '1819 – 1877',
+  year: '1849 – 1850', sort: 1850, medium: 'Oil on canvas', dims: '315 × 668 cm',
+  museum: 'Musée d’Orsay', city: 'Paris',
+  file: 'Gustave Courbet - A Burial at Ornans - Google Art Project 2.jpg', w: 6042, h: 2777, wiki: 'A_Burial_At_Ornans',
+  history: [
+    'Painted in Courbet’s home town in the Franche-Comté, using the townspeople as models — the mayor, the priest, the gravediggers, his own sisters — each one posing in his studio in turn. It is over six and a half metres wide.',
+    'Shown at the Salon of 1850–51 and detested. The objection was scale: a canvas that size was for battles, coronations and scripture, and Courbet had used it on a village funeral with no hero, no saint and nothing uplifting. He said he had buried Romanticism in it.',
+  ],
+  depicts: [
+    'A crowd of some fifty life-size figures stands along a shallow trench at the edge of a provincial cemetery: clergy in red, pallbearers, beadles with bulbous noses, a mayor, weeping women, a dog looking away, and a hole in the ground at the front with a skull beside it.',
+    'Nobody is arranged. The line of figures runs flat across the canvas with no focal point, so there is nothing to look at first and nothing to look at last. The identity of the dead man is not given. The dog is the only thing in the picture that seems certain about anything.',
+  ],
+  about: [
+    'Courbet was a self-taught farmer’s son with an enormous appetite for controversy, who declared that painting could only consist of the representation of real and existing things. He took part in the Paris Commune, was held responsible for toppling the Vendôme Column, was billed for its re-erection, and died in Swiss exile the day before the first instalment fell due.',
+  ],
+  echoes: [
+    { label: 'Rembrandt, The Night Watch (1642)', note: 'The Dutch group portrait, which Courbet had studied, at Salon scale.' },
+    { label: 'Édouard Manet and the Salon of 1863', note: 'The generation that took from Courbet the idea that ordinary life would do.' },
+    { label: 'The Paris Commune, 1871', note: 'Courbet’s politics and his painting were read as the same act, and punished together.' },
+  ],
+  summary: 'It is twenty-two feet wide, and it is a funeral in a village nobody had heard of. That was the offence. In 1850, a canvas of this size in France meant a coronation, a battle, a scene from scripture — something with a hero in it. Gustave Courbet filled one with the burial of an unnamed man in Ornans, the small town in the Franche-Comté where he had grown up, and he painted the mourners life-size. They are real people. He brought the townspeople into his studio one after another: the mayor, the priest, the gravediggers, the beadles with their red robes and their drinkers’ noses, his own sisters among the women. And he arranged them in no particular order, in a flat line across the canvas, with no centre, so the eye has nowhere to go first. At the front there is a hole in the ground and a skull beside it. Off to one side, a dog has lost interest and is looking out of the frame. Critics called it ugly, and they were reacting correctly: the picture is a refusal. Courbet said afterwards that the burial at Ornans was in reality the burial of Romanticism. He later joined the Paris Commune, was blamed for the destruction of the Vendôme Column, and died in exile in Switzerland the day before the first payment towards rebuilding it was due.',
+},
+{
+  id: 'the-gleaners', category: 'nineteenth',
+  title: 'The Gleaners', artist: 'Jean-François Millet', artistDates: '1814 – 1875',
+  year: '1857', sort: 1857, medium: 'Oil on canvas', dims: '84 × 112 cm',
+  museum: 'Musée d’Orsay', city: 'Paris',
+  file: 'Jean-François Millet - Gleaners - Google Art Project 2.jpg', w: 5354, h: 4006, wiki: 'The_Gleaners',
+  history: [
+    'Shown at the Salon of 1857 and disliked by the press of a country nine years after a revolution. To paint the rural poor at this scale, with this gravity, was read as a political statement; one critic saw in the three bent figures “the scaffolds of 1793”.',
+    'It sold for a modest sum in Millet’s lifetime. In 1889 it went for three hundred thousand francs, and it entered the Louvre by bequest a year later. Millet died in 1875, having spent most of his life short of money.',
+  ],
+  depicts: [
+    'Three women bend over a harvested field, picking up the ears of corn left behind. Behind them, in bright light, is the harvest proper: stacks, a cart, a mounted overseer, a farm’s worth of plenty.',
+    'Gleaning was a right of the very poorest, allowed after the harvest was taken. The distance between the three foreground figures and the abundance behind them is the entire argument of the painting, and it is made by composition alone, without a word of commentary.',
+  ],
+  about: [
+    'Millet was born to a farming family in Normandy and knew the work he painted. He settled in Barbizon on the edge of the Fontainebleau forest and painted peasants for the rest of his life, insisting he was a painter rather than a socialist. Van Gogh copied him repeatedly and called him the voice of the wheat.',
+  ],
+  echoes: [
+    { label: 'Vincent van Gogh’s copies after Millet (1880 – 90)', note: 'Van Gogh returned to Millet throughout his life, calling him father Millet.' },
+    { label: 'The Book of Ruth', note: 'Gleaning as a biblical right, which is how the subject entered European painting.' },
+    { label: 'Agnès Varda, The Gleaners and I (2000)', note: 'A documentary that begins at this painting and follows modern gleaners to the end.' },
+  ],
+  summary: 'Three women are bent over in a field, picking up what the harvest missed. That is the whole subject, and in 1857 it caused a great deal of trouble. Gleaning was the old right of the poorest people in a village to go over a field after the crop was taken and keep whatever was left — a handful of ears, enough for bread. Jean-François Millet painted three women doing it at a scale that French painting reserved for serious matters, and he gave them the weight and dignity of figures on a monument. The country had had a revolution nine years earlier and was in no mood. One critic said he saw in the three bent backs the scaffolds of 1793. What makes the picture work is what is behind them. In the bright distance is the harvest itself: the stacks, the loaded cart, the crowd of workers, the overseer on his horse. There is plenty in this field. It is simply not for them. Millet makes that argument without a single gesture of protest — nobody is looking up, nobody is complaining, the women are just working. He grew up on a farm in Normandy and always denied he was making political pictures. He sold this one for very little. Thirty years later it changed hands for three hundred thousand francs.',
+},
+{
+  id: 'the-ballet-class', category: 'nineteenth',
+  title: 'The Ballet Class', artist: 'Edgar Degas', artistDates: '1834 – 1917',
+  year: '1873 – 1876', sort: 1875, medium: 'Oil on canvas', dims: '85 × 75 cm',
+  museum: 'Musée d’Orsay', city: 'Paris',
+  file: 'Edgar Degas - La Classe de danse.jpg', w: 4618, h: 5300, wiki: 'The_Dance_Class',
+  history: [
+    'Begun for the singer Jean-Baptiste Faure, who had to wait years for it; Degas reworked the canvas repeatedly and changed the ballet master’s identity partway through. The old man with the stick is Jules Perrot, a famous dancer of the previous generation, painted from a separate study.',
+    'Degas made around fifteen hundred works on dancers over forty years, which is roughly half his output. He was not a balletomane in the usual sense; he had a subscription that let him behind the scenes and used it to watch people working.',
+  ],
+  depicts: [
+    'A rehearsal room at the Paris Opéra. An examination is going on: one girl dances at the centre while the master leans on his stick and the rest wait, and almost none of them are looking at her. A mother reads a newspaper. A dancer scratches her back; another adjusts an earring; one sits on the piano.',
+    'The floor tilts steeply up, the space is cropped at the edges like a photograph, and the arrangement pushes everything to the sides and leaves the centre almost empty. The interest is in the waiting, not the dancing.',
+  ],
+  about: [
+    'Degas was a banker’s son, trained in the classical tradition, and disliked being called an Impressionist — he wanted to be called a realist and painted almost entirely indoors, from drawings and memory. His eyesight failed progressively from his forties, pushing him towards pastel and sculpture. He died nearly blind at eighty-three.',
+  ],
+  echoes: [
+    { label: 'Degas, The Little Fourteen-Year-Old Dancer (1881)', note: 'The wax sculpture in a real tutu that horrified the 1881 exhibition.' },
+    { label: 'Japanese woodblock prints', note: 'The steep floor, the cropping and the empty centre come from prints then flooding Paris.' },
+    { label: 'Photography and the snapshot', note: 'Degas owned a camera and composed as if a shutter had caught the room mid-moment.' },
+  ],
+  summary: 'An examination is in progress at the Paris Opéra, and almost nobody is watching it. A girl dances in the middle of the floor. The old man leaning on the long stick is Jules Perrot, a great dancer of an earlier generation, now teaching. And around them, the room carries on: a mother sits reading a newspaper, a dancer scratches her back, another fiddles with an earring, one has perched on the piano, several are talking. Edgar Degas made about fifteen hundred pictures of dancers, roughly half of everything he produced, and this is what he was after. Not the performance — he painted very few performances — but the hours of standing about that surround it. He had a subscription that got him backstage and he used it the way a naturalist uses a hide. The composition is doing something unusual. The floorboards rush up and away, the figures are pushed out to the edges, the centre is nearly empty, and people are cut off by the frame as though the picture had been taken rather than arranged. That comes from two things arriving in Paris at once: Japanese woodblock prints, which he collected, and the camera, which he owned. Degas hated being called an Impressionist. He said he was a realist, and he meant that he painted what people actually do when they think the performance has not started.',
+},
+{
+  id: 'whistlers-mother', category: 'nineteenth',
+  title: 'Arrangement in Grey and Black No. 1', artist: 'James McNeill Whistler', artistDates: '1834 – 1903',
+  year: '1871', sort: 1871, medium: 'Oil on canvas', dims: '144 × 162 cm',
+  museum: 'Musée d’Orsay', city: 'Paris',
+  file: 'Whistlers Mother high res.jpg', w: 5897, h: 5247, wiki: 'Whistler\'s_Mother',
+  tags: ['portrait'],
+  history: [
+    'The title everyone uses is not the title. Whistler called it an arrangement of grey and black, and said the identity of the sitter could not possibly matter to the public. The sitter was Anna McNeill Whistler, his mother, who was living with him in Chelsea.',
+    'The Royal Academy nearly rejected it in 1872 and hung it grudgingly. France bought it in 1891, the first Whistler in a public collection anywhere. It toured America during the Depression to enormous crowds and became, improbably, an American icon of motherhood.',
+  ],
+  depicts: [
+    'An elderly woman in a black dress and white lace cap sits in profile on a hard chair, hands folded, feet on a low stool, looking at a wall. A patterned curtain hangs at the left; one framed print hangs behind her; the rest is grey.',
+    'Almost nothing is described. There is no anecdote, no expression to read, no interior to furnish the character. The picture is composed like an abstract arrangement of rectangles and one curve, which is precisely what the title says it is.',
+  ],
+  about: [
+    'Whistler was born in Massachusetts, expelled from West Point, and spent his career in London and Paris being spectacular. He sued Ruskin for libel over a review, won a farthing in damages, and was bankrupted by the costs. He insisted on art for art’s sake and gave his pictures musical titles — nocturnes, symphonies, arrangements — to stop people reading stories into them.',
+  ],
+  echoes: [
+    { label: 'Mr. Bean (1997)', note: 'The plot of the film is the destruction of this painting.' },
+    { label: 'The 1934 US postage stamp', note: 'Issued “in memory and in honor of the mothers of America”, which Whistler would have hated.' },
+    { label: 'Whistler v. Ruskin (1878)', note: 'The libel trial that made art for art’s sake a matter of public record.' },
+  ],
+  summary: 'James McNeill Whistler did not call this Whistler’s Mother. He called it Arrangement in Grey and Black No. 1, and when people asked about the sitter he said that the identity of the woman could not possibly interest the public. The sitter was his mother, Anna, who was living with him in Chelsea at the time, and the story is that a model failed to turn up and she stood in, and then could not stand for long, so a chair was brought. Look at what is actually in the picture. A woman in profile in a black dress. A white cap. A hard chair, a footstool, a patterned curtain, one framed print, and a very large amount of grey wall. There is no expression to read, no object to explain her, no story. It is a composition of rectangles with one soft curve in it, and Whistler meant exactly that: he gave his paintings musical names — nocturnes, symphonies, arrangements — specifically to stop people looking for anecdotes. The Royal Academy almost rejected it. France bought it in 1891, the first Whistler to enter a public collection. Then it toured America during the Depression, crowds queued round blocks to see it, the Post Office put it on a stamp honouring the mothers of America, and a picture built to be about nothing became the most sentimental image in the country.',
+},
+{
+  id: 'olympia', category: 'nineteenth',
+  title: 'Olympia', artist: 'Édouard Manet', artistDates: '1832 – 1883',
+  year: '1863', sort: 1863, medium: 'Oil on canvas', dims: '130 × 190 cm',
+  museum: 'Musée d’Orsay', city: 'Paris',
+  file: 'Edouard Manet - Olympia - Google Art ProjectFXD.jpg', w: 5876, h: 3976, wiki: 'Olympia_(Manet)',
+  history: [
+    'Painted in 1863 and held back for two years; when it was shown at the Salon of 1865 it had to be rehung high in a corner and guarded, because visitors were trying to attack it with sticks and umbrellas.',
+    'Manet died in 1883 with the picture unsold. Claude Monet organised a public subscription to buy it from his widow and give it to the state, which accepted it reluctantly and hung it in the Musée du Luxembourg in 1890.',
+  ],
+  depicts: [
+    'A naked woman lies on white sheets, propped on pillows, a ribbon at her throat, one mule dangling from her foot, one hand flat across her thigh. A servant brings a large bouquet, still wrapped. A black cat stands at the end of the bed with its back up.',
+    'The model is Victorine Meurent, a painter herself. The name Olympia, the orchid in the hair, the ribbon and the bracelet all signalled a courtesan to a Paris audience, and so did the flowers arriving from someone off-stage. What caused the riot was not the nakedness but the look: unashamed, unhurried, and directed at the person in front of the canvas.',
+  ],
+  about: [
+    'Manet came from a wealthy legal family, wanted official success all his life, and never got it. He refused to exhibit with the Impressionists although he was their central example, and painted modern Paris — bars, boats, streets, and people who worked — with the technique of the Old Masters he had copied in the Louvre.',
+  ],
+  echoes: [
+    { label: 'Titian, Venus of Urbino (1534)', note: 'The direct source: same pose, same room, dog replaced by a cat.' },
+    { label: 'Émile Zola’s defence (1867)', note: 'Zola wrote a pamphlet defending it and Manet painted his portrait with it on the wall.' },
+    { label: 'Larry Rivers, I Like Olympia in Black Face (1970)', note: 'One of many works reopening the question of the servant, long the unlooked-at figure.' },
+  ],
+  summary: 'In 1865 the Paris Salon had to hang a painting out of reach and put a guard in front of it, because people were coming at it with their umbrellas. The painting was Olympia. It is, in its bones, a copy. Titian’s Venus of Urbino has a naked woman on white sheets propped on pillows, a servant in the background and a small dog at her feet, and Édouard Manet used every part of that arrangement. He changed three things. He replaced the sleeping dog with a black cat, arched and awake. He gave the servant a bouquet, still in its paper, sent by somebody we do not see. And he painted the woman as a particular person — Victorine Meurent, a model who was also a painter — with a ribbon at her throat, an orchid in her hair, one slipper half off, and a hand laid flat and deliberately across her thigh. Every one of those details told a Paris audience that she was a courtesan. But the nudes of the Salon were courtesans too, dressed up as goddesses. What could not be forgiven was that she is looking at you, without shame and without interest, as at a client who has arrived. Manet died with it unsold. Monet raised a public subscription to buy it for France.',
+},
+/* ───────────────────── MODERN, ADDED SEPTEMBER 2026 ───────────────────── */
+{
+  id: 'sunflowers', category: 'modern',
+  title: 'Sunflowers', artist: 'Vincent van Gogh', artistDates: '1853 – 1890',
+  year: '1888', sort: 1888, medium: 'Oil on canvas', dims: '92 × 73 cm',
+  museum: 'National Gallery', city: 'London',
+  file: 'Vincent Willem van Gogh 127.jpg', w: 3349, h: 4226, wiki: 'Sunflowers_(Van_Gogh_series)',
+  history: [
+    'Painted in Arles in August 1888 in a week of hard sun, to decorate the bedroom Van Gogh was preparing for Paul Gauguin in the Yellow House. He wrote to his brother Theo that he was working from the morning light with the intention of doing a dozen panels of nothing but sunflowers.',
+    'There are five in the series, with a sixth lost in Japan during the war, plus repetitions Van Gogh made the following January. The chrome yellows he used are chemically unstable, and conservators have shown that some of the brightest passages are browning permanently.',
+  ],
+  depicts: [
+    'Fifteen sunflowers in an earthenware pot on a table, at every stage from full bloom to spent seed head, against a yellow wall, in a yellow vase, with a yellow signature.',
+    'The picture is almost entirely one colour, which was the experiment: Van Gogh set out to prove that yellow on yellow could still carry form. The flowers going over are not accidental — the series is a life cycle, not a bouquet.',
+  ],
+  about: [
+    'Van Gogh came late to painting, worked for ten years, and sold almost nothing. He was supported throughout by his brother Theo, to whom he wrote more than six hundred letters that are among the best accounts of making art in existence. He shot himself in a wheatfield at thirty-seven.',
+  ],
+  echoes: [
+    { label: 'Paul Gauguin, The Painter of Sunflowers (1888)', note: 'Gauguin painted Van Gogh at work on them, and Van Gogh disliked the result.' },
+    { label: 'Don McLean, Vincent (1971)', note: 'Starry starry night; the song that fixed the popular image of him.' },
+    { label: 'Japanese corporate collecting in the 1980s', note: 'A version sold in 1987 for a then-record price and set off a decade of speculation.' },
+  ],
+  summary: 'Vincent van Gogh painted these in Arles in August 1888, in a hurry, because Paul Gauguin was coming to stay. He had rented a yellow house and was preparing a room, and he decided to hang it with sunflowers, working through the mornings while the light held and writing to his brother Theo that he meant to do a dozen panels of nothing else. What he was really doing was an experiment. The wall is yellow, the table is yellow, the vase is yellow and so are the flowers, and the signature is painted in yellow on yellow. The question was whether a picture could be made almost entirely out of one colour and still contain things that stand up and occupy space. Look at how he did it: by thickening the paint until the petals are physically raised off the canvas, so that form is carried by relief rather than by shadow. And look at the flowers themselves. They are not a bouquet. Some are in full bloom, some are half open, and several have gone over completely into ragged seed heads. This is a life cycle in a pot. There is a cruel footnote. The chrome yellow he used was new and unstable, and modern analysis shows the brightest passages are slowly turning brown. The picture is fading in a way he could not have known.',
+},
+{
+  id: 'where-do-we-come-from', category: 'modern',
+  title: 'Where Do We Come From? What Are We? Where Are We Going?', artist: 'Paul Gauguin', artistDates: '1848 – 1903',
+  year: '1897 – 1898', sort: 1898, medium: 'Oil on canvas', dims: '139 × 375 cm',
+  museum: 'Museum of Fine Arts', city: 'Boston',
+  file: 'Gauguin - Where Do We Come From? What Are We? Where Are We Going? (1897-98).jpg', w: 5400, h: 1987, wiki: 'Where_Do_We_Come_From%3F_What_Are_We%3F_Where_Are_We_Going%3F',
+  history: [
+    'Painted in Tahiti in about a month, on sacking, after Gauguin learned of the death of his favourite daughter Aline and while he was ill and deeply in debt. He wrote that he intended to kill himself when it was finished, went into the hills with arsenic, took too much, and was sick.',
+    'He told his dealer to read it from right to left, and inscribed the three questions in the top left corner himself. It went to Boston in 1936 and has rarely left the building since.',
+  ],
+  depicts: [
+    'A frieze more than three and a half metres long. At the right, a sleeping infant and three seated women. At the centre, a figure reaching up to pick fruit. At the left, an old woman crouched with her head in her hands beside a white bird holding a lizard, and a blue idol with both arms raised.',
+    'The order is the answer: birth at one end, death at the other, and the ordinary business of living in between. The blue figure is Gauguin’s invention rather than any Polynesian deity, which is true of most of the religion in his Tahitian pictures.',
+  ],
+  about: [
+    'Gauguin was a Paris stockbroker who gave it up at thirty-five to paint, left his wife and five children, and spent his last decade in Tahiti and the Marquesas pursuing an idea of the primitive that the islands, already colonised and missionised, could not supply. He took teenage girls as partners, fought the colonial administration, and died in poverty in 1903.',
+  ],
+  echoes: [
+    { label: 'Gauguin’s letters to Daniel de Monfreid (1898)', note: 'Where he sets out the reading order and describes the suicide attempt.' },
+    { label: 'W. Somerset Maugham, The Moon and Sixpence (1919)', note: 'The novel that turned his biography into the myth of the artist who abandons everything.' },
+    { label: 'Post-colonial reassessment, 2019 onwards', note: 'Major exhibitions now show the paintings alongside an account of what his presence there actually was.' },
+  ],
+  summary: 'Paul Gauguin painted this in Tahiti in 1897, on sacking because he could not afford canvas, in about a month, having just learned that his daughter Aline had died of pneumonia in Denmark. He was ill, in debt, and by his own account intending to kill himself as soon as it was done. He finished it, went up into the hills with arsenic, took too much, and vomited it back. He lived another five years. He wrote to his dealer that the picture should be read from right to left, and if you do that it gives up its argument immediately. At the right there is a sleeping baby and three women sitting. In the middle a figure stretches up to pick fruit, which is the ordinary business of being alive. At the left an old woman crouches with her head in her hands, close to death, beside a strange white bird holding a lizard in its claw. The three questions are written by Gauguin in the upper corner, in his own hand. Almost everything supposedly Polynesian in it is invented — the blue idol with its raised arms belongs to no religion anyone has identified — because Gauguin had come looking for an untouched world and found a French colony with a post office. The picture is his masterpiece and, increasingly, a document of what he was doing there.',
+},
+{
+  id: 'the-sleeping-gypsy', category: 'modern',
+  title: 'The Sleeping Gypsy', artist: 'Henri Rousseau', artistDates: '1844 – 1910',
+  year: '1897', sort: 1897, medium: 'Oil on canvas', dims: '130 × 201 cm',
+  museum: 'Museum of Modern Art', city: 'New York',
+  file: 'La Bohémienne endormie.jpg', w: 5411, h: 3457, wiki: 'The_Sleeping_Gypsy',
+  history: [
+    'Rousseau offered it to the mayor of his home town of Laval for two hundred francs, describing it in the letter as a wandering woman asleep with her mandolin and her jar, and a lion passing by who does not devour her. The mayor declined. It sold cheaply and vanished into a Paris charcoal merchant’s shop for twenty-five years.',
+    'Rediscovered in 1924, it was so strange that its authenticity was argued over for decades. It came to the Museum of Modern Art in 1939.',
+  ],
+  depicts: [
+    'A sleeping figure in a striped robe lies on sand beside a mandolin and an earthenware jar. A lion stands over her, mane out and tail up, sniffing. A full moon hangs in a blue-black sky above a blue river and low hills.',
+    'There are no shadows and there is no wind. The desert is flat and painted like a stage floor, and the lion’s eye is a bead of glass. Everything is described with total confidence and none of it obeys the light.',
+  ],
+  about: [
+    'Rousseau spent his working life as a toll collector on the edge of Paris, which is why he was called Le Douanier, and taught himself to paint in his forties. Critics mocked him for twenty years. Picasso, who found one of his canvases being sold for the price of the fabric, threw a banquet in his honour in 1908. He never left France; every jungle he painted came from the botanical gardens.',
+  ],
+  echoes: [
+    { label: 'Picasso’s banquet for Rousseau (1908)', note: 'Half mockery, half homage, and the moment the avant-garde adopted him.' },
+    { label: 'Surrealism', note: 'Breton’s circle claimed him as an ancestor for the dream logic he arrived at without trying.' },
+    { label: 'Maurice Sendak, Where the Wild Things Are (1963)', note: 'Sendak named Rousseau as a direct source for the moonlit beasts.' },
+  ],
+  summary: 'A lion has found a sleeping woman in a desert, and nothing is going to happen. Henri Rousseau described the picture himself, in a letter offering it to the mayor of his home town for two hundred francs: a wandering woman asleep with her mandolin and her jar, and a lion passing by who does not devour her. The mayor said no. The painting disappeared into a charcoal merchant’s shop in Paris for twenty-five years. Rousseau was a toll collector on the edge of the city who taught himself to paint in middle age and was laughed at for two decades by people who could draw better than he could. What they could not do was this. There are no shadows anywhere. There is no wind. The sand is flat as a stage floor, the river is a band of blue, the moon is full, and the lion’s eye is a bead of glass. Every single thing in the picture is stated with complete conviction and none of it behaves the way the world behaves, and the result is a scene that feels less painted than remembered from a dream. Picasso found one of his canvases being sold as scrap and threw a banquet in his honour. The Surrealists later claimed him as an ancestor. He never left France; the jungles in his other paintings came from the botanical gardens in Paris.',
+},
+{
+  id: 'at-the-moulin-rouge', category: 'modern',
+  title: 'At the Moulin Rouge: The Dance', artist: 'Henri de Toulouse-Lautrec', artistDates: '1864 – 1901',
+  year: '1890', sort: 1890, medium: 'Oil on canvas', dims: '116 × 150 cm',
+  museum: 'Philadelphia Museum of Art', city: 'Philadelphia',
+  file: 'Henri de Toulouse-Lautrec, French - At the Moulin Rouge- The Dance - Google Art Project.jpg', w: 5889, h: 4476, wiki: 'At_the_Moulin_Rouge:_The_Dance',
+  history: [
+    'Painted in the Moulin Rouge’s first year. The management bought it and hung it in the entrance hall, which made it the first thing anyone saw on the way in — an advertisement that happened to be a painting.',
+    'Toulouse-Lautrec had a table permanently reserved there and drew in it most nights for a decade. His lithographed posters for the same venue, printed in their thousands, effectively invented the modern advertising poster.',
+  ],
+  depicts: [
+    'Valentin le Désossé, the boneless one, teaches a step to a dancer in pink while the room carries on around them. A crowd stands along the back wall — top hats, a woman in black and white, another in salmon pink standing alone and looking out of the picture.',
+    'The floor is empty in the centre and everyone has been pushed to the edges, so the two dancers occupy a hole in the composition. The thinned paint and hard outline come from the Japanese prints then flooding Paris.',
+  ],
+  about: [
+    'Toulouse-Lautrec was born to an aristocratic family, broke both thigh bones in his teens, and stopped growing; he reached about a metre and a half. He moved to Montmartre and painted its dancers, prostitutes and drinkers as colleagues rather than subjects, lived for a period in a brothel, drank heavily, and died at thirty-six.',
+  ],
+  echoes: [
+    { label: 'Japanese woodblock prints', note: 'The flat colour, the cropping and the strong outline come straight from them.' },
+    { label: 'Toulouse-Lautrec’s posters (1891 onwards)', note: 'The lithographs for this venue created the vocabulary of modern advertising.' },
+    { label: 'Baz Luhrmann, Moulin Rouge! (2001)', note: 'The film’s look is assembled almost entirely out of these paintings.' },
+  ],
+  summary: 'The Moulin Rouge had been open a matter of months when Henri de Toulouse-Lautrec painted this, and the management liked it enough to hang it in the entrance hall, where it worked as an advertisement that happened to be art. The tall thin man at the centre is Valentin le Désossé — Valentin the Boneless — a wine merchant by day and the best dancer in Montmartre by night, and he is showing a step to a woman in pink. Around them the room does what rooms do. Men in top hats stand along the back wall. A woman in black and white watches. Another, in salmon pink, stands by herself at the right and looks out of the picture entirely, at us. Toulouse-Lautrec had a table permanently reserved in this building and drew in it most nights for ten years. He was there as a regular rather than a visitor: an aristocrat’s son who had broken both thighs as a boy, stopped growing at about a metre and a half, and found in Montmartre a set of people who did not much care. The composition empties the centre and pushes everybody to the sides, a trick borrowed from the Japanese prints then arriving in Paris by the crate. Within a year he would take the same flat colour and hard outline into lithography and more or less invent the advertising poster.',
+},
+{
+  id: 'boulevard-montmartre-night', category: 'modern',
+  title: 'The Boulevard Montmartre at Night', artist: 'Camille Pissarro', artistDates: '1830 – 1903',
+  year: '1897', sort: 1897, medium: 'Oil on canvas', dims: '53 × 65 cm',
+  museum: 'National Gallery', city: 'London',
+  file: 'Pissarro - The Boulevard Montmartre at Night (1897).jpg', w: 15224, h: 12533, wiki: 'The_Boulevard_Montmartre_at_Night',
+  tags: ['landscape'],
+  history: [
+    'One of fourteen views Pissarro painted from a window of the Hôtel de Russie over a single winter, working through the series as the weather and the hour changed. He was in his late sixties, with an eye condition that made painting outdoors painful, and had taken to working from rooms above streets.',
+    'It is the only night scene in the set, and among the first paintings anywhere to take electric street lighting as its subject.',
+  ],
+  depicts: [
+    'A wet boulevard seen from above at night. Lamps run down both sides in receding rows, shop windows throw yellow light across the pavement, carriages and pedestrians dissolve into smears, and the whole road surface has become a reflection.',
+    'Almost nothing is described. Every figure on that street is one or two marks. The picture works because the eye reads a rain-slicked boulevard out of colour and rhythm alone, which is the entire Impressionist argument compressed into one canvas.',
+  ],
+  about: [
+    'Pissarro was born in the Danish West Indies, came to Paris at twenty-five, and was the only painter to show in all eight Impressionist exhibitions. He was the group’s hinge — he taught Cézanne and Gauguin, argued with everyone, went through a Pointillist phase in his fifties and came out the other side — and he lost a life’s work when Prussian troops occupied his house in 1870.',
+  ],
+  echoes: [
+    { label: 'Monet’s Rouen Cathedral series (1892 – 94)', note: 'The same method: one view, many canvases, the real subject being the light.' },
+    { label: 'Electric street lighting in Paris', note: 'New enough in 1897 to be the reason for painting the picture at all.' },
+    { label: 'Van Gogh, Café Terrace at Night (1888)', note: 'The other great early attempt at artificial light out of doors.' },
+  ],
+  summary: 'Camille Pissarro was sixty-seven, his eyes were troubling him, and standing at an easel in the street had become difficult. So he took a room in a hotel on the Boulevard Montmartre and painted what was underneath the window — fourteen times, through one winter, as the light and the weather and the hour changed. Thirteen of those canvases are daylight. This is the other one. It is, as far as anyone can tell, among the first paintings in history to take electric street lighting as its subject. The boulevard is wet, and the entire surface of the road has become a mirror: the lamps run away in two receding rows, the shop windows throw yellow across the pavement, and the carriages and people are nothing but smears of paint moving through it. Go close and there is no detail anywhere. Not a face, not a wheel, not a window frame — every figure on that street is one or two marks. Stand back and it is unmistakably a Paris evening in the rain. That gap, between what is on the canvas and what you see, is the whole Impressionist proposition, and here it is doing something the movement had mostly avoided, which is night. Pissarro was the only one of the group to exhibit in all eight of their shows, and he taught both Cézanne and Gauguin.',
+},
+{
+  id: 'the-childs-bath', category: 'modern',
+  title: 'The Child’s Bath', artist: 'Mary Cassatt', artistDates: '1844 – 1926',
+  year: '1893', sort: 1893, medium: 'Oil on canvas', dims: '100 × 66 cm',
+  museum: 'Art Institute of Chicago', city: 'Chicago',
+  file: "Mary Cassatt - The Child's Bath - Google Art Project.jpg", w: 3219, h: 4912, wiki: 'The_Child%27s_Bath',
+  history: [
+    'Painted the year after Cassatt completed a mural nearly twenty metres long, called Modern Woman, for the Woman’s Building at the Chicago World’s Fair — a commission that was dismantled when the fair closed and has never been found.',
+    'It comes directly out of a set of ten colour prints she made in 1890 and 1891, after seeing a vast exhibition of Japanese woodblock prints in Paris that changed her drawing permanently. The Art Institute bought it in 1910.',
+  ],
+  depicts: [
+    'Seen from above, a woman holds a child on her lap with one arm around her and washes her foot in a basin on the floor. The child’s hand rests on her own knee. Both look down at the water, and neither looks out.',
+    'Everything is pattern — the striped dress, the flowered wallpaper, the carpet, the jug — except the bare skin, which gives the only plain surfaces in the picture and is therefore the only place the eye will settle.',
+  ],
+  about: [
+    'Cassatt was born in Pennsylvania, moved to Paris against her father’s wishes, and was the only American invited to exhibit with the Impressionists, by Degas, who became a lifelong and difficult friend. She never married, campaigned for women’s suffrage, and advised the American collectors whose purchases built much of what now hangs in United States museums.',
+  ],
+  echoes: [
+    { label: 'Kitagawa Utamaro’s mother-and-child prints', note: 'The overhead viewpoint, the flattened pattern and the cropping all come from here.' },
+    { label: 'Degas and the 1879 Impressionist exhibition', note: 'Degas invited her to show with the group; she called it the turning point of her life.' },
+    { label: 'Modern Woman, Chicago World’s Fair (1893)', note: 'Her largest work, painted the year before this one, and lost within a decade.' },
+  ],
+  summary: 'A woman is washing a child’s foot, and the entire picture is arranged around that small fact. Mary Cassatt painted it in 1893, and the first thing to notice is the viewpoint. We are looking down into the scene, steeply, from somewhere above and to the side, so the floor tips up towards us and the basin becomes an oval. That angle is not European. Cassatt had seen an enormous exhibition of Japanese woodblock prints in Paris in 1890, and it rearranged her sense of what a picture could do — the high viewpoint, the flattened pattern, the willingness to crop a figure at the edge. The second thing is the patterning. The striped dress, the flowered wallpaper, the carpet, the jug: almost every surface is busy. The exceptions are the areas of bare skin, the child’s legs and the two pairs of hands, which are the only quiet places in the painting and are therefore exactly where you look. Nobody is performing. Neither of them glances out at us; both are watching the water. Cassatt was an American who moved to Paris against her family’s wishes and became the only American invited to show with the Impressionists. She painted mothers and children for thirty years and was patronised for it by people who thought the subject too small.',
+},
+{
+  id: 'water-lilies', category: 'modern',
+  title: 'Water Lilies', artist: 'Claude Monet', artistDates: '1840 – 1926',
+  year: '1920', sort: 1920, medium: 'Oil on canvas', dims: '200 × 425 cm',
+  museum: 'Museum of Modern Art', city: 'New York',
+  file: 'Reflections of Clouds on the Water-Lily Pond.jpg', w: 3463, h: 1978, wiki: 'Water_Lilies_(Monet_series)',
+  tags: ['landscape'],
+  history: [
+    'Monet painted roughly two hundred and fifty water lily canvases over the last thirty years of his life, in a garden he built himself at Giverny, diverting a stream to make the pond and importing the lilies over the objections of neighbours who thought they would poison the water.',
+    'He worked on the largest panels through the First World War, with the front close enough that he could hear the guns, and gave a set to France the day after the Armistice. Cataracts ruined his sight; he had surgery in 1923 and went back to repaint work he had made half blind.',
+  ],
+  depicts: [
+    'Water, lilies, and the reflections of clouds and willows. There is no horizon, no bank, and no sky except the sky in the water.',
+    'Removing the horizon is the whole move. Without it there is no ground plane and no depth cue, so the painted surface and the depicted surface become the same thing — which is why American painters half a century later found these canvases so useful.',
+  ],
+  about: [
+    'Monet gave Impressionism its name by accident, with a canvas called Impression, Sunrise. He outlived the rest of the group by decades, became wealthy and famous, and spent his last thirty years painting one pond. He died at eighty-six with the great decorations still unfinished to his satisfaction.',
+  ],
+  echoes: [
+    { label: 'The Orangerie panels, Paris (1927)', note: 'Eight compositions in two oval rooms, given to the state and opened months after his death.' },
+    { label: 'Jackson Pollock and Abstract Expressionism', note: 'New York in the 1950s rediscovered the late Monet and read him as an ancestor.' },
+    { label: 'Monet’s cataracts', note: 'Diagnosed in 1912; the colour of the late work shifts with his sight, and again after surgery.' },
+  ],
+  summary: 'There is no horizon in this painting. That is the thing to notice, and everything else follows from it. Claude Monet spent the last thirty years of his life painting one pond, roughly two hundred and fifty times. He had built it himself at Giverny, diverting a stream against the objections of local farmers who believed his imported lilies would poison the water, and then he painted it in every light there was. In the late canvases, of which this is one, he did something without real precedent: he took away the bank, the sky and the far edge, and pointed the picture straight down at the water. What is left is lilies, and the reflections of clouds and willows in the surface they are floating on. There is no way to tell how deep it is, or which way is up, and no ground for your eye to stand on. He worked on these through the First World War — Giverny is close enough to the Marne that he could hear the artillery — and gave a set of the largest to France the day after the Armistice. His eyes were failing throughout. Cataracts turned his palette muddy and then red, and after surgery in 1923 he went back and repainted canvases he had made half blind. Fifty years later, painters in New York looked at these and saw the beginning of abstraction.',
+},
+{
+  id: 'self-portrait-with-physalis', category: 'modern',
+  title: 'Self-Portrait with Physalis', artist: 'Egon Schiele', artistDates: '1890 – 1918',
+  year: '1912', sort: 1912, medium: 'Oil and gouache on wood', dims: '32 × 40 cm',
+  museum: 'Leopold Museum', city: 'Vienna',
+  file: 'Egon Schiele - Self-Portrait with Physalis - Google Art Project.jpg', w: 3781, h: 3062, wiki: 'Self-Portrait_with_Physalis',
+  tags: ['portrait'],
+  history: [
+    'Painted in the year Schiele spent twenty-four days in custody. He had been arrested in a small town outside Vienna on serious charges that were dropped; he was convicted instead of leaving an indecent drawing where children could see it, and a judge burned one of his works in the courtroom.',
+    'It was made as one of a pair with a portrait of Wally Neuzil, his partner and model, designed to hang side by side and turn towards each other. The two were separated for most of the twentieth century.',
+  ],
+  depicts: [
+    'The painter at twenty-two, head tilted, one shoulder hitched up, in three-quarter view against bare board. A branch of physalis — Chinese lanterns — crosses the upper right with its papery orange husks and wiry stems.',
+    'The plant is doing the work of a landscape, a curtain and a signature at once. Everything else is stripped away: no room, no furniture, no depth. The board is left bare wherever nothing needed to be said.',
+  ],
+  about: [
+    'Schiele entered the Vienna Academy at sixteen, walked out at nineteen, and was taken up by Klimt, who bought his drawings and sent him clients. He made about three hundred paintings and several thousand drawings in ten years. He died in the influenza pandemic of 1918, aged twenty-eight, three days after his pregnant wife.',
+  ],
+  echoes: [
+    { label: 'Gustav Klimt', note: 'Mentor and patron; the ornament in Schiele is Klimt’s, the anatomy is not.' },
+    { label: 'Portrait of Wally Neuzil (1912)', note: 'Its companion, painted to hang facing it, and the subject of a long restitution case.' },
+    { label: 'The 1918 influenza pandemic', note: 'It killed Klimt in February and Schiele in October, ending Viennese modernism inside a year.' },
+  ],
+  summary: 'Egon Schiele was twenty-two when he painted this, and he had spent part of that year in a cell. He had been living in a small town outside Vienna with his partner Wally Neuzil, and the town did not care for either of them. He was arrested on serious charges that were dropped, convicted instead of leaving an indecent drawing where a child could see it, and made to watch a judge burn one of his works over a candle flame. He served twenty-four days. The picture that came out of that year is small, painted on wood, and almost empty. There is no room behind him, no furniture, no depth of any kind — just bare board, a head tilted at an angle a neck does not comfortably make, one shoulder hitched up, and a branch of physalis crossing the top right corner with its orange paper lanterns and its wiry stems. That plant is carrying the entire picture. It is the landscape, the decoration and the signature all at once, and it is the only thing in the painting that is not him. It was made as one of a pair, designed to hang beside a portrait of Wally so that the two of them would be turning towards each other. Six years later Schiele died in the influenza pandemic at twenty-eight, three days after his pregnant wife.',
+},
+{
+  id: 'twittering-machine', category: 'modern',
+  title: 'Twittering Machine', artist: 'Paul Klee', artistDates: '1879 – 1940',
+  year: '1922', sort: 1922, medium: 'Oil transfer drawing, watercolour and ink on paper', dims: '64 × 48 cm',
+  museum: 'Museum of Modern Art', city: 'New York',
+  file: 'Paul-klee-twittering-machine-1.jpg', w: 4581, h: 6144, wiki: 'Twittering_Machine',
+  history: [
+    'Made at the Bauhaus in Weimar, where Klee taught alongside Kandinsky. He used his own oil-transfer method: a sheet coated in black oil paint laid under the paper and drawn on from above, so the line comes through smudged and slightly out of his control rather than confident.',
+    'The Museum of Modern Art bought it in 1939. By then the Nazis had declared Klee degenerate, seized more than a hundred of his works from German collections, and driven him out of his teaching post and back to Switzerland.',
+  ],
+  depicts: [
+    'Four thin birds, or things standing in for birds, are mounted on a wire that runs to a hand crank. Turn the handle and they will presumably sing. Beneath them the ground gives way into a pit of violet.',
+    'The joke has a floor under it. A machine for producing birdsong is charming until you notice the birds are threaded onto the wire like beads, their beaks are open far too wide, and there is a hole underneath waiting for whatever the crank attracts.',
+  ],
+  about: [
+    'Klee was a Swiss-German painter and trained musician who played the violin well enough to have gone professional. He taught at the Bauhaus for a decade and left notebooks of teaching theory that have been compared to Leonardo’s. He made nearly ten thousand works, was paraded by the Nazis as degenerate, and died in 1940 of scleroderma.',
+  ],
+  echoes: [
+    { label: 'Theodor Adorno and the Frankfurt School', note: 'Read it as mechanisation turning even birdsong into product.' },
+    { label: 'Degenerate Art exhibition, Munich (1937)', note: 'Klee was among the artists displayed in it; about a hundred works were confiscated.' },
+    { label: 'Aaron Jay Kernis, Twittering Machines', note: 'One of several musical works that take the painting as a score.' },
+  ],
+  summary: 'Four birds sit on a wire, and the wire is attached to a crank. Turn the handle, and they will sing. Paul Klee made this at the Bauhaus in 1922, where he was teaching alongside Kandinsky, and he made it with a technique he had invented for himself: he coated a sheet in black oil paint, laid it face down under his drawing paper, and drew on the back, so that the line came through smudged, hesitant and slightly beyond his control. That wobble is why the machine looks hand-built and faintly pathetic rather than engineered. It is funny, and then it is not. Look at how the birds are attached. They are not perched on the wire; they are threaded onto it like beads, with their beaks open much too wide for singing. And underneath them the ground gives way into a pit of violet, a hole the picture offers no explanation for. A device that manufactures birdsong on demand, with the birds fixed in place, and something waiting below. Klee made nearly ten thousand works in his life and taught for a decade, leaving notebooks that get compared to Leonardo’s. In 1937 the Nazis put him in the Degenerate Art exhibition, seized a hundred of his pictures, and he went home to Switzerland to die.',
+},
+{
+  id: 'the-city-rises', category: 'modern',
+  title: 'The City Rises', artist: 'Umberto Boccioni', artistDates: '1882 – 1916',
+  year: '1910', sort: 1910, medium: 'Oil on canvas', dims: '199 × 301 cm',
+  museum: 'Museum of Modern Art', city: 'New York',
+  file: 'The City Rises by Umberto Boccioni 1910.jpg', w: 2583, h: 1715, wiki: 'The_City_Rises',
+  history: [
+    'Painted in Milan in 1910, the year after Marinetti published the Futurist Manifesto on the front page of Le Figaro, declaring that a racing car was more beautiful than the Victory of Samothrace and that Italy should drain its canals and demolish its museums.',
+    'Boccioni called it his first great work. Six years later he was dead at thirty-three, thrown from a horse during cavalry training for a war the Futurists had campaigned loudly to enter.',
+  ],
+  depicts: [
+    'An enormous red horse fills the centre, straining forward, with labourers hauling at it and being dragged off their feet. Behind them scaffolding goes up over a new suburb, and the whole surface is broken into short divided strokes so that nothing holds still.',
+    'The subject is a building site — the expansion of industrial Milan — treated as though it were a battle or a myth. The horse is the muscle of the new century, and the men are barely keeping hold of it.',
+  ],
+  about: [
+    'Boccioni was the most gifted of the Italian Futurists, a painter and sculptor who theorised the group’s ideas as well as illustrating them. Futurism’s worship of speed, machinery and violence fed directly into Italian Fascism afterwards, which complicates its legacy considerably. He enlisted in 1915 and died the following year.',
+  ],
+  echoes: [
+    { label: 'F. T. Marinetti, Futurist Manifesto (1909)', note: 'Published in Paris and Milan; this painting is its first major answer in paint.' },
+    { label: 'Boccioni, Unique Forms of Continuity in Space (1913)', note: 'The striding bronze figure that now appears on the Italian twenty-cent coin.' },
+    { label: 'Fritz Lang, Metropolis (1927)', note: 'The same faith in the machine city, seventeen years on and a great deal darker.' },
+  ],
+  summary: 'A vast red horse lunges through the middle of this painting and men are hanging off it, dragged forward with their heels in the dirt. Behind them scaffolding is going up over a new suburb of Milan. That is the subject: a building site. Umberto Boccioni painted it in 1910, the year after Filippo Marinetti had published the Futurist Manifesto on the front page of a Paris newspaper, announcing that a roaring motor car was more beautiful than a Greek statue, that museums were cemeteries, and that Italy should tear up its past and begin again. This is what that sounded like as a painting. Everything is broken into short separated strokes of colour so that no edge sits still and the whole canvas seems to shudder. The horse is not really a horse; it is the raw force of the new century, and the men are not controlling it, they are holding on. Boccioni called it his first great work. It is worth knowing what happened next. The Futurists campaigned hard for Italy to enter the First World War, because they believed a war would cleanse the country of its past, and they got what they wanted. Boccioni enlisted, and in 1916 he was thrown from a horse during cavalry training and died of his injuries. He was thirty-three.',
+},
 ];
 
 if (typeof module !== 'undefined') module.exports = { CATEGORIES, ARTWORKS };
