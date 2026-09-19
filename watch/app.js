@@ -6,6 +6,8 @@ function select(id,options){const p=parts.find(p=>p.id===id);if(!p)return false;
 function clear(){selected=null;model?.select(null);$('#detail').hidden=true;document.body.classList.remove('detail-open')}
 $('#detail-close').onclick=clear;$('#focus-part').onclick=()=>selected&&model?.focus(selected);$('#connections').onclick=()=>{$('#connection-list').hidden=!$('#connection-list').hidden;$('#connections').textContent=$('#connection-list').hidden?'Show connected parts':'Hide connected parts'};
 // Guided walkthrough: step through flow.js, one part at a time, from crown to hairspring.
+// Its start button is removed for now, so nothing opens the sheet; the stepper itself still works.
+const flowStart=$('#flow-start');
 let step=-1;
 const track=$('#flow-track');
 flow.forEach((s,i)=>{const dot=document.createElement('button');dot.className='flow-dot';dot.dataset.phase=s.phase;dot.title=`${i+1}. ${s.title}`;dot.setAttribute('aria-label',`Step ${i+1}: ${s.title}`);if(i&&s.phase!==flow[i-1].phase)dot.classList.add('phase-start');dot.onclick=()=>goTo(i);track.append(dot)});
@@ -25,10 +27,10 @@ let collapsed=false;
 function renderBar(){const s=flow[step];$('#flow-count').textContent=collapsed&&s?`Step ${step+1} of ${flow.length} · ${s.title}`:`Step ${step+1} of ${flow.length}`}
 function setCollapsed(v){collapsed=v;$('#flow-body').hidden=v;$('#flow-toggle').textContent=v?'▴':'▾';$('#flow-toggle').setAttribute('aria-expanded',String(!v));$('#flow-toggle').setAttribute('aria-label',`${v?'Expand':'Collapse'} walkthrough`);renderBar()}
 $('#flow-toggle').onclick=()=>setCollapsed(!collapsed);
-function startFlow(){clear();$('#flow').hidden=false;$('#flow-start').hidden=true;goTo(0);$('#flow-next').focus()}
+function startFlow(){clear();$('#flow').hidden=false;if(flowStart)flowStart.hidden=true;goTo(0);$('#flow-next').focus()}
 // Leaves the walkthrough. A part picked on the model or in search takes over the highlight itself.
-function stopFlow(keepHighlight){if(step<0)return;step=-1;$('#flow').hidden=true;$('#flow-start').hidden=false;if(!keepHighlight)model?.select(null)}
-$('#flow-start').onclick=startFlow;$('#flow-close').onclick=()=>stopFlow();
+function stopFlow(keepHighlight){if(step<0)return;step=-1;$('#flow').hidden=true;if(flowStart)flowStart.hidden=false;if(!keepHighlight)model?.select(null)}
+if(flowStart)flowStart.onclick=startFlow;$('#flow-close').onclick=()=>stopFlow();
 $('#flow-back').onclick=()=>step>0&&goTo(step-1);
 // The last step still points at the escape wheel it hands back to, but Next starts again at step 1.
 $('#flow-next').onclick=()=>goTo(step===flow.length-1?0:step+1);
