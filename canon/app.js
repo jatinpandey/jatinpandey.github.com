@@ -639,10 +639,35 @@
      their height and lands short. Some environments ignore a smooth scroll
      altogether, so if nothing has moved a moment later, go straight there —
      better an abrupt arrival than a control that appears to do nothing. */
+  /* How much of the window is actually free: the masthead sits over the top,
+     and on a narrow screen the rail is a bar across the foot. */
+  function clearSpace() {
+    var top = MASTHEAD;
+    var bottom = window.innerHeight;
+    var rail = document.getElementById('rail');
+    if (rail) {
+      var r = rail.getBoundingClientRect();
+      var isBar = r.width > window.innerWidth * 0.8 && r.bottom >= window.innerHeight - 1;
+      if (isBar) bottom -= r.height;
+    }
+    return { top: top, height: Math.max(160, bottom - top) };
+  }
+
   function jumpTo(id) {
     var target = document.getElementById(id);
     if (!target) return;
-    var to = Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - MASTHEAD);
+    /* Centre the painting, not the section. Aligning the top of the work put
+       the eyebrow and a band of empty paper on screen and pushed the picture
+       off the bottom edge, behind the rail. */
+    var plate = target.querySelector('.frame') || target;
+    var room = clearSpace();
+    var rect = plate.getBoundingClientRect();
+    var docTop = rect.top + window.pageYOffset;
+    var to = rect.height <= room.height
+      ? docTop - room.top - (room.height - rect.height) / 2
+      : docTop - room.top - 12;   // taller than the space there is: start at its top
+    var limit = Math.max(0, document.documentElement.scrollHeight - window.innerHeight);
+    to = Math.max(0, Math.min(Math.round(to), limit));
     var from = window.pageYOffset;
     try { window.scrollTo({ top: to, behavior: 'smooth' }); } catch (e) { window.scrollTo(0, to); }
     if (history.replaceState) history.replaceState(null, '', '#' + id);
