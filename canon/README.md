@@ -86,14 +86,21 @@ Categories are date ranges, so they cannot overlap:
 
 | key | name | span |
 | --- | --- | --- |
-| `old` | Renaissance to Rococo | 1400 – 1780 |
-| `nineteenth` | Revolution to Impressionism | 1780 – 1886 |
+| `old` | The Old Masters | 1400 – 1780 |
+| `nineteenth` | The Long Nineteenth Century | 1780 – 1886 |
 | `modern` | Modern | 1886 – 1950 |
 
 The keys are internal and must stay as they are: the daily shuffle is seeded on
 `(category, cycle)`, so renaming one deals a different hand for that era from
 then on, and every day already shown would show something else. The labels are
 free to change — only the page reads them.
+
+"The long nineteenth century" is borrowed from historians, who use it for a
+century that plainly did not run from 1800 to 1899. Theirs usually runs 1789 to
+1914; this one is cut at 1886, the last Impressionist exhibition, because that
+is where Modern begins here. The looser name is the point — it carries
+Neoclassicism at one end and Hokusai in the middle without claiming either
+belongs to a French story.
 
 Subjects (myth, portrait, landscape) cut across periods, so they are better as tags than categories. Nothing after 1950 is included because those works are still in copyright and Commons cannot host them.
 

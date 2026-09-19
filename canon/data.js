@@ -10,8 +10,8 @@
    seeded on them, so changing one deals a different hand for that era from then
    on. Rename the label instead; nothing but the page reads it. */
 const CATEGORIES = {
-  old:        { name: 'Renaissance to Rococo',      span: '1400 – 1780', blurb: 'Renaissance, Mannerism, Baroque and Rococo — the age of the Old Masters.' },
-  nineteenth: { name: 'Revolution to Impressionism', span: '1780 – 1886', blurb: 'Neoclassicism, Romanticism, Realism, ukiyo-e, and the Impressionists.' },
+  old:        { name: 'The Old Masters',           span: '1400 – 1780', blurb: 'Renaissance, Mannerism, Baroque and Rococo.' },
+  nineteenth: { name: 'The Long Nineteenth Century', span: '1780 – 1886', blurb: 'Neoclassicism, Romanticism, Realism, ukiyo-e, and the Impressionists.' },
   modern:     { name: 'Modern',                     span: '1886 – 1950', blurb: 'From Post-Impressionism to pure abstraction.' },
 };
 
