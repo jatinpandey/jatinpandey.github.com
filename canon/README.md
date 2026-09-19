@@ -86,8 +86,14 @@ anybody on purpose. Render the rest, re-run `scripts/durations.mjs`, and the
 list grows until it covers everything and the filter stops doing anything.
 
 `PINNED_DAYS` in `data.js` fixes a particular date by hand, which takes
-precedence over the shuffle for that date and leaves every other day alone. Keep
-it short: each pinned day is a day the rotation is not deciding.
+precedence over the shuffle for that date and leaves every other day alone.
+
+The ten days from 19 September 2026 are pinned: thirty works, every one of them
+recorded, none repeating. That is almost the whole of what has been rendered —
+thirty of thirty-two — so it cannot be extended further until more narrations
+exist. The rotation resumes on the eleventh day and may then repeat a work from
+the run, since it is drawing from the same thirty-two. Render the rest and the
+pinned block can be deleted outright; the filter alone will do the job.
 
 
 Day zero is 16 September 2026. Each category is shuffled with a seed of (category, cycle), and the day's index walks through the shuffle, so within one cycle no work repeats and the order changes on each pass. `?d=2026-09-20` shows a past day; future days are not shown.

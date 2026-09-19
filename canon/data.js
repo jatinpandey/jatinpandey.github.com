@@ -19,7 +19,20 @@ const CATEGORIES = {
    alone; these simply take precedence for the date they name. Keep it short —
    every pinned day is a day the shuffle is not deciding. */
 const PINNED_DAYS = {
+  /* The first ten days are dealt by hand so that each is a work with a
+     recorded narration and no work repeats across them — thirty of the
+     thirty-two that have been rendered. After these the rotation takes over
+     again, still drawing only from what can be heard. */
   '2026-09-19': ['mona-lisa', 'liberty-leading-the-people', 'nighthawks'],
+  '2026-09-20': ['last-supper', 'great-wave', 'starry-night'],
+  '2026-09-21': ['creation-of-adam', 'third-of-may-1808', 'the-scream'],
+  '2026-09-22': ['girl-with-a-pearl-earring', 'wanderer-above-the-sea-of-fog', 'the-kiss'],
+  '2026-09-23': ['night-watch', 'raft-of-the-medusa', 'american-gothic'],
+  '2026-09-24': ['las-meninas', 'impression-sunrise', 'grande-jatte'],
+  '2026-09-25': ['birth-of-venus', 'fighting-temeraire', 'card-players'],
+  '2026-09-26': ['school-of-athens', 'death-of-marat', 'dance'],
+  '2026-09-27': ['arnolfini-portrait', 'dejeuner-sur-lherbe', 'composition-vii'],
+  '2026-09-28': ['garden-of-earthly-delights', 'bal-du-moulin-de-la-galette', 'black-square'],
 };
 
 const ARTWORKS = [
